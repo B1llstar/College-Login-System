@@ -1,15 +1,4 @@
-const {courseSearchQuery} = require('./queries');
-const express = require('express');
-const app = express();
-const mysql = require('mysql');
-const cors = require('cors');
-
-app.use(cors());
-app.use(express.json());
-
-
-
-const viewRegQuery = ("SELECT instructor.studentID AS 'StudentID', instructor.crn AS 'CRN', instructor.courseID AS 'CourseID', \n"+
+var viewRegistrationQuery = ("SELECT instructor.studentID AS 'StudentID', instructor.crn AS 'CRN', instructor.courseID AS 'CourseID', \n"+
 "instructor.courseName AS 'CourseName', instructor.semYear AS 'Semester', \n"+
 "CONCAT(u.lastName,', ',u.firstName) AS 'Instructor' FROM user u\n"+
 "JOIN \n"+
@@ -25,7 +14,7 @@ const viewRegQuery = ("SELECT instructor.studentID AS 'StudentID', instructor.cr
 "ON u.userID=instructor.facultyID\n"+
 "WHERE semYear='S2022' AND studentID=700102001\n;");
 
-const crnSearchQuery = ("SELECT finalList.crn AS 'CRN', finalList.courseID AS 'CourseID', finalList.courseName AS 'CourseName', finalList.roomID AS 'Room', \n"+
+var courseSearchQuery = ("SELECT finalList.crn AS 'CRN', finalList.courseID AS 'CourseID', finalList.courseName AS 'CourseName', finalList.roomID AS 'Room', \n"+
 "finalList.Instructor, finalList.Days, finalList.Time, finalList.semYear AS 'Semester' FROM\n"+
 "(SELECT courseList.*, times1.TSID, CONCAT (substring(times1.day,1,1),'/',substring(times2.day,1,1)) AS 'Days', times1.Time FROM\n"+
 "(SELECT S2022.crn, S2022.courseID, S2022.courseName, S2022.roomID,\n"+ 
@@ -51,42 +40,4 @@ const crnSearchQuery = ("SELECT finalList.crn AS 'CRN', finalList.courseID AS 'C
 "JOIN period p ON tsp.periodID=p.periodID) AS timeTable) as times2\n"+
 "ON courseList.timeslot2=times2.TSID) AS finalList ");
 
-const db = mysql.createConnection({
-    user: 'admin',
-    host: 'neweastburytesting.cqsmeet2vhlb.us-east-1.rds.amazonaws.com',
-    port: '3306',
-    password: 'NewEastburyDBpass',
-    database: 'newEastburyAWS',
-});
-
-app.post('/courseSearch', (req, res) => {
-    console.log(req.body);
-    const crn = req.body.crn;
-
-    db.query(
-        courseSearchQuery + 'WHERE finalList.crn LIKE ?;',
-        [crn],
-        (err, result) => {
-            if(err) {
-                console.log(err);
-            } else {
-                console.log(result)
-                res.send(result);
-            }
-        }
-    );
-});
-
-app.get('/ViewRegistration', (req, res) => {
-    db.query(viewRegQuery, (err, result) => {
-        if(err){
-            console.log(err);
-        } else{
-            res.send(result);
-        }
-    })
-})
-
-app.listen(3305, () => {
-    console.log('Server running: port 3305');
-});
+module.exports = {viewRegistrationQuery, courseSearchQuery};
