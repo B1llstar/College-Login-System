@@ -1,20 +1,27 @@
-<<<<<<< HEAD
 import React, { Component } from "react";
 
 import "./App.css";
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Student from './Pages/Student';
-import Faculty from './Pages/Faculty';
-import Admin from './Pages/Admin';
-import ResearchStaff from './Pages/ResearchStaff';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Student from "./Pages/Student";
+import Faculty from "./Pages/Faculty";
+import Admin from "./Pages/Admin";
+import ResearchStaff from "./Pages/ResearchStaff";
 import NavBar from "./Components/NavBar.jsx";
 import Login from "./Components/Login.jsx";
-import ErrorPage from './Pages/ErrorPage';
+import ErrorPage from "./Pages/ErrorPage";
 import Axios from "axios";
 import "./bootstrap/css/bootstrap.css";
 import "./bootstrap/css/bootstrap.min.css";
-import { CourseSearch, ViewRegistration, RegisterCourse, DropCourse,
-  ViewHolds, ViewTranscript, DegreeAudit, ViewAdvisor } from './Pages/studentSections/studentSections';
+import {
+  CourseSearch,
+  ViewRegistration,
+  RegisterCourse,
+  DropCourse,
+  ViewHolds,
+  ViewTranscript,
+  DegreeAudit,
+  ViewAdvisor,
+} from "./Pages/studentSections/studentSections";
 import MasterSchedule from "./Components/MasterSchedule.jsx";
 
 class App extends Component {
@@ -77,55 +84,39 @@ class App extends Component {
           </div>
         </div>
 
-        <div><Router>
         <div>
-        <Routes>
+          <Router>
+            <div>
+              <Routes>
+                {/* Landing Page Routes */}
+                <Route path="/" element={<root />} />
+                <Route path="/Student" element={<Student />} />
+                <Route path="/Faculty" element={<Faculty />} />
+                <Route path="/Admin" element={<Admin />} />
+                <Route path="/ResearchStaff" element={<ResearchStaff />} />
 
-            {/* Landing Page Routes */}
-            <Route path="/" element={<root />} />
-            <Route path="/Student" element={<Student />} />
-            <Route path="/Faculty" element={<Faculty />} />
-            <Route path="/Admin" element={<Admin />} />
-            <Route path="/ResearchStaff" element={<ResearchStaff />} />
+                {/* Student Navigation Routes */}
+                <Route path="/CourseSearch" element={<CourseSearch />} />
+                <Route
+                  path="/ViewRegistration"
+                  element={<ViewRegistration />}
+                />
+                <Route path="/RegisterCourse" element={<RegisterCourse />} />
+                <Route path="/DropCourse" element={<DropCourse />} />
+                <Route path="/ViewHolds" element={<ViewHolds />} />
+                <Route path="/ViewTranscript" element={<ViewTranscript />} />
+                <Route path="/DegreeAudit" element={<DegreeAudit />} />
+                <Route path="/ViewAdvisor" element={<ViewAdvisor />} />
 
-            {/* Student Navigation Routes */}
-            <Route path="/CourseSearch" element={<CourseSearch />} />
-            <Route path="/ViewRegistration" element={<ViewRegistration />} />
-            <Route path="/RegisterCourse" element={<RegisterCourse />} />
-            <Route path="/DropCourse" element={<DropCourse />} />
-            <Route path="/ViewHolds" element={<ViewHolds />} />
-            <Route path="/ViewTranscript" element={<ViewTranscript />} />
-            <Route path="/DegreeAudit" element={<DegreeAudit />} />
-            <Route path="/ViewAdvisor" element={<ViewAdvisor />} />
-
-            {/* Error Page Route */}
-            <Route path="*" element={<ErrorPage />} />
-        </Routes>
+                {/* Error Page Route */}
+                <Route path="*" element={<ErrorPage />} />
+              </Routes>
+            </div>
+          </Router>
         </div>
-    </Router></div>
       </React.Fragment>
     );
   }
 }
 
 export default App;
-=======
-import "./App.css";
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Student from './Pages/Student';
-import Faculty from './Pages/Faculty';
-import Admin from './Pages/Admin';
-import ResearchStaff from './Pages/ResearchStaff';
-import ErrorPage from './Pages/ErrorPage';
-import { CourseSearch, ViewRegistration, RegisterCourse, DropCourse,
-    ViewHolds, ViewTranscript, DegreeAudit, ViewAdvisor } from './Pages/studentSections/studentSections';
-
-
-function App(){
-    return (
-
-    );
-}
-
-export default App;
->>>>>>> With_Chris_Files
