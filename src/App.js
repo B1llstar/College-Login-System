@@ -1,27 +1,9 @@
 import React, { Component } from "react";
-
-import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Student from "./Pages/Student";
-import Faculty from "./Pages/Faculty";
-import Admin from "./Pages/Admin";
-import ResearchStaff from "./Pages/ResearchStaff";
 import NavBar from "./Components/NavBar.jsx";
 import Login from "./Components/Login.jsx";
-import ErrorPage from "./Pages/ErrorPage";
 import Axios from "axios";
 import "./bootstrap/css/bootstrap.css";
 import "./bootstrap/css/bootstrap.min.css";
-import {
-  CourseSearch,
-  ViewRegistration,
-  RegisterCourse,
-  DropCourse,
-  ViewHolds,
-  ViewTranscript,
-  DegreeAudit,
-  ViewAdvisor,
-} from "./Pages/studentSections/studentSections";
 import MasterSchedule from "./Components/MasterSchedule.jsx";
 
 class App extends Component {
@@ -85,34 +67,22 @@ class App extends Component {
         </div>
 
         <div>
-          <Router>
-            <div>
-              <Routes>
-                {/* Landing Page Routes */}
-                <Route path="/" element={<root />} />
-                <Route path="/Student" element={<Student />} />
-                <Route path="/Faculty" element={<Faculty />} />
-                <Route path="/Admin" element={<Admin />} />
-                <Route path="/ResearchStaff" element={<ResearchStaff />} />
+          {/* Landing Page Routes THESE ARE HOME FOR EACH USER
+                Root, Student, Faculty, Admin, ResearchStaff
+                */}
 
-                {/* Student Navigation Routes */}
-                <Route path="/CourseSearch" element={<CourseSearch />} />
-                <Route
-                  path="/ViewRegistration"
-                  element={<ViewRegistration />}
-                />
-                <Route path="/RegisterCourse" element={<RegisterCourse />} />
-                <Route path="/DropCourse" element={<DropCourse />} />
-                <Route path="/ViewHolds" element={<ViewHolds />} />
-                <Route path="/ViewTranscript" element={<ViewTranscript />} />
-                <Route path="/DegreeAudit" element={<DegreeAudit />} />
-                <Route path="/ViewAdvisor" element={<ViewAdvisor />} />
+          {/* EVERYTHING IS A SIDEBAR OPTION
+                
+                Student Navigation Routes
+                CourseSearch, ViewRegistration, RegisterCourse, DropCourse, ViewHolds,
+                ViewTranscript, DegreeAudit, ViewAdviconst 
+                 = useSelector(state => state.
+                  )
+                */}
 
-                {/* Error Page Route */}
-                <Route path="*" element={<ErrorPage />} />
-              </Routes>
-            </div>
-          </Router>
+          {/* Error Page Route 
+                \asterisk
+                */}
         </div>
       </React.Fragment>
     );

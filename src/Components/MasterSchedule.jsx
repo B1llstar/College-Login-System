@@ -4,8 +4,6 @@ import Axios from "axios";
 import "../bootstrap/css/bootstrap.css";
 import "../bootstrap/css/bootstrap.min.css";
 
-const fs = require("fs");
-
 class MasterSchedule extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +11,6 @@ class MasterSchedule extends Component {
   }
 
   query = () => {
-    let ele;
     Axios.post("http://localhost:3002/masterSchedule", {
       // username: user,
       // password: pass,

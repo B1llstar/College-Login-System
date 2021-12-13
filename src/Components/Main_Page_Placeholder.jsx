@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 
-class MainPagePlaceholder extends React.Component {
+class MainPagePlaceholder extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   render() {
     return (
       <div>
