@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import NavBar from "./Components/NavBar.jsx";
 import Login from "./Components/Login.jsx";
 import Axios from "axios";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./bootstrap/css/bootstrap.css";
+import "./bootstrap/css/bootstrap.min.css";
 import MasterSchedule from "./Components/MasterSchedule.jsx";
 
 class App extends Component {
@@ -61,7 +61,7 @@ class App extends Component {
           <div id="widget" className="col-4">
             <MasterSchedule
               className="col-8"
-              obj={{ data: {}, arrData: [] }}
+              obj={{ data: [], arrData: [] }}
             ></MasterSchedule>
           </div>
         </div>

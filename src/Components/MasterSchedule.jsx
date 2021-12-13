@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Axios from "axios";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "../bootstrap/css/bootstrap.css";
+import "../bootstrap/css/bootstrap.min.css";
 
 const fs = require("fs");
 
