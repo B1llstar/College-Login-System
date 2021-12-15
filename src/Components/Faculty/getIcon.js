@@ -42,7 +42,7 @@ const icon = function (name) {
     case "accessStudentReg":
       return <DegAuditIcon />;
       break;
-    case "holds":
+    case "holds": // view student holds
       return <HoldsIcon />;
       break;
     case "logout":
