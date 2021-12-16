@@ -5,11 +5,13 @@ import Axios from "axios";
 import "./bootstrap/css/bootstrap.css";
 import "./bootstrap/css/bootstrap.min.css";
 import MasterSchedule from "./Components/MasterSchedule.jsx";
+import Faculty from "./User_Classes/Faculty.js";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: " ", displayMsg: "Login" };
+    this.state = { username: " ", displayMsg: "Login", faculty: "" };
+    console.log(Faculty);
   }
 
   handleLogin = (user, pass, userType) => {
@@ -84,6 +86,7 @@ class App extends Component {
                 \asterisk
                 */}
         </div>
+        <button onClick={console.log("Hi")}>Hi</button>
       </React.Fragment>
     );
   }
