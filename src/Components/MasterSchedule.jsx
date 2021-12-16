@@ -4,21 +4,22 @@ import Axios from "axios";
 import "../bootstrap/css/bootstrap.css";
 import "../bootstrap/css/bootstrap.min.css";
 import PostRequest from "./Post_Request_Template";
+/*
 PostRequest({
   username: "smashamlw@neweastbury.edu",
   password: "jSNHlqbS",
   userType: "Student",
 });
+*/
 class MasterSchedule extends Component {
   constructor(props) {
     super(props);
     this.state = { scheduleData: [], tableData: [[]], isShow: false };
   }
 
-  query = () => {
+  query1 = () => {
     //    Axios.post("http://localhost:3305/masterSchedule", {
     // Axios.post("http://localhost:3305/Admin/", {
-
     Axios.post("http://localhost:3305/researchStaff/viewGradeData", {}).then(
       (response) => {
         console.log(response);
@@ -32,9 +33,15 @@ class MasterSchedule extends Component {
     );
   };
 
-  query2 = () => {
+  query = () => {
     //    Axios.post("http://localhost:3305/masterSchedule", {
     // Axios.post("http://localhost:3305/Admin/", {
+    PostRequest({
+      path: "/Main/Login",
+      username: "smashamlw@neweastbury.edu",
+      password: "jSNHlqbS",
+      userType: "Student",
+    });
   };
 
   makeSomeTables = () => {

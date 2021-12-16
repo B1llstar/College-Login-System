@@ -12,6 +12,7 @@ router.post("/", (req, res) => {
   const password = req.body.args.password;
   const userType = req.body.args.userType;
   console.log("Kappa" + username);
+  console.log("weirdchamp");
   var userID = "";
   var firstName = "";
 

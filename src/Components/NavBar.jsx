@@ -12,20 +12,92 @@ class NavBar extends Component {
 
   render() {
     return (
-      <div className="col-4">
-        <nav className="nav flex-column mw-100">
+      <div>
+        <div
+          class="nav flex-column nav-pills"
+          id="v-pills-tab"
+          role="tablist"
+          aria-orientation="vertical"
+        >
           <a
-            className="nav-link active"
-            aria-current="page"
-            href="#"
-            onClick={this.doSomething}
+            class="nav-link"
+            id="v-pills-home-tab"
+            data-toggle="pill"
+            href="#v-pills-home"
+            role="tab"
+            aria-controls="v-pills-home"
+            aria-selected="true"
           >
-            Login Demo
+            Home
           </a>
-          <a className="nav-link" href="#">
-            Link
+          <a
+            class="nav-link"
+            id="v-pills-profile-tab"
+            data-toggle="pill"
+            href="#v-pills-profile"
+            role="tab"
+            aria-controls="v-pills-profile"
+            aria-selected="false"
+          >
+            Profile
           </a>
-        </nav>
+          <a
+            class="nav-link"
+            id="v-pills-messages-tab"
+            data-toggle="pill"
+            href="#v-pills-messages"
+            role="tab"
+            aria-controls="v-pills-messages"
+            aria-selected="false"
+          >
+            Messages
+          </a>
+          <a
+            class="nav-link"
+            id="v-pills-settings-tab"
+            data-toggle="pill"
+            href="#v-pills-settings"
+            role="tab"
+            aria-controls="v-pills-settings"
+            aria-selected="false"
+          >
+            Settings
+          </a>
+        </div>
+        <div class="tab-content" id="v-pills-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="v-pills-home"
+            role="tabpanel"
+            aria-labelledby="v-pills-home-tab"
+          >
+            ...
+          </div>
+          <div
+            class="tab-pane fade"
+            id="v-pills-profile"
+            role="tabpanel"
+            aria-labelledby="v-pills-profile-tab"
+          >
+            ...
+          </div>
+          <div
+            class="tab-pane fade"
+            id="v-pills-messages"
+            role="tabpanel"
+            aria-labelledby="v-pills-messages-tab"
+          >
+            ...
+          </div>
+          <div
+            class="tab-pane fade"
+            id="v-pills-settings"
+            role="tabpanel"
+            aria-labelledby="v-pills-settings-tab"
+          >
+            ...
+          </div>
+        </div>
       </div>
     );
     // set height of parent to certain amount of pixels ex 100px

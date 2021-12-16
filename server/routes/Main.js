@@ -66,6 +66,8 @@ router.post("/login", (req, res) => {
                   firstName: firstName,
                   userType: userType,
                   validated: true,
+                  auth: makeAuth(),
+
                   // issue an auth token upon successful login
                 });
               }
@@ -78,6 +80,7 @@ router.post("/login", (req, res) => {
                   firstName: firstName,
                   userType: userType,
                   validated: true,
+                  auth: makeAuth(),
                 });
               }
               break;
@@ -89,6 +92,7 @@ router.post("/login", (req, res) => {
                   firstName: firstName,
                   userType: userType,
                   validated: true,
+                  auth: makeAuth(),
                 });
               }
               break;
@@ -100,6 +104,7 @@ router.post("/login", (req, res) => {
                   firstName: firstName,
                   userType: userType,
                   validated: true,
+                  auth: makeAuth(),
                 });
               }
               break;

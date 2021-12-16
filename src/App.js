@@ -10,6 +10,7 @@ import ResearchStaff from "./User_Classes/ResearchStaff.js";
 import Admin from "./User_Classes/Admin.js";
 import Student from "./User_Classes/Student.js";
 import Main from "./User_Classes/Main.js";
+import AdminApp from "./Components/Navigation/App";
 
 class App extends Component {
   constructor(props) {
@@ -54,6 +55,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
+        <AdminApp />
         <div className="row">
           <div className="col-2">
             <NavBar onClick={this.handleNavClick}></NavBar>

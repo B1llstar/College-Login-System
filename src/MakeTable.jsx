@@ -1,8 +1,11 @@
-makeSomeTables = () => {
+import ReactDOM from "react-dom";
+
+export default function makeSomeTables(dataArr) {
+  console.log("executing");
   let unique = [];
   let thList = [];
   let counter = 0;
-  let result = this.props.obj.data.map((element, index) => {
+  let result = dataArr.map((element, index) => {
     let keys = Object.keys(element);
     let tdList = [];
     // keys of keys are 0, 1, 2, 3.... this tells me the amount of properties
@@ -66,6 +69,4 @@ makeSomeTables = () => {
   ReactDOM.render(<div>{ele_}</div>, document.getElementById("test2"));
   console.log(unique);
   // ReactDOM.render(<div>{result}</div>, document.getElementById("test2"));
-};
-
-module.exports = makeSomeTables;
+}
