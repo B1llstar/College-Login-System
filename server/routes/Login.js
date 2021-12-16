@@ -8,9 +8,10 @@ router.use(express.json());
 router.use(cors());
 
 router.post("/", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const userType = req.body.userType;
+  const username = req.body.args.username;
+  const password = req.body.args.password;
+  const userType = req.body.args.userType;
+  console.log("Kappa" + username);
   var userID = "";
   var firstName = "";
 

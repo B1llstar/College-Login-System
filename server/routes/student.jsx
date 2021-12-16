@@ -13,7 +13,6 @@ router.use(cors());
 
 router.post("/", (req, res) => {
   // Use login.js as a template
-  let someBodyProp = "";
 
   // home
   db.query();

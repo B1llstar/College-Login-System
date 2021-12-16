@@ -6,6 +6,7 @@ class Login extends Component {
     user: "",
     pass: "",
     userType: "",
+    auth: "",
   };
 
   update = () => {};

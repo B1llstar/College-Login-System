@@ -9,7 +9,7 @@ function Faculty() {
     getStudentHolds,
     getListOfStudentsFacultyIsAdvising,
   } = queries;
-  console.log(getStudentHistory);
+  // console.log(getStudentHistory);
 
   // define new key/val pairs in permissibleQueries for
   // easy access

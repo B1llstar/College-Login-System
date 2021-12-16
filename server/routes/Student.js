@@ -15,24 +15,35 @@ router.post("/", (req, res) => {
   // Use login.js as a template
 });
 
-router.post("/viewGradeData", (req, res) => {
+router.post("/viewRegistration", (req, res) => {
   // Use login.js as a template
-  let query = userType.ResearchStaff.viewGradeData;
-  db.query(query, [], (err, result) => {
-    res.send(result);
-    // console.log("Result: " + result);
-    if (err) {
-      console.log(err);
-      res.err("Something went wrong");
-    } else {
-    }
-  });
 });
 
-router.post("/updatePassword", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
+router.post("/courseSearch", (req, res) => {
+  db.query();
+});
 
+router.post("/registerForCourse", (req, res) => {
+  db.query();
+});
+
+router.post("/dropCourse", (req, res) => {
+  db.query();
+});
+
+router.post("/viewHolds", (req, res) => {
+  db.query();
+});
+
+router.post("/getUnofficialTranscript", (req, res) => {
+  db.query();
+});
+
+router.post("/degreeAudit", (req, res) => {
+  db.query();
+});
+
+router.post("/viewAdvisor", (req, res) => {
   db.query();
 });
 
@@ -40,5 +51,4 @@ router.post("/logout", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
 });
-
 module.exports = router;

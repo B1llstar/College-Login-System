@@ -3,6 +3,7 @@ router = express.Router();
 const cors = require("cors");
 const db = require("../database.js");
 const { response } = require("express");
+const storage = require("node-persist");
 
 router.use(express.json());
 router.use(cors());
@@ -15,17 +16,17 @@ router.post("/", (req, res) => {
 
 router.post("/viewCourses", (req, res) => {
   // Use login.js as a template
-  let someBodyProp = "";
+  storage.init();
   db.query();
 });
 
-router.post("/advisor", (req, res) => {
+router.post("/viewAdvisees", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
   db.query();
 });
 
-router.post("/examSchedules", (req, res) => {
+router.post("/viewExamSchedules", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
   db.query();
@@ -35,6 +36,31 @@ router.post("/recordAttendance", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
   db.query();
+});
+
+router.post("/accessStudentTranscript", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
+});
+
+router.post("/accessStudentSchedule", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
+});
+
+router.post("/accessStudentRegistration", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
+});
+
+router.post("/viewStudentHolds", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
+});
+
+router.post("/logout", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
 });
 
 module.exports = router;

@@ -1,38 +1,43 @@
 const { courseSearchQuery } = require("./queries");
 const { viewRegQuery } = require("./");
+
 const express = require("express");
-const mysql = require("mysql");
 const cors = require("cors");
-const loginRoutes = require("./routes/login");
-const studentRoutes = require("./routes/student.jsx");
-const adminRoutes = require("./routes/admin.jsx");
-const facultyRoutes = require("./routes/faculty.jsx");
-const researchStaff = require("./routes/researchStaff.jsx");
-const masterScheduleRoutes = require("./routes/masterSchedule");
+
 const db = require("./database.js");
 const app = express();
-const researchStaffRoutes = require("./routes/researchStaff");
+
+const researchStaffRoutes = require("./routes/ResearchStaff");
+const studentRoutes = require("./routes/Student.js");
+const adminRoutes = require("./routes/Admin.js");
+const facultyRoutes = require("./routes/Faculty.js");
+const mainRoutes = require("./routes/Main.js");
 
 app.use(cors());
 app.use(express.json());
 
-// Get viewRegQuery from queries
-// Get crnSearchQuery from queries
-app.use("/login", loginRoutes);
-app.use("/masterSchedule", masterScheduleRoutes);
-app.use("/researchStaff", researchStaffRoutes);
-app.use("/Admin");
-app.use("/Faculty");
-app.use("/Student");
-app.use("/ResearchStaff");
-
 // The four buttons
-app.use("Main");
+app.use("/Main", mainRoutes);
+
+// User Types & their respective navigation
+// These will lead to their individual home pages
+app.use("/Admin", adminRoutes);
+app.use("/Faculty", facultyRoutes);
+app.use("/Student", studentRoutes);
+app.use("/ResearchStaff", researchStaffRoutes);
 
 db.connect((err) => {
   if (err) throw err;
   console.log("Connected!");
 });
+
+app.listen(3305, () => {
+  console.log("Server running: port 3305");
+});
+
+/* // This post & this get are what Chris had used
+// Pay attention to parameters, I'm rebuilding this
+// whole page but that all may be useful later
 
 app.post("/courseSearch", (req, res) => {
   console.log(req.body);
@@ -62,6 +67,4 @@ app.get("/ViewRegistration", (req, res) => {
   });
 });
 
-app.listen(3305, () => {
-  console.log("Server running: port 3305");
-});
+*/

@@ -3,19 +3,17 @@ router = express.Router();
 const cors = require("cors");
 const db = require("../database.js");
 const { response } = require("express");
-// const iconGetter = require("../getSidebarIcon");
+const storage = require("node-persist");
+
+// probably a better way to do this... f it
 
 router.use(express.json());
 router.use(cors());
-/*
-let [title, setTitle] = useState({});
-let [icon, setIcon] = useState({});
-let [link, setLink] = useState({});
-*/
-router.post("/", (req, res) => {
+
+router.post("/", (req, res) => {});
+
+router.post("/viewAllUsers", (req, res) => {
   // Use login.js as a template
-  // setIcon(iconGetter("home"));
-  db.query();
 });
 
 router.post("/viewUsers", (req, res) => {
@@ -36,7 +34,7 @@ router.post("/modifyUser", (req, res) => {
   db.query();
 });
 
-router.post("/viewCourses", (req, res) => {
+router.post("/viewAllCourses", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
 
@@ -50,17 +48,78 @@ router.post("/createCourse", (req, res) => {
   db.query();
 });
 
-router.post("/modifyCourses", (req, res) => {
+router.post("/modifyCourse", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
 
   db.query();
 });
 
-router.post("/deleteCourses", (req, res) => {
+router.post("/deleteCourse", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
 
   db.query();
+});
+
+router.post("/accessStudentRegistration", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
+
+  db.query();
+});
+
+router.post("/registerStudentForCourse", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
+
+  db.query();
+});
+
+router.post("/dropStudentCourse", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
+
+  db.query();
+});
+
+router.post("/viewStudentHolds", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
+
+  db.query();
+});
+
+router.post("/viewStudentTranscript", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
+
+  db.query();
+});
+
+router.post("/viewStudentDegreeAudit", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
+
+  db.query();
+});
+
+router.post("/viewFacultyThatAreAdvisors", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
+
+  db.query();
+});
+
+router.post("/modifyMasterSchedule", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
+
+  db.query();
+});
+
+router.post("/logout", (req, res) => {
+  // Use login.js as a template
+  let someBodyProp = "";
 });
 module.exports = router;

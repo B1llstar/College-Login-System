@@ -15,17 +15,20 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
+    "node-persist": "^3.1.0",
+    "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-fast-marquee": "^1.2.1",
     "react-html-id": "^0.1.5",
     "react-scripts": "^4.0.3",
     "request": "^2.79.0",
+    "uid-generator": "^2.0.0",
     "web-vitals": "^1.0.1",
     "yarn": "^1.22.17"
   },
   "scripts": {
-   "start": "react-scripts start", 
-   "build": "react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

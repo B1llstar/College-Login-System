@@ -11,7 +11,6 @@ router.use(cors());
 router.post("/", (req, res) => {
   db.query(getSchedule, [], (err, result) => {
     res.send(result);
-    console.log(result);
     console.log("Made request");
     if (err) {
       // res.send({ err: err });
