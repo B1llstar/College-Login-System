@@ -5,12 +5,11 @@ import Axios from "axios";
 import "./bootstrap/css/bootstrap.css";
 import "./bootstrap/css/bootstrap.min.css";
 import MasterSchedule from "./Components/MasterSchedule.jsx";
-import Faculty from "./User_Classes/Faculty.js";
-import ResearchStaff from "./User_Classes/ResearchStaff.js";
-import Admin from "./User_Classes/Admin.js";
-import Student from "./User_Classes/Student.js";
-import Main from "./User_Classes/Main.js";
-import AdminApp from "./Components/Navigation/App";
+import Faculty from "./Components/Faculty/Faculty.js";
+import ResearchStaff from "./Components/ResearchStaff/ResearchStaff.js";
+import Admin from "./Components/Admin/Admin.js";
+import Student from "./Components/Student/Student.js";
+import Main from "./Components/Main/Main.js";
 
 class App extends Component {
   constructor(props) {
@@ -55,11 +54,8 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <AdminApp />
         <div className="row">
-          <div className="col-2">
-            <NavBar onClick={this.handleNavClick}></NavBar>
-          </div>
+          <div className="col-2"></div>
           <h1>{this.state.displayMsg}</h1>
           <div className="col-8">
             <Login onLoginSubmit={this.handleLogin}></Login>

@@ -1,4 +1,4 @@
-const queries = require("../queries/Queries_Master");
+const queries = require("../../queries/Queries_Master");
 
 function Student() {
   let permissibleQueries = {};
