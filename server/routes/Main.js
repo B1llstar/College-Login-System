@@ -57,10 +57,11 @@ router.post("/login", (req, res) => {
 
           console.log(result[0].userEmail);
           console.log(userID);
+          console.log(userType);
 
-          switch (userID) {
-            case "6":
-              {
+          switch (userType) {
+            case "Admin":
+              if (userID === "6"){
                 console.log("Success! Logged in as Admin");
                 res.send({
                   firstName: firstName,
@@ -73,8 +74,8 @@ router.post("/login", (req, res) => {
               }
               break;
 
-            case "9":
-              {
+            case "Faculty":
+              if (userID === "9"){
                 console.log("Success! Logged in as Faculty.");
                 res.send({
                   firstName: firstName,
@@ -85,8 +86,8 @@ router.post("/login", (req, res) => {
               }
               break;
 
-            case "5":
-              {
+            case "ResearchStaff":
+              if (userID === "5"){
                 console.log("Success! Logged in as Research Staff.");
                 res.send({
                   firstName: firstName,
@@ -97,8 +98,8 @@ router.post("/login", (req, res) => {
               }
               break;
 
-            case "7":
-              {
+            case "Student":
+              if (userID === "7"){
                 console.log("Success! Logged in as Student.");
                 res.send({
                   firstName: firstName,
