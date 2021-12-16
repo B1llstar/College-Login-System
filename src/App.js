@@ -15,11 +15,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { username: " ", displayMsg: "Login", faculty: "" };
-    console.log(Faculty);
-    console.log(ResearchStaff);
-    console.log(Admin);
-    console.log(Student);
-    console.log(Main);
   }
 
   handleLogin = (user, pass, userType) => {

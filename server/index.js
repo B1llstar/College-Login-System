@@ -4,13 +4,14 @@ const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
 const loginRoutes = require("./routes/login");
-const studentRoutes = require("./student.jsx");
-const adminRoutes = require("./admin.jsx");
-const facultyRoutes = require("./faculty.jsx");
-const researchStaff = require("./researchStaff.jsx");
+const studentRoutes = require("./routes/student.jsx");
+const adminRoutes = require("./routes/admin.jsx");
+const facultyRoutes = require("./routes/faculty.jsx");
+const researchStaff = require("./routes/researchStaff.jsx");
 const masterScheduleRoutes = require("./routes/masterSchedule");
 const db = require("./database.js");
 const app = express();
+const researchStaffRoutes = require("./routes/researchStaff");
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +20,14 @@ app.use(express.json());
 // Get crnSearchQuery from queries
 app.use("/login", loginRoutes);
 app.use("/masterSchedule", masterScheduleRoutes);
+app.use("/researchStaff", researchStaffRoutes);
+app.use("/Admin");
+app.use("/Faculty");
+app.use("/Student");
+app.use("/ResearchStaff");
+
+// The four buttons
+app.use("Main");
 
 db.connect((err) => {
   if (err) throw err;

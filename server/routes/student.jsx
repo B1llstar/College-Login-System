@@ -2,11 +2,14 @@ var express = require("express");
 router = express.Router();
 const cors = require("cors");
 const db = require("../database.js");
-const 
 const { response } = require("express");
 
 router.use(express.json());
 router.use(cors());
+
+// There's probably a better way to make these routes
+// but I'm just gonna hard code them in based on the class
+// Maybe this is better in a way since it's more clear? IDK
 
 router.post("/", (req, res) => {
   // Use login.js as a template
@@ -16,7 +19,7 @@ router.post("/", (req, res) => {
   db.query();
 });
 
-router.post("/viewRegistration", (req, res) => {
+router.post("/getStudentLoginInfo", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
 
@@ -24,15 +27,15 @@ router.post("/viewRegistration", (req, res) => {
   db.query();
 });
 
-router.post("/courseSearch", (req, res) => {
+router.post("/getStudentAssignedFacultyAdvisor", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
 
- // search for a course
+  // search for a course
   db.query();
 });
 
-router.post("/registerCourse", (req, res) => {
+router.post("/updatePassword", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
 
@@ -40,7 +43,7 @@ router.post("/registerCourse", (req, res) => {
   db.query();
 });
 
-router.post("/dropCourse", (req, res) => {
+router.post("/getStudentHistory", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
 
@@ -48,40 +51,18 @@ router.post("/dropCourse", (req, res) => {
   db.query();
 });
 
-router.post("/viewHolds", (req, res) => {
+router.post("/getStudentHolds", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
-  
+
   // Get Holds
-  db.query();
-});
-
-router.post("/viewTranscript", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-  
-  // Get transcript 
-  db.query();
-});
-
-router.post("/degreeAudit", (req, res) => {
-  // Use login.js as a template
-  
-  // Get audit data
-  db.query(    );
-});
-
-router.post("/viewAdvisor", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-  
   db.query();
 });
 
 router.post("/logout", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
-  
+
   db.query();
 });
 

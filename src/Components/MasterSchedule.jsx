@@ -11,11 +11,14 @@ class MasterSchedule extends Component {
   }
 
   query = () => {
-    Axios.post("http://localhost:3002/masterSchedule", {
+    //    Axios.post("http://localhost:3305/masterSchedule", {
+    Axios.post("http://localhost:3305/researchStaff/viewGradeData", {
       // username: user,
       // password: pass,
       // userType: userType,
     }).then((response) => {
+      console.log(response);
+      console.log("QUERY!!!!!");
       this.props.obj.data = response.data;
 
       // console.log(this.props.obj.arrData);

@@ -7,9 +7,6 @@ const { response } = require("express");
 router.use(express.json());
 router.use(cors());
 
-let [title, setTitle] = useState({});
-let [icon, setIcon] = useState({});
-let [link, setLink] = useState({});
 // Removing query where it's not needed
 router.post("/", (req, res) => {
   // Use login.js as a template

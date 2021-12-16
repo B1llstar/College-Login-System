@@ -3,26 +3,24 @@ router = express.Router();
 const cors = require("cors");
 const db = require("../database.js");
 const { response } = require("express");
-const { render } = require("jade");
-const iconGetter = require("../getSidebarIcon");
+// const iconGetter = require("../getSidebarIcon");
 
 router.use(express.json());
 router.use(cors());
-
+/*
 let [title, setTitle] = useState({});
 let [icon, setIcon] = useState({});
 let [link, setLink] = useState({});
-
+*/
 router.post("/", (req, res) => {
   // Use login.js as a template
-  setIcon(iconGetter("home"));
+  // setIcon(iconGetter("home"));
   db.query();
 });
 
 router.post("/viewUsers", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";
-  setIcon(<ViewUsers />);
 
   db.query();
 });
