@@ -14,6 +14,7 @@ ReactDOM.render(
     <MainPagePlaceholder />
        <App />
     */}
+    <App />
     <NavBar />
   </div>,
   document.getElementById("root")

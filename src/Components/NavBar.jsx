@@ -23,6 +23,7 @@ class NavBar extends Component {
   }
 
   render() {
+    // Grab the ele array, spit out some buttons
     let eles = this.state.nav.map((ele) => {
       return (
         <a

@@ -73,13 +73,13 @@ module.exports = {
 
   // [STUDENT]
   /*Student Query to retrieve info of a individual Student's assigned Faculty Advisor*/
-  getStudentAssignedFacultyAdvisor:
+  getAdvisor:
     "SELECT CONCAT(adv.firstName,' ',adv.lastName) AS 'Advisor Name', adv.phoneNumber AS 'Advisor Phone', l.userEmail AS 'Advisor Email' FROM loginInfo l\n" +
     "RIGHT JOIN\n" +
     "(SELECT facID.facultyID, u.firstName, u.lastName, u.phoneNumber FROM user u\n" +
     "	JOIN\n" +
     "	(SELECT facultyID FROM advisor\n" +
-    "		WHERE studentID=700903061) AS facID \n" +
+    "		WHERE studentID=?) AS facID \n" +
     "	WHERE facID.facultyID=u.userID) AS adv\n" +
     "ON adv.facultyID=l.userID;",
   /*student's ID number gets input on this line, the one with facID*/
@@ -173,13 +173,13 @@ module.exports = {
     "ON history.courseID=course.courseID) AS courseHistory\n" +
     "ON courseHistory.facultyID=f.facultyID) AS instructor\n" +
     "ON u.userID=instructor.facultyID\n" +
-    "WHERE studentID='700100828'  \n" +
+    "WHERE studentID='?'  \n" +
     "ORDER BY studentID ASC;",
   /*Student's ID number gets input on this line, remove WHERE clause to get entire table (Admin Version)*/
 
   // [STUDENT, FACULTY, ADMIN]
   /*Query to retireve a student's holds*/
-  getStudentHolds:
+  viewHolds:
     "SELECT sHolds.studentID AS 'Student ID', sHolds.studentName AS 'Student Name', \n" +
     "h.holdDesc AS 'Description', h.holdType AS 'Type of Hold', sHolds.dateAdded AS 'Date Applied' FROM hold h\n" +
     "JOIN\n" +
@@ -189,7 +189,7 @@ module.exports = {
     "JOIN student s ON u.userID=s.studentID) AS studentInfo\n" +
     "ON studentInfo.studentID=sh.studentID) AS sHolds\n" +
     "ON h.holdName=sHolds.holdName\n" +
-    "WHERE sHolds.studentID='700727715';",
+    "WHERE sHolds.studentID='?';",
   /*Student's ID number gets input on this line, remove WHERE clause to get entire table (Admin Version)*/
 
   // [FACULTY]
@@ -220,7 +220,7 @@ with a divider between them, and a Header to indicate major/minor*/
     "JOIN dept d ON m.deptID=d.deptID;",
 
   /*Student, Faculty, Admin, View Student's registration for next semester*/
-  viewStudentRegistration:
+  viewRegistration:
     "SELECT instructor.studentID AS 'Student ID', instructor.crn AS 'CRN', instructor.courseID AS 'Course ID', \n" +
     "instructor.courseName AS 'Course Name', instructor.semYear AS 'Semester', \n" +
     "CONCAT(u.lastName,', ',u.firstName) AS 'Professor', instructor.grade AS 'Grade' FROM user u\n" +
@@ -275,12 +275,12 @@ finalList.courseName = '%userInput%'; (percent symbols are wildcards, this retur
 finalList.Instructor = '%userInput%'; */
 
   /*Student Query to retreive student transcript, studentID gets inserted at bottom*/
-  getStudentTranscript:
+  getTranscript:
     "SELECT SUBSTRING(c1.courseID,1,2) AS 'Subject', SUBSTRING(c1.courseID,3,3) AS 'Course', c1.courseName AS 'Title', sh2.grade AS 'Grade', \n" +
     "c1.numCredits AS 'Credit Hours', sh2.semYear AS 'Term' FROM course c1\n" +
     "JOIN (SELECT sh1.studentID, sh1.crn, sh1.semYear, sec1.courseID, sh1.grade FROM studentHistory sh1\n" +
     "JOIN section sec1 ON sh1.crn=sec1.crn) AS sh2 ON c1.courseID=sh2.courseID\n" +
-    "WHERE sh2.studentID='700100828' ORDER BY SUBSTRING(sh2.semYear,2,4) ASC;" /* Insert studentID on this line*/,
+    "WHERE sh2.studentID='?' ORDER BY SUBSTRING(sh2.semYear,2,4) ASC;" /* Insert studentID on this line*/,
   /* Amir gave me this algorithm to convert a grade letter into a GPA, which we should display somewhere on the Transcript page:
 	arrayOfGradeLatters= ["A","A-","B+","B","B-","C+","C","C-","D+","D","F"];
 	arrayOfGradeValues= [4.0,3.7,3.3,3.0,2.7,2.3,2.0,1.7,1.3,1.0,0.0];
@@ -392,8 +392,7 @@ First Query:*/
     "INSERT INTO enrollment(studentID, crn, dateEnrolled, grade) VALUES ('700114370', '25195', CURDATE(), 'IP');",
 
   /*Student, Admin Query - Drop a Course*/
-  dropCourse:
-    "DELETE FROM enrollment WHERE studentID='700123456' AND crn='BB101';",
+  dropCourse: "DELETE FROM enrollment WHERE studentID='?' AND crn='?';",
 
   /*Admin Query - Create a course*/
   createCourse:

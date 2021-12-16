@@ -3,7 +3,7 @@ router = express.Router();
 const cors = require("cors");
 const db = require("../database.js");
 const { response } = require("express");
-const userType = require("../../src/User_Classes/ResearchStaff");
+const userType = require("../../src/Components/ResearchStaff/ResearchStaff");
 const { viewGradeData } = require("../../src/queries/Queries_Master.js");
 // used usertype here since ResearchStaff.ResearchStaff
 // looked weird

@@ -17,7 +17,10 @@ class MasterSchedule extends Component {
     this.state = { scheduleData: [], tableData: [[]], isShow: false };
   }
 
-  query1 = () => {
+  // I've been experimenting w/ different queries
+  // basically postrequest can take whatever parameters and whatever
+  // path as needed, paths begin as follows http://localhost:3305$PATH
+  query = () => {
     //    Axios.post("http://localhost:3305/masterSchedule", {
     // Axios.post("http://localhost:3305/Admin/", {
     Axios.post("http://localhost:3305/researchStaff/viewGradeData", {}).then(
@@ -33,14 +36,19 @@ class MasterSchedule extends Component {
     );
   };
 
-  query = () => {
+  query2 = () => {
     //    Axios.post("http://localhost:3305/masterSchedule", {
     // Axios.post("http://localhost:3305/Admin/", {
+    /*
     PostRequest({
       path: "/Main/Login",
       username: "smashamlw@neweastbury.edu",
       password: "jSNHlqbS",
       userType: "Student",
+    });*/
+
+    PostRequest({
+      path: "/masterSchedule",
     });
   };
 

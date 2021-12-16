@@ -3,7 +3,7 @@ router = express.Router();
 const cors = require("cors");
 const db = require("../database.js");
 const { response } = require("express");
-const userType = require("../../src/User_Classes/ResearchStaff");
+const userType = require("../../src/Components/ResearchStaff/ResearchStaff");
 const { viewGradeData } = require("../../src/queries/Queries_Master.js");
 // used usertype here since ResearchStaff.ResearchStaff
 // looked weird
@@ -19,9 +19,7 @@ router.post("/viewRegistration", (req, res) => {
   // Use login.js as a template
 });
 
-router.post("/courseSearch", (req, res) => {
-  db.query();
-});
+router.post("/courseSearch", (req, res) => {});
 
 router.post("/registerForCourse", (req, res) => {
   db.query();
