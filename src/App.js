@@ -6,12 +6,20 @@ import "./bootstrap/css/bootstrap.css";
 import "./bootstrap/css/bootstrap.min.css";
 import MasterSchedule from "./Components/MasterSchedule.jsx";
 import Faculty from "./User_Classes/Faculty.js";
+import ResearchStaff from "./User_Classes/ResearchStaff.js";
+import Admin from "./User_Classes/Admin.js";
+import Student from "./User_Classes/Student.js";
+import Main from "./User_Classes/Main.js";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = { username: " ", displayMsg: "Login", faculty: "" };
     console.log(Faculty);
+    console.log(ResearchStaff);
+    console.log(Admin);
+    console.log(Student);
+    console.log(Main);
   }
 
   handleLogin = (user, pass, userType) => {
@@ -86,7 +94,7 @@ class App extends Component {
                 \asterisk
                 */}
         </div>
-        <button onClick={console.log("Hi")}>Hi</button>
+        <button onClick={console.log(Faculty)}>Hi</button>
       </React.Fragment>
     );
   }

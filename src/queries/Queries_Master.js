@@ -52,7 +52,7 @@ module.exports = {
   // [Admin?] Retrieve Student's Login Info
   /*Replace userID value with whichever userID value should be viewed*/
 
-  fetchStudentLoginInfo:
+  getStudentLoginInfo:
     "SELECT u.userID, u.userType, u.firstName, u.lastName, l.userEmail, l.password FROM\n" +
     "user u RIGHT JOIN loginInfo l ON u.userID=l.userID\n" +
     "WHERE u.userID=700107173;",
