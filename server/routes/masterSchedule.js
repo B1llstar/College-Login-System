@@ -3,7 +3,7 @@ router = express.Router();
 const cors = require("cors");
 const db = require("../database.js");
 const { response } = require("express");
-const { getMasterSchedule, Main } = require("../../src/Components/Main/Main");
+const { Main } = require("../../src/Components/Main/Main");
 
 
 router.use(express.json());

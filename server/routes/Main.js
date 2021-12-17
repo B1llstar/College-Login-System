@@ -3,7 +3,7 @@ router = express.Router();
 const cors = require("cors");
 const db = require("../database.js");
 const { response } = require("express");
-const getSchedule = require("../../src/queries/getMasterSchedule.js");
+const { getMasterSchedule } = require("../../src/queries/VisitorQueries");
 const auth = require("../generateAuth");
 
 router.use(express.json());
@@ -18,7 +18,7 @@ async function makeAuth() {
 }
 
 router.post("/masterSchedule", (req, res) => {
-  db.query(getSchedule, [], (err, result) => {
+  db.query(getMasterSchedule, [], (err, result) => {
     res.send(result);
     console.log(result);
     console.log("Made request");
