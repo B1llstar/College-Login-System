@@ -23,7 +23,7 @@ class MasterSchedule extends Component {
   query = () => {
     //    Axios.post("http://localhost:3305/masterSchedule", {
     // Axios.post("http://localhost:3305/Admin/", {
-    Axios.post("http://localhost:3305/researchStaff/viewGradeData", {}).then(
+    Axios.post("http://localhost:3305/Main/masterSchedule", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -48,7 +48,7 @@ class MasterSchedule extends Component {
     });*/
 
     PostRequest({
-      path: "/masterSchedule",
+      path: "/Main/masterSchedule",
     });
   };
 
@@ -117,7 +117,7 @@ class MasterSchedule extends Component {
         <tbody>{result}</tbody>
       </table>
     );
-    ReactDOM.render(<div>{ele_}</div>, document.getElementById("test2"));
+    ReactDOM.render(<div className="main">{ele_}</div>, document.getElementById("test2"));
     console.log(unique);
     // ReactDOM.render(<div>{result}</div>, document.getElementById("test2"));
   };
