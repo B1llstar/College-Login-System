@@ -1,6 +1,6 @@
 // MAIN PAGE
 // 'home' will be used for user landing pages (after login)
-const queries = require("../../queries/Queries_Master");
+const queries = require("../../queries/VisitorQueries");
 
 function Main() {
   let permissibleQueries = {};

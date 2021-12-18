@@ -7,7 +7,7 @@ const cors = require("cors");
 const db = require("./database.js");
 const app = express();
 
-const researchStaffRoutes = require("./routes/ResearchStaff");
+// const researchStaffRoutes = require("./routes/ResearchStaff");
 const studentRoutes = require("./routes/Student.js");
 const adminRoutes = require("./routes/Admin.js");
 const facultyRoutes = require("./routes/Faculty.js");
@@ -24,7 +24,7 @@ app.use("/Main", mainRoutes);
 app.use("/Admin", adminRoutes);
 app.use("/Faculty", facultyRoutes);
 app.use("/Student", studentRoutes);
-app.use("/ResearchStaff", researchStaffRoutes);
+// app.use("/ResearchStaff", researchStaffRoutes);
 
 db.connect((err) => {
   if (err) throw err;

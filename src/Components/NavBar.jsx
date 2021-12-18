@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import '../styles/NavigationStyles.css';
 
 class NavBar extends Component {
   constructor(props) {
@@ -26,29 +27,32 @@ class NavBar extends Component {
     // Grab the ele array, spit out some buttons
     let eles = this.state.nav.map((ele) => {
       return (
+        <div>
         <a
           class="nav-link"
-          id="v-pills-home-tab"
-          data-toggle="pill"
+          id="barBody"
+          //data-toggle="pill"
           href="#v-pills-home"
-          role="tab"
-          aria-controls="v-pills-home"
-          aria-selected="true"
+          role="tabpanel"
+          //aria-controls="v-pills-home"
+          //aria-selected="true"
         >
           {ele}
         </a>
+        </div>
       );
     });
 
     return (
-      <div>
+      <div className="Sidebar">
         <div
-          class="nav flex-column nav-pills"
-          id="v-pills-tab"
+          className="container"
+          id="row"
           role="tablist"
           aria-orientation="vertical"
         >
-          {eles}
+          <nav class="menu">{eles}</nav>
+          
         </div>
       </div>
     );

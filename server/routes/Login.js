@@ -17,8 +17,8 @@ router.post("/", (req, res) => {
   var firstName = "";
 
   db.query(
-    "SELECT * FROM loginInfo WHERE (userEmail = ? AND password = ?)",
-    [username, password],
+    "SELECT * FROM loginInfo WHERE (userEmail = ? AND password = ? AND userType ?)",
+    [username, password, userType],
     (err, result) => {
       console.log(result);
       if (err) {
@@ -29,13 +29,14 @@ router.post("/", (req, res) => {
           // grab first number of userID, identifies userType
           // ResearchStaff: 5, Admin: 6, Student: 7, Faculty: 9
           userID = result[0].userID.toString().substr(0, 1);
+          userType = result[2];
           // bbfirstName = result[0].firstName.toString();
 
           console.log(result[0].userEmail);
           console.log(userID);
-          switch (userType) {
-            case "Admin":
-              if (userID === "6") {
+          switch (userID) {
+            case "6":
+              if (userType === "Admin") {
                 console.log("Success! Logged in as Admin");
                 res.send({
                   firstName: firstName,
@@ -44,8 +45,8 @@ router.post("/", (req, res) => {
                 });
               }
               break;
-            case "Faculty":
-              if (userID === "9") {
+            case "9":
+              if (userType === "Faculty") {
                 console.log("Success! Logged in as Faculty.");
                 res.send({
                   firstName: firstName,
@@ -54,8 +55,8 @@ router.post("/", (req, res) => {
                 });
               }
               break;
-            case "ResearchStaff":
-              if (userID === "5") {
+            case "5":
+              if (userType === "ResearchStaff") {
                 console.log("Success! Logged in as Research Staff.");
                 res.send({
                   firstName: firstName,
@@ -64,8 +65,8 @@ router.post("/", (req, res) => {
                 });
               }
               break;
-            case "Student":
-              if (userID === "7") {
+            case "7":
+              if (userType === "Student") {
                 console.log("Success! Logged in as Student.");
                 res.send({
                   firstName: firstName,
