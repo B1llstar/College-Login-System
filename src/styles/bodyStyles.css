@@ -45,3 +45,18 @@
   background-color: #d8d8d8;
   color: white;
 }
+
+#dbRow {
+  background-color: white;
+  font-size: larger;
+  font-weight: 600;
+}
+
+#dbRow:nth-child(even) {
+  background: #d1d1d1;
+}
+
+#dbHead {
+  color: white;
+  font-size: 150%;
+}

@@ -15,7 +15,7 @@ module.exports = {
     "cNamed.roomID, cNamed.semYear, cNamed.days, cNamed.Time FROM dept d JOIN\n" +
     "(SELECT courseSched.crn, c.courseID, c.courseName, c.deptID, c.numCredits, courseSched.facultyID, \n" +
     "courseSched.roomID, courseSched.semYear, courseSched.days, courseSched.Time FROM course c JOIN\n" +
-    "(SELECT s.crn, s.courseID, s.facultyID, s.roomID, s.semYear, CONCAT(tSlots1.day,'/',tSlots2.day) AS 'days', tSlots1.Time FROM section s\n" +
+    "(SELECT s.crn, s.courseID, s.facultyID, s.roomID, s.semYear, CONCAT(SUBSTRING(tSlots1.day,1,1),'/',SUBSTRING(tSlots2.day,1,1)) AS 'days', tSlots1.Time FROM section s\n" +
     "JOIN (SELECT timeTable.timeSlotID AS 'TSID', timeTable.weekDay AS day, \n" +
     "CONCAT(TIME_FORMAT(timeTable.periodStart, '%h:%i%p'),' - ',TIME_FORMAT(timeTable.periodEnd, '%h:%i%p')) AS 'Time' FROM\n" +
     "(SELECT ts.timeSlotID, ts.dayID, ts.periodID, d.weekday, p.periodStart, p.periodEnd FROM timeSlot ts\n" +

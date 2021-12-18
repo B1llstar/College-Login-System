@@ -4,6 +4,7 @@ import Axios from "axios";
 import "../bootstrap/css/bootstrap.css";
 import "../bootstrap/css/bootstrap.min.css";
 import PostRequest from "./Post_Request_Template";
+import '../styles/bodyStyles.css'
 /*
 PostRequest({
   username: "smashamlw@neweastbury.edu",
@@ -80,28 +81,14 @@ class MasterSchedule extends Component {
         tdList.push(<td>{element[ele]}</td>);
 
         if (counter < unique.length) {
-          thList.push(<th>{unique[index]}</th>);
+          thList.push(<th id='dbHead'>{unique[index]}</th>);
           counter++;
         }
       });
 
       return (
-        <tr>
-          <th scope="row">{index + 1}</th>
+        <tr id='dbRow'>      
           {tdList}
-          {/* 
-          <th scope="row">{index + 1}</th> 
-          <td>{element["CRN Number"]}</td>
-          <td>{element["Course Days"]}</td>
-          <td>{element["Course ID"]}</td>
-          <td>{element["Course Time"]}</td>
-          <td>{element["Course Title"]}</td>
-          <td>{element["Credits"]}</td>
-          <td>{element["Dept Name"]}</td>
-          <td>{element["Instructor"]}</td>
-          <td>{element["Room"]}</td>
-          <td>{element["Semester"]}</td>
-*/}
         </tr>
       );
     });
@@ -110,7 +97,6 @@ class MasterSchedule extends Component {
       <table className="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">#</th>
             {thList}
           </tr>
         </thead>
