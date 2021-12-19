@@ -8,6 +8,10 @@ import MasterSchedule from "./Components/Display";
 import Display from "./Components/Display";
 import Faculty from "./Components/Faculty/Faculty.js";
 import ReactDOM from "react-dom";
+import QueryHandlerAdmin from "./Components/Admin/QueryHandler.jsx";
+import QueryHandlerFaculty from "./Components/Faculty/QueryHandler.jsx";
+import QueryHandlerResearchStaff from "./Components/ResearchStaff/QueryHandler";
+import QueryHandlerStudent from "./Components/Student_/QueryHandler";
 
 class App extends Component {
   constructor(props) {
@@ -26,8 +30,10 @@ class App extends Component {
     };
 
     this.displays = [
-      // Admin
-      <NavBar
+      ,// Admin
+      /*
+      <NavBar>
+      
         sideBarOptions={{
           eles: [
             "Access Student Registration",
@@ -95,7 +101,7 @@ class App extends Component {
           ],
         }}
         userType={"Student"}
-      ></NavBar>,
+      ></NavBar>   */
     ];
   }
 
@@ -103,6 +109,7 @@ class App extends Component {
     // is there a better way to do this?
     // using states b/c i need this data to be persistent
     var displayMsg = "";
+    console.log("Type: ", userType);
 
     console.log("Calling");
     Axios.post("http://localhost:3305/Main/login", {
@@ -128,7 +135,41 @@ class App extends Component {
         };
         console.log(response.data.userType);
 
-        console.log(this.displays[0].props.userType);
+        let ele;
+        switch (userType) {
+          case "Admin":
+            ReactDOM.render(
+              <QueryHandlerAdmin userType={"Admin"}></QueryHandlerAdmin>,
+              document.getElementById("NavBar")
+            );
+            break;
+          case "Faculty":
+            ReactDOM.render(
+              <QueryHandlerFaculty userType={"Faculty"}></QueryHandlerFaculty>,
+              document.getElementById("NavBar")
+            );
+            console.log("Faculty");
+
+            break;
+          case "Research Staff":
+            ReactDOM.render(
+              <QueryHandlerResearchStaff
+                userType={"ResearchStaff"}
+              ></QueryHandlerResearchStaff>,
+              document.getElementById("NavBar")
+            );
+          case "Student":
+            ReactDOM.render(
+              <QueryHandlerStudent userType={"Student"}></QueryHandlerStudent>,
+              document.getElementById("NavBar")
+            );
+            console.log("Match");
+            break;
+          default:
+            console.log("Nothing of import.");
+        }
+
+        /*
         let eles = this.displays;
         eles.forEach((element) => {
           console.log(element);
@@ -139,7 +180,7 @@ class App extends Component {
               document.getElementById("NavBar")
             );
           }
-        });
+        }); */
         this.setState({ userCredentials });
         console.log(this.state.userCredentials);
 

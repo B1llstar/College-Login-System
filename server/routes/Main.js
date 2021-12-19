@@ -87,7 +87,7 @@ router.post("/login", (req, res) => {
                 console.log("Success! Logged in as Faculty.");
                 res.send({
                   firstName: firstName,
-                  userType: userType,
+                  userType: "Faculty",
                   validated: true,
                   auth: makeAuth(),
                   userID: userID,

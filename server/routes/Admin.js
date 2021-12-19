@@ -16,100 +16,21 @@ router.post("/", (req, res) => {});
     // Use login.js as a template
   });
 
-router.post("/createUser", (req, res) => {
-  // Use login.js as a template
-});
-
-router.post("/modifyUser", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
-
-router.post("/viewAllCourses", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
-
-router.post("/createCourse", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
-
-router.post("/modifyCourse", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
-
-router.post("/deleteCourse", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
-
-router.post("/accessStudentRegistration", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
-
-router.post("/registerStudentForCourse", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
-
-router.post("/dropStudentCourse", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
-
-router.post("/viewStudentHolds", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
-
-router.post("/viewStudentTranscript", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
-
-router.post("/viewStudentDegreeAudit", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
-
-router.post("/viewFacultyThatAreAdvisors", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
-
-router.post("/modifyMasterSchedule", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
+router.post("/accessStudentRegistration", (req, res) => {});
+router.post("/createCourse", (req, res) => {});
+router.post("/createUser", (req, res) => {});
+router.post("/deleteCourse", (req, res) => {});
+router.post("/dropStudentCourse", (req, res) => {});
+router.post("/logout", (req, res) => {});
+router.post("/modifyCourse", (req, res) => {});
+router.post("/modifyMasterSchedule", (req, res) => {});
+router.post("/modifyUser", (req, res) => {});
+router.post("/registerStudentForCourse", (req, res) => {});
+router.post("/viewAllCourses", (req, res) => {});
+router.post("/viewFacultyThatAreAdvisors", (req, res) => {});
+router.post("/viewStudentDegreeAudit", (req, res) => {});
+router.post("/viewStudentHolds", (req, res) => {});
+router.post("/viewStudentTranscript", (req, res) => {});
 
 router.post("/logout", (req, res) => {
   // Use login.js as a template

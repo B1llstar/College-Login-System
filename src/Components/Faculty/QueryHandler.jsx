@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import queries from "./getQueries";
 import Home from "./Home";
 import Axios from "axios";
+import NavBar from "../NavBar";
 
 class QueryHandler extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { display: <NavBar userType={this.props.userType}></NavBar> };
     this.curQuery = "";
   }
 
@@ -199,11 +200,12 @@ class QueryHandler extends Component {
     );
   };
 
-
+  // Index > Query Handler > App > NavBar
   render() {
     return (
       <div>
-        <Home
+        <NavBar
+          userType={this.props.userType}
           coursesTeaching={this.doHandleGetCoursesTeaching}
           courseSearch={this.doHandleCourseSearch}
           dropCourse={this.doHandleDropCourse}
@@ -219,7 +221,7 @@ class QueryHandler extends Component {
           viewHolds={this.doHandleViewHolds}
           viewRegistration={this.doHandleViewRegistration}
           viewStudentSchedule={this.doHandleViewStudentSchedule}
-        ></Home>
+        ></NavBar>
       </div>
     );
   }

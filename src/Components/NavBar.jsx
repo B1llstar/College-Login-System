@@ -4,32 +4,133 @@ import "../styles/NavigationStyles.css";
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      /*
-      nav: [
-        "Home",
-        "View Registration",
-        "Course Search",
-        "Register Course",
-        "Drop Course",
-        "View Holds",
-        "Transcript",
-        "Degree Audit",
-        "View Advisor",
-      ],
-      */
-    };
-  }
 
-  doSomething() {
-    console.log("doing");
+    this.state = {
+      chosenUserTypeNavEleArray: [],
+      Admin: [
+        { name: "Home", onClick: "#" },
+        {
+          name: "Access Student Registration",
+          onClick: this.props.accessStudentRegistration,
+        },
+        { name: "Create Course", onClick: this.props.createCourse },
+        { name: "Create User", onClick: this.props.createUser },
+        { name: "Delete Course", onClick: this.props.deleteCourse },
+        { name: "Drop Student Course", onClick: this.props.dropStudentCourse },
+        { name: "Modify Course", onClick: this.props.modifyCourse },
+        {
+          name: "Modify Master Schedule",
+          onClick: this.props.modifyMasterSchedule,
+        },
+        { name: "Modify User", onClick: this.props.modifyUser },
+        {
+          name: "Register Student for Course",
+          onClick: this.props.registerStudentForCourse,
+        },
+        { name: "View All Courses", onClick: this.props.viewAllCourses },
+        {
+          name: "View Faculty Advisors",
+          onClick: this.props.viewFacultyAdvisors,
+        },
+        {
+          name: "View Student Degree Audit",
+          onClick: this.props.viewStudentDegreeAudit,
+        },
+        { name: "View Student Holds", onClick: this.props.viewStudentHolds },
+        {
+          name: "View Student Transcript",
+          onClick: this.props.viewStudentTranscript,
+        },
+      ],
+
+      Student: [
+        { name: "Home", onClick: "#" },
+        { name: "Course Search", onClick: this.props.courseSearch },
+        { name: "Drop Course", onClick: this.props.dropCourse },
+        { name: "Degree Audit", onClick: this.props.degreeAudit },
+        { name: "Degree Audit 2", onClick: this.props.degreeAudit2 },
+        { name: "Register for Course", onClick: this.props.registerForCourse },
+        { name: "Student History", onClick: this.props.studentHistory },
+        { name: "Student Login Info", onClick: this.props.studentLoginInfo },
+        {
+          name: "Unofficial Transcript",
+          onClick: this.props.unofficialTranscript,
+        },
+        { name: "Update Password", onClick: this.props.updatePasswprd },
+        { name: "View Advisor", onClick: this.props.viewAdvisor },
+        { name: "View Holds", onClick: this.props.viewHolds },
+        { name: "View Registration", onClick: this.props.viewRegistration },
+        { name: "Logout", onClick: "#" }, // some arbitrary location atm
+      ],
+
+      Faculty: [
+        { name: "Home", onClick: "#" },
+        {
+          name: "Assigned Course List",
+          onClick: this.props.coursesTeaching,
+        },
+        { name: "Course Search", onClick: this.props.courseSearch },
+        { name: "Drop Course", onClick: this.props.dropCourse },
+        { name: "Degree Audit", onClick: this.props.degreeAudit },
+        { name: "Degree Audit 2", onClick: this.props.degreeAudit2 },
+        { name: "Faculty Login Info", onClick: this.props.facultyLoginInfo },
+        { name: "Record Attendance", onClick: this.props.recordAttendance },
+        {
+          name: "Register for Course",
+          onClick: this.props.registerForCourse,
+        },
+        { name: "Student History", onClick: this.props.studentHistory },
+        {
+          name: "Unofficial Transcript",
+          onClick: this.props.unofficialTranscript,
+        },
+        { name: "Update Password", onClick: this.props.updatePassword },
+        { name: "View Advisees", onClick: this.props.viewAdvisees },
+        { name: "View Holds", onClick: this.props.viewHolds },
+        { name: "View Registration", onClick: this.props.viewRegistration },
+        {
+          name: "View Student Schedule",
+          onClick: this.props.viewStudentSchedule,
+        },
+        { name: "Logout", onClick: "./Logout" }, // some arbitrary location atm
+      ],
+
+      /* Will do research staff at a later time
+      ResearchStaff: [
+        {name: "Home", onClick: "#"},
+
+      ] */
+    };
+
+    // I put this underneath the code above simply because I'm not sure if
+    // it would affect compile-time, since the state variables would not yet
+    // be declared at that point
   }
 
   render() {
-    let names = this.props.sideBarOptions.eles;
-    console.log(names);
+    let arr = [];
+    switch (this.props.userType) {
+      case "Admin":
+        arr = this.state.Admin;
+        break;
+      case "Faculty":
+        arr = this.state.Faculty;
+        console.log("Matched faculty");
+        break;
+      //  case "Research Staff": // Holding off on research staff for now
+      // this.setState({chosenUserTypeNavEleArray}) = this.state.ResearchStaff;
+      case "Student":
+        arr = this.state.Student;
+        console.log("Chose student");
+
+        break;
+    }
+    // let names = this.props.sideBarOptions.eles;
+    // console.log(names);
     // Grab the ele array, spit out some buttons
-    let eles = names.map((ele) => {
+    console.log(arr);
+    let eles = arr.map((element) => {
+      console.log(element);
       return (
         <div>
           <a
@@ -38,10 +139,12 @@ class NavBar extends Component {
             //data-toggle="pill"
             href="#v-pills-home"
             role="tabpanel"
+            onClick={() => element.onClick()}
+
             //aria-controls="v-pills-home"
             //aria-selected="true"
           >
-            {ele}
+            {element["name"]}
           </a>
         </div>
       );

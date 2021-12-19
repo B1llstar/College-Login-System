@@ -3,13 +3,31 @@ import queries from "./getQueries";
 import Home from "./Home";
 import Axios from "axios";
 import Display from "../Display";
+import NavBar from "../NavBar";
 
 class QueryHandler extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.curQuery = "";
   }
+  /*      <NavBar
+          userType={this.props.userType}
+          courseSearch={this.doHandleCourseSearch}
+          dropCourse={this.doHandleDropCourse}
+          degreeAudit={this.doHandleGetDegreeAuditCoursesTakenP1}
+          degreeAudit2={this.doHandleGetDegreeAuditCoursesTakenP2}
+          registerForCourse={this.doHandleRegisterForCourse}
+          studentHistory={this.doHandleGetStudentHistory}
+          studentLoginInfo={this.doHandleGetStudentLoginInfo}
+          unofficialTranscript={this.doHandleGetTranscript}
+          updatePassword={this.doHandleUpdatePassword}
+          viewAdvisor={this.doHandleViewAdvisor}
+          viewHolds={this.doHandleViewHolds}
+          viewRegistration={this.doHandleViewRegistration}
+        ></NavBar> 
+      ),
+    };
+    this.curQuery = ""; */
 
   // Set the response.data object, and store it
   // Send it over to the tablemaker
@@ -170,11 +188,30 @@ class QueryHandler extends Component {
     );
   };
 
-
   render() {
+    let display = this.state.display;
+    console.log(display);
     return (
       <div>
-        <Home
+        <p>Gay</p>
+        <div>
+          <NavBar
+            userType={this.props.userType}
+            courseSearch={this.doHandleCourseSearch}
+            dropCourse={this.doHandleDropCourse}
+            degreeAudit={this.doHandleGetDegreeAuditCoursesTakenP1}
+            degreeAudit2={this.doHandleGetDegreeAuditCoursesTakenP2}
+            registerForCourse={this.doHandleRegisterForCourse}
+            studentHistory={this.doHandleGetStudentHistory}
+            studentLoginInfo={this.doHandleGetStudentLoginInfo}
+            unofficialTranscript={this.doHandleGetTranscript}
+            updatePassword={this.doHandleUpdatePassword}
+            viewAdvisor={this.doHandleViewAdvisor}
+            viewHolds={this.doHandleViewHolds}
+            viewRegistration={this.doHandleViewRegistration}
+          ></NavBar>
+        </div>
+        {/*        <Home
           courseSearch={this.doHandleCourseSearch}
           dropCourse={this.doHandleDropCourse}
           degreeAudit={this.doHandleGetDegreeAuditCoursesTakenP1}
@@ -187,7 +224,7 @@ class QueryHandler extends Component {
           viewAdvisor={this.doHandleViewAdvisor}
           viewHolds={this.doHandleViewHolds}
           viewRegistration={this.doHandleViewRegistration}
-        ></Home>
+        ></Home> */}
       </div>
     );
   }

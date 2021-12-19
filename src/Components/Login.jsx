@@ -18,9 +18,9 @@ class Login extends Component {
   }
 
   populateFields = (type) => {
-    let userEmail = "smashamlw@neweastbury.edu";
-    let pass = "jSNHlqbS";
-    let userType = "Student";
+    let userEmail;
+    let pass;
+    let userType;
     switch (type) {
       case "Admin": {
         userEmail = "mguyanb6@neweastbury.edu";
@@ -51,7 +51,7 @@ class Login extends Component {
     let credentials = {
       user: userEmail,
       pass: pass,
-      userType: userType,
+      userType: type,
     };
 
     this.setState({ credentials });
