@@ -49,21 +49,7 @@ class QueryHandler extends Component {
 
   doHandleGetDegreeAuditPt2 = () => {
     this.curQuery = queries.degreeAuditPt2;
-    Axios.post("http://localhost:3305/Student/degreeAuditPt2", {}).then(
-  doHandleGetDegreeAuditCoursesTakenP1 = () => {
-    this.curQuery = queries.degreeAudit;
-    
-    Axios.post("http://localhost:3305/Student/degreeAudit", {  username: user,
-    password: pass,
-    userType: userType}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
+    Axios.post("http://localhost:3305/Student/degreeAuditPt2", {}).then();
   };
 
   doHandleDropCourse = () => {
@@ -181,22 +167,22 @@ class QueryHandler extends Component {
     let display = this.state.display;
     console.log(display);
     return (
-        <div>
-          <NavBar
-            courseSearch={this.doHandleCourseSearch}
-            degreeAuditPt1={this.doHandleGetDegreeAuditPt1}
-            degreeAuditPt2={this.doHandleGetDegreeAuditPt2}
-            dropCourse={this.doHandleDropCourse}
-            registerForCourse={this.doHandleRegisterForCourse}
-            studentHistory={this.doHandleGetStudentHistory}
-            transcript={this.doHandleGetTranscript}
-            updatePassword={this.doHandleUpdatePassword}
-            viewAdvisor={this.doHandleViewAdvisor}
-            viewHolds={this.doHandleViewHolds}
-            viewRegistration={this.doHandleViewRegistration}
-            studentLoginInfo={this.doHandleGetViewStudentLoginInfo}
-          ></NavBar>
-        </div>
+      <div>
+        <NavBar
+          courseSearch={this.doHandleCourseSearch}
+          degreeAuditPt1={this.doHandleGetDegreeAuditPt1}
+          degreeAuditPt2={this.doHandleGetDegreeAuditPt2}
+          dropCourse={this.doHandleDropCourse}
+          registerForCourse={this.doHandleRegisterForCourse}
+          studentHistory={this.doHandleGetStudentHistory}
+          transcript={this.doHandleGetTranscript}
+          updatePassword={this.doHandleUpdatePassword}
+          viewAdvisor={this.doHandleViewAdvisor}
+          viewHolds={this.doHandleViewHolds}
+          viewRegistration={this.doHandleViewRegistration}
+          studentLoginInfo={this.doHandleGetViewStudentLoginInfo}
+        ></NavBar>
+      </div>
     );
   }
 }
