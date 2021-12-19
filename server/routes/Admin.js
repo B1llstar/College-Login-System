@@ -126,7 +126,7 @@ router.post("/registerForCourse", (req, res) => {
   let query = queries.registerForCourse;
 });
 
-router.post("/studentHistory", (req, res) => {
+router.post("/getStudentHistory", (req, res) => {
   let query = queries.getStudentHistory;
   const testID = 700100828;
   db.query(query, [testID], (err, result) => {
@@ -144,15 +144,15 @@ router.post("/studentLoginInfo", (req, res) => {
   const testID = 700100828;
   db.query(query, [testID], (err, result) => {
     res.send(result);
-    console.log("Getting student history...");
+    console.log("Getting student login info...");
     if (err) {
       console.log(err);
-      res.err("Something went wrong getting student history.");
+      res.err("Something went wrong getting student login info.");
     }
   });
 });
 
-router.post("/unofficialTranscript", (req, res) => {
+router.post("/getTranscript", (req, res) => {
   let query = queries.getTranscript;
   const testID = 700100828;
   db.query(query, [testID], (err, result) => {
@@ -210,8 +210,8 @@ router.post("/viewAllUsers", (req, res) => {
 
 router.post("/viewCourseHistory", (req, res) => {
   let query = queries.viewCourseHistory;
-  const testID = 700100828;
-  db.query(query, [testID], (err, result) => {
+  //const testID = 700100828;
+  db.query(query, (err, result) => {
     res.send(result);
     console.log("Getting course history...");
     if (err) {
@@ -249,7 +249,7 @@ router.post("/viewRegistration", (req, res) => {
 
 router.post("/viewStudentSchedule", (req, res) => {
   let query = queries.getStudentSchedule;
-  const testID = 700217149;
+  const testID = 700727715;
   db.query(query, [testID], (err, result) => {
     res.send(result);
     console.log("Getting student's schedule...");

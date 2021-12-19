@@ -95,6 +95,23 @@ module.exports = {
 
     //--------------SHARED QUERIES-------------------
 
+    facultyCoursesTeaching:
+    "SELECT list.crn AS 'CRN', list.courseID AS 'Course ID', c.courseName AS 'Course Name', list.roomID As 'Room', \n" +
+    "list.faculty AS 'Instructor', list.semYear as 'Semester', list.Days, list.Time, list.facultyID FROM course c\n" +
+    "JOIN (SELECT s.crn, s.courseID, s.roomID, s.semYear, s.facultyID, CONCAT(u.lastName, ', ', u.firstName) AS 'faculty', \n" +
+    "CONCAT(SUBSTRING(tSlots1.day,1,1),'/',SUBSTRING(tSlots2.day,1,1)) as Days, tSlots2.Time FROM section s\n" +
+    "JOIN user u ON s.facultyID=u.userID JOIN (SELECT timeTable.timeSlotID AS 'TSID', timeTable.weekDay AS day, \n" +
+    "CONCAT(TIME_FORMAT(timeTable.periodStart, '%h:%i%p'),' - ',TIME_FORMAT(timeTable.periodEnd, '%h:%i%p')) AS 'Time' FROM\n" +
+    "(SELECT ts.timeSlotID, ts.dayID, ts.periodID, d.weekday, p.periodStart, p.periodEnd FROM timeSlot ts\n" +
+    "JOIN tsDay tsd ON ts.timeSlotID=tsd.timeSlotID JOIN tsPeriod tsp ON ts.timeslotID=tsp.timeSlotID\n" +
+    "JOIN day d ON tsd.dayID=d.dayID JOIN period p ON tsp.periodID=p.periodID) AS timeTable) as tSlots1\n" +
+    "ON s.timeslot1=tSlots1.TSID JOIN (SELECT timeTable.timeSlotID AS 'TSID', timeTable.weekDay AS day, \n" +
+    "CONCAT(TIME_FORMAT(timeTable.periodStart, '%h:%i%p'),' - ',TIME_FORMAT(timeTable.periodEnd, '%h:%i%p')) AS 'Time' FROM\n" +
+    "(SELECT ts.timeSlotID, ts.dayID, ts.periodID, d.weekday, p.periodStart, p.periodEnd FROM timeSlot ts\n" +
+    "JOIN tsDay tsd ON ts.timeSlotID=tsd.timeSlotID JOIN tsPeriod tsp ON ts.timeslotID=tsp.timeSlotID\n" +
+    "JOIN day d ON tsd.dayID=d.dayID JOIN period p ON tsp.periodID=p.periodID) AS timeTable) as tSlots2\n" +
+    "ON s.timeslot2=tSlots2.TSID) AS list ON list.courseID=c.courseID WHERE (list.semYear='F2021' OR list.semYear='S2022') \n" +
+    "ORDER BY list.semYear ASC;",
 
     // [STUDENT, FACULTY, ADMIN] Query to update password
     // USER INPUTS: password, userID (for Admin Only)
@@ -130,16 +147,23 @@ module.exports = {
     // USER INPUT: studentID (for Faculty, Admin)
     // ADMIN Alternate version - if User input null, remove where clause for entire table
     viewRegistration:
-    "SELECT instructor.studentID AS 'Student ID', instructor.crn AS 'CRN', instructor.courseID AS 'Course ID', \n" +
-    "instructor.courseName AS 'Course Name', instructor.semYear AS 'Semester', \n" +
-    "CONCAT(u.lastName,', ',u.firstName) AS 'Professor', instructor.grade AS 'Grade' FROM user u JOIN \n" +
-    "(SELECT f.facultyID, courseHistory.studentID, courseHistory.courseID, courseHistory.courseName, courseHistory.crn, \n" +
-    "courseHistory.semYear, courseHistory.grade FROM faculty f JOIN (SELECT history.studentID, course.courseID, course.courseName, \n" +
-    "history.crn, history.semYear, history.grade, history.facultyID FROM course JOIN\n" +
-    "(SELECT sh.studentID, sh.crn, s.courseID, sh.semYear, sh.grade, s.facultyID FROM studentHistory sh\n" +
-    "JOIN section s ON sh.crn=s.crn) AS history ON history.courseID=course.courseID) AS courseHistory\n" +
-    "ON courseHistory.facultyID=f.facultyID) AS instructor ON u.userID=instructor.facultyID\n" +
-    "WHERE semYear='S2022' AND studentID='?';",
+    "SELECT courseHist.*, e.grade AS 'Current Grade', DATE_FORMAT(e.dateEnrolled, '%m/%d/%Y') AS 'Date Enrolled' FROM enrollment e \n"+
+    "JOIN (SELECT list.crn AS 'CRN', list.courseID AS 'Course ID', c.courseName AS 'Course Name', list.roomID As 'Room',  \n"+
+    "list.faculty AS 'Instructor', list.semYear as 'Semester', list.Days, list.Time FROM course c\n"+
+    "JOIN (SELECT s.crn, s.courseID, s.roomID, s.semYear, s.facultyID, CONCAT(u.lastName, ', ', u.firstName) AS 'faculty', \n"+
+    "CONCAT(SUBSTRING(tSlots1.day,1,1),'/',SUBSTRING(tSlots2.day,1,1)) as Days, tSlots2.Time FROM section s\n"+
+    "JOIN user u ON s.facultyID=u.userID JOIN (SELECT timeTable.timeSlotID AS 'TSID', timeTable.weekDay AS day, \n"+
+    "CONCAT(TIME_FORMAT(timeTable.periodStart, '%h:%i%p'),' - ',TIME_FORMAT(timeTable.periodEnd, '%h:%i%p')) AS 'Time' FROM\n"+
+    "(SELECT ts.timeSlotID, ts.dayID, ts.periodID, d.weekday, p.periodStart, p.periodEnd FROM timeSlot ts\n"+
+    "JOIN tsDay tsd ON ts.timeSlotID=tsd.timeSlotID JOIN tsPeriod tsp ON ts.timeslotID=tsp.timeSlotID JOIN day d ON tsd.dayID=d.dayID\n"+
+    "JOIN period p ON tsp.periodID=p.periodID) AS timeTable) as tSlots1 ON s.timeslot1=tSlots1.TSID JOIN\n"+
+    "(SELECT timeTable.timeSlotID AS 'TSID', timeTable.weekDay AS day,\n"+
+    "CONCAT(TIME_FORMAT(timeTable.periodStart, '%h:%i%p'),' - ',TIME_FORMAT(timeTable.periodEnd, '%h:%i%p')) AS 'Time' FROM\n"+
+    "(SELECT ts.timeSlotID, ts.dayID, ts.periodID, d.weekday, p.periodStart, p.periodEnd FROM timeSlot ts\n"+
+    "JOIN tsDay tsd ON ts.timeSlotID=tsd.timeSlotID JOIN tsPeriod tsp ON ts.timeslotID=tsp.timeSlotID\n"+
+    "JOIN day d ON tsd.dayID=d.dayID	JOIN period p ON tsp.periodID=p.periodID) AS timeTable) as tSlots2\n"+
+    "ON s.timeslot2=tSlots2.TSID) AS list ON list.courseID=c.courseID ORDER BY list.semYear DESC, list.courseID) AS courseHist\n"+
+    "ON e.crn=courseHist.crn WHERE courseHist.Semester='S2022' AND studentID='700217149';",
 
 
     // [STUDENT, FACULTY, ADMIN] Course Search Query

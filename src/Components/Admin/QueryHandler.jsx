@@ -255,7 +255,7 @@ class QueryHandler extends Component {
 
   doHandleViewCourseHistory = () => {
     this.curQuery = queries.viewCourseHistory;
-    Axios.post("http://localhost:3305/Admin/viewAdvisees", {}).then(
+    Axios.post("http://localhost:3305/Admin/viewCourseHistory", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -310,7 +310,7 @@ class QueryHandler extends Component {
     return (
       <div>
         <Home
-          adminLoginInfo={this.adminLoginInfo}
+          adminLoginInfo={this.doHandleGetAdminLoginInfo}
           coursesTeaching={this.doHandleGetCoursesTeaching}
           courseSearch={this.doHandleCourseSearch}
           createCourse={this.doHandleCreateCourse}
@@ -328,8 +328,8 @@ class QueryHandler extends Component {
           updatePassword={this.doHandleUpdatePassword}
           viewAdvisors={this.doHandleViewAdvisors}
           viewAdvisees={this.doHandleViewAdvisees}
-          viewAllUsers={this.viewAllUsers}
-          viewCourseHistory={this.viewCourseHistory}
+          viewAllUsers={this.doHandleViewAllUsers}
+          viewCourseHistory={this.doHandleViewCourseHistory}
           viewHolds={this.doHandleViewHolds}
           viewRegistration={this.doHandleViewRegistration}
           viewStudentSchedule={this.doHandleViewStudentSchedule}
