@@ -9,17 +9,17 @@ class Home extends Component {
       nav: [
         { name: "Home", onClick: "#" },
         { name: "Course Search", onClick: this.props.courseSearch },
+        { name: "Degree Audit Pt1", onClick: this.props.degreeAuditPt1 },
+        { name: "Degree Audit Pt2", onClick: this.props.degreeAuditPt2 },
         { name: "Drop Course", onClick: this.props.dropCourse },
-        { name: "Degree Audit", onClick: this.props.degreeAudit },
-        { name: "Degree Audit 2", onClick: this.props.degreeAudit2 },
         { name: "Register for Course", onClick: this.props.registerForCourse },
         { name: "Student History", onClick: this.props.studentHistory },
-        { name: "Student Login Info", onClick: this.props.studentLoginInfo },
         { name: "Unofficial Transcript", onClick: this.props.unofficialTranscript,},
         { name: "Update Password", onClick: this.props.updatePasswprd },
         { name: "View Advisor", onClick: this.props.viewAdvisor },
         { name: "View Holds", onClick: this.props.viewHolds },
         { name: "View Registration", onClick: this.props.viewRegistration },
+        { name: "View Student Login Info", onClick: this.props.viewStudentLoginInfo },
         { name: "Logout", onClick: "./Logout" }, // some arbitrary location atm
       ],
     };

@@ -13,19 +13,6 @@ class QueryHandler extends Component {
 
   tableMaker = () => {};
 
-  doHandleGetCoursesTeaching = () => {
-    this.curQuery = queries.coursesTeaching;
-    Axios.post("http://localhost:3305/Faculty/coursesTeaching", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
-  };
-
   doHandleCourseSearch = () => {
     this.curQuery = queries.courseSearch;
     Axios.post("http://localhost:3305/Faculty/courseSearch", {}).then(
@@ -39,20 +26,9 @@ class QueryHandler extends Component {
     );
   };
 
-  doHandleDropCourse = () => {
-    this.curQuery = queries.dropCourse;
-    Axios.post("http://localhost:3305/Faculty/dropCourse", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-      }
-    );
-  };
-
-  doHandleGetDegreeAuditCoursesTakenP1 = () => {
-    this.curQuery = queries.degreeAudit;
-    Axios.post("http://localhost:3305/Faculty/degreeAudit", {}).then(
+  doHandleGetDegreeAuditPt1 = () => {
+    this.curQuery = queries.degreeAuditPt1;
+    Axios.post("http://localhost:3305/Faculty/degreeAuditPt1", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -63,9 +39,9 @@ class QueryHandler extends Component {
     );
   };
 
-  doHandleGetDegreeAuditCoursesTakenP2 = () => {
-    this.curQuery = queries.degreeAudit2;
-    Axios.post("http://localhost:3305/Faculty/degreeAudit2", {}).then(
+  doHandleGetDegreeAuditPt2 = () => {
+    this.curQuery = queries.degreeAuditPt2;
+    Axios.post("http://localhost:3305/Faculty/degreeAuditPt2", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -75,6 +51,20 @@ class QueryHandler extends Component {
       }
     );
   };
+
+  doHandleGetFacultyCoursesTeaching = () => {
+    this.curQuery = queries.facultyCoursesTeaching;
+    Axios.post("http://localhost:3305/Faculty/facultyCoursesTeaching", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+  
 
   doHandleGetFacultyLoginInfo = () => {
     this.curQuery = queries.facultyLoginInfo;
@@ -90,19 +80,8 @@ class QueryHandler extends Component {
   };
 
   doHandleRecordAttendance = () => {
-    this.curQuery = queries.registerForCourse;
-    Axios.post("http://localhost:3305/Faculty/registerForCourse", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-      }
-    );
-  };
-
-  doHandleRegisterForCourse = () => {
-    this.curQuery = queries.registerForCourse;
-    Axios.post("http://localhost:3305/Faculty/registerForCourse", {}).then(
+    this.curQuery = queries.recordAttendance;
+    Axios.post("http://localhost:3305/Faculty/recordAttendance", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -112,8 +91,8 @@ class QueryHandler extends Component {
   };
 
   doHandleGetStudentHistory = () => {
-    this.curQuery = queries.getStudentHistory;
-    Axios.post("http://localhost:3305/Faculty/getStudentHistory", {}).then(
+    this.curQuery = queries.studentHistory;
+    Axios.post("http://localhost:3305/Faculty/studentHistory", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -125,8 +104,8 @@ class QueryHandler extends Component {
   };
 
   doHandleGetTranscript = () => {
-    this.curQuery = queries.getTranscript;
-    Axios.post("http://localhost:3305/Faculty/getTranscript", {}).then(
+    this.curQuery = queries.transcript;
+    Axios.post("http://localhost:3305/Faculty/transcript", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -144,19 +123,6 @@ class QueryHandler extends Component {
         console.log(response);
         console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
-      }
-    );
-  };
-
-  doHandleViewAdvisees = () => {
-    this.curQuery = queries.viewAdvisees;
-    Axios.post("http://localhost:3305/Faculty/viewAdvisees", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -187,8 +153,21 @@ class QueryHandler extends Component {
     );
   };
 
+  doHandleViewStudentAdvisees = () => {
+    this.curQuery = queries.viewStudentAdvisees;
+    Axios.post("http://localhost:3305/Faculty/viewStudentAdvisees", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
   doHandleViewStudentSchedule = () => {
-    this.curQuery = queries.viewRegistration;
+    this.curQuery = queries.viewStudentSchedule;
     Axios.post("http://localhost:3305/Faculty/viewStudentSchedule", {}).then(
       (response) => {
         console.log(response);
@@ -205,21 +184,18 @@ class QueryHandler extends Component {
     return (
       <div>
         <NavBar
-          userType={this.props.userType}
-          coursesTeaching={this.doHandleGetCoursesTeaching}
           courseSearch={this.doHandleCourseSearch}
-          dropCourse={this.doHandleDropCourse}
-          degreeAudit={this.doHandleGetDegreeAuditCoursesTakenP1}
-          degreeAudit2={this.doHandleGetDegreeAuditCoursesTakenP2}
+          degreeAudit={this.doHandleGetDegreeAuditPt1}
+          degreeAudit2={this.doHandleGetDegreeAuditPt2}
+          facultyCoursesTeaching={this.doHandleGetFacultyCoursesTeaching}
           facultyLoginInfo={this.doHandleGetFacultyLoginInfo}
           recordAttendance={this.doHandleRecordAttendance}
-          registerForCourse={this.doHandleRegisterForCourse}
           studentHistory={this.doHandleGetStudentHistory}
-          unofficialTranscript={this.doHandleGetTranscript}
+          transcript={this.doHandleGetTranscript}
           updatePassword={this.doHandleUpdatePassword}
-          viewAdvisees={this.doHandleViewAdvisees}
           viewHolds={this.doHandleViewHolds}
           viewRegistration={this.doHandleViewRegistration}
+          viewStudentAdvisees={this.doHandleViewStudentAdvisees}
           viewStudentSchedule={this.doHandleViewStudentSchedule}
         ></NavBar>
       </div>

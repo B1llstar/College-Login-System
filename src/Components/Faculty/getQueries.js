@@ -1,20 +1,18 @@
 const queries = require("../../queries/FacultyQueries.js");
 
 const permissibleQueries = {
-  coursesTeaching: queries.facultyCoursesTeaching,
   courseSearch: queries.courseSearch,
-  dropCourse: queries.dropCourse,
-  degreeAudit: queries.getDegreeAuditCoursesTakenP1,
-  degreeAudit2: queries.getDegreeAuditCoursesTakenP2,
-  facultyLoginInfo: queries.getFacultyLoginInfo,
+  degreeAuditPt1: queries.degreeAuditPt1,
+  degreeAuditPt2: queries.degreeAuditPt2,
+  facultyCoursesTeaching: queries.facultyCoursesTeaching,
+  facultyLoginInfo: queries.facultyLoginInfo,  
   recordAttendance: queries.recordAttendance,
-  registerForCourse: queries.registerForCourse,
-  getStudentHistory: queries.getStudentHistory,
-  getTranscript: queries.getTranscript,
+  studentHistory: queries.studentHistory,
+  transcript: queries.transcript,
   updatePassword: queries.updatePassword,
-  viewAdvisees: queries.viewAdvisees,
   viewHolds: queries.viewHolds,
   viewRegistration: queries.viewRegistration,
+  viewStudentAdvisees: queries.viewStudentAdvisees,
   viewStudentSchedule: queries.viewStudentSchedule
 };
 
