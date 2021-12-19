@@ -13,15 +13,16 @@ class Home extends Component {
         { name: "Drop Course", onClick: this.props.dropCourse },
         { name: "Degree Audit", onClick: this.props.degreeAudit },
         { name: "Degree Audit 2", onClick: this.props.degreeAudit2 },
+        { name: "Faculty Login Info", onClick: this.props.facultyLoginInfo },
         { name: "Record Attendance", onClick: this.props.recordAttendance },
         { name: "Register for Course", onClick: this.props.registerForCourse },
         { name: "Student History", onClick: this.props.studentHistory },
-        { name: "Faculty Login Info", onClick: this.props.studentLoginInfo },
         { name: "Unofficial Transcript", onClick: this.props.unofficialTranscript,},
         { name: "Update Password", onClick: this.props.updatePasswprd },
-        { name: "View Advisees", onClick: this.props.viewAdvisor },
+        { name: "View Advisees", onClick: this.props.viewAdvisees },
         { name: "View Holds", onClick: this.props.viewHolds },
         { name: "View Registration", onClick: this.props.viewRegistration },
+        { name: "View Student Schedule", onClick: this.props.viewStudentSchedule },
         { name: "Logout", onClick: "./Logout" }, // some arbitrary location atm
       ],
     };
