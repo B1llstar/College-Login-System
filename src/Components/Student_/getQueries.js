@@ -2,17 +2,17 @@ const queries = require("../../queries/StudentQueries.js");
 
 const permissibleQueries = {
   courseSearch: queries.courseSearch,
+  degreeAuditPt1: queries.degreeAuditPt1,
+  degreeAuditPt2: queries.degreeAuditPt2,
   dropCourse: queries.dropCourse,
-  degreeAudit: queries.getDegreeAuditCoursesTakenP1,
-  degreeAudit2: queries.getDegreeAuditCoursesTakenP2,
   registerForCourse: queries.registerForCourse,
-  getStudentHistory: queries.getStudentHistory,
-  getStudentLoginInfo: queries.getStudentLoginInfo,
-  getTranscript: queries.getTranscript,
+  studentHistory: queries.studentHistory,
+  transcript: queries.transcript,
   updatePassword: queries.updatePassword,
-  viewAdvisor: queries.getAdvisor,
+  viewAdvisor: queries.viewAdvisor,
   viewHolds: queries.viewHolds,
   viewRegistration: queries.viewRegistration,
+  viewStudentLoginInfo: queries.viewStudentLoginInfo
 };
 
 module.exports = permissibleQueries;

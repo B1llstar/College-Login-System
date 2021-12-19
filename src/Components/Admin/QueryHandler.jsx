@@ -14,7 +14,7 @@ class QueryHandler extends Component {
 
   doHandleGetAdminLoginInfo = () => {
     this.curQuery = queries.adminLoginInfo;
-    Axios.post("http://localhost:3305/Admin/facultyLoginInfo", {}).then(
+    Axios.post("http://localhost:3305/Admin/adminLoginInfo", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -52,7 +52,7 @@ class QueryHandler extends Component {
   };
 
   doHandleCreateCourse = () => {
-    this.curQuery = queries.courseSearch;
+    this.curQuery = queries.createCourse;
     Axios.post("http://localhost:3305/Admin/createCourse", {}).then(
       (response) => {
         console.log(response);
@@ -91,21 +91,20 @@ class QueryHandler extends Component {
 
   doHandleDeleteCourse = () => {
     this.curQuery = queries.courseSearch;
-    let courseID = this.props.tempData.courseID;
-    Axios.post("http://localhost:3305/Admin/courseSearch", {
-      courseID: courseID,
-    }).then((response) => {
-      console.log(response);
-      console.log("QUERY!!!!!");
-      this.props.obj.data = response.data;
-      console.log(this.props.obj.data);
-      // this.props.makeTable(this.props.obj.data);
-    });
+    Axios.post("http://localhost:3305/Admin/courseSearch", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        // this.props.makeTable(this.props.obj.data);
+      }
+    );
   };
 
-  doHandleGetDegreeAuditCoursesTakenP1 = () => {
-    this.curQuery = queries.degreeAudit;
-    Axios.post("http://localhost:3305/Admin/degreeAudit", {}).then(
+  doHandleGetDegreeAuditPt2 = () => {
+    this.curQuery = queries.degreeAuditPt2;
+    Axios.post("http://localhost:3305/Admin/degreeAuditPt2", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -116,15 +115,15 @@ class QueryHandler extends Component {
     );
   };
 
-  doHandleGetDegreeAuditCoursesTakenP2 = () => {
-    this.curQuery = queries.degreeAudit2;
-    Axios.post("http://localhost:3305/Admin/degreeAudit2", {}).then(
+  doHandleDeleteCourse = () => {
+    this.curQuery = queries.deleteCourse;
+    Axios.post("http://localhost:3305/Admin/deleteCourse", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
         console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
+        // this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -140,35 +139,10 @@ class QueryHandler extends Component {
     );
   };
 
-  doHandleGetStudentLoginInfo = () => {
-    this.curQuery = queries.getStudentLoginInfo;
-    Axios.post("http://localhost:3305/Admin/studentLoginInfo", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
-  };
 
-  doHandleGetStudentHistory = () => {
-    this.curQuery = queries.getStudentHistory;
-    Axios.post("http://localhost:3305/Admin/getStudentHistory", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
-  };
-
-  doHandleGetTranscript = () => {
-    this.curQuery = queries.getTranscript;
-    Axios.post("http://localhost:3305/Admin/getTranscript", {}).then(
+  doHandleGetFacultyCourseList = () => {
+    this.curQuery = queries.coursesTeaching;
+    Axios.post("http://localhost:3305/Admin/facultyCourseList", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -216,6 +190,45 @@ class QueryHandler extends Component {
     );
   };
 
+  doHandleGetStudentHistory = () => {
+    this.curQuery = queries.studentHistory;
+    Axios.post("http://localhost:3305/Admin/studentHistory", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
+  doHandleGetStudentLoginInfo = () => {
+    this.curQuery = queries.studentLoginInfo;
+    Axios.post("http://localhost:3305/Admin/studentLoginInfo", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
+  doHandleGetTranscript = () => {
+    this.curQuery = queries.transcript;
+    Axios.post("http://localhost:3305/Admin/transcript", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
   doHandleUpdatePassword = () => {
     this.curQuery = queries.updatePassword;
     Axios.post("http://localhost:3305/Admin/updatePassword", {}).then(
@@ -223,32 +236,6 @@ class QueryHandler extends Component {
         console.log(response);
         console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
-      }
-    );
-  };
-
-  doHandleViewAdvisors = () => {
-    this.curQuery = queries.viewAdvisors;
-    Axios.post("http://localhost:3305/Admin/viewAdvisors", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
-  };
-
-  doHandleViewAdvisees = () => {
-    this.curQuery = queries.viewAdvisees;
-    Axios.post("http://localhost:3305/Admin/viewAdvisees", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -279,6 +266,34 @@ class QueryHandler extends Component {
     );
   };
 
+
+  doHandleViewFacultyAdvisors = () => {
+    this.curQuery = queries.viewFacultyAdvisors;
+    Axios.post("http://localhost:3305/Admin/viewFacultyAdvisors", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
+  doHandleViewStudentAdvisees = () => {
+    this.curQuery = queries.viewStudentAdvisees;
+    Axios.post("http://localhost:3305/Admin/viewStudentAdvisees", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
+
   doHandleViewHolds = () => {
     this.curQuery = queries.viewHolds;
     Axios.post("http://localhost:3305/Admin/viewHolds", {}).then((response) => {
@@ -304,7 +319,7 @@ class QueryHandler extends Component {
   };
 
   doHandleViewStudentSchedule = () => {
-    this.curQuery = queries.viewRegistration;
+    this.curQuery = queries.viewStudentSchedule;
     Axios.post("http://localhost:3305/Admin/viewStudentSchedule", {}).then(
       (response) => {
         console.log(response);
@@ -322,27 +337,27 @@ class QueryHandler extends Component {
       <div>
         <NavBar
           adminLoginInfo={this.doHandleGetAdminLoginInfo}
-          coursesTeaching={this.doHandleGetCoursesTeaching}
+          facultyCourseList={this.doHandleGetFacultyCourseList}
           courseSearch={this.doHandleCourseSearch}
           createCourse={this.doHandleCreateCourse}
           createUser={this.doHandleCreateUser}
           deleteCourse={this.doHandleDeleteCourse}
-          degreeAudit={this.doHandleGetDegreeAuditCoursesTakenP1}
-          degreeAudit2={this.doHandleGetDegreeAuditCoursesTakenP2}
+          degreeAuditPt1={this.doHandleGetDegreeAuditPt1}
+          degreeAuditPt2={this.doHandleGetDegreeAuditPt2}
           dropCourse={this.doHandleDropCourse}
           modifyCourse={this.doHandleModifyCourse}
           modifyUser={this.doHandleModifyUser}
           registerForCourse={this.doHandleRegisterForCourse}
           studentHistory={this.doHandleGetStudentHistory}
           studentLoginInfo={this.doHandleGetStudentLoginInfo}
-          unofficialTranscript={this.doHandleGetTranscript}
+          transcript={this.doHandleGetTranscript}
           updatePassword={this.doHandleUpdatePassword}
-          viewAdvisors={this.doHandleViewAdvisors}
-          viewAdvisees={this.doHandleViewAdvisees}
           viewAllUsers={this.doHandleViewAllUsers}
           viewCourseHistory={this.doHandleViewCourseHistory}
+          viewFacultyAdvisors={this.doHandleViewAdvisors}
           viewHolds={this.doHandleViewHolds}
           viewRegistration={this.doHandleViewRegistration}
+          viewStudentAdvisees={this.doHandleViewAdvisees}
           viewStudentSchedule={this.doHandleViewStudentSchedule}
           userType={"Admin"}
         ></NavBar>

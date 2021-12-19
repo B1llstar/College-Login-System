@@ -13,40 +13,23 @@ router.post("/", (req, res) => {
   // Use login.js as a template
 });
 
-router.post("/coursesTeaching", (req, res) => {
-  let query = queries.facultyCoursesTeaching;
-  const testID = 900000375;
-  db.query(query, [testID], (err, result) => {
-    res.send(result);
-    console.log("Getting courses...");
-    if (err) {
-      console.log(err);
-      res.err("Something went wrong getting courses.");
-    }
-  });
-});
-
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
-  const testID = 25252;
-  db.query(query, [testID], (err, result) => {
-    res.send(result);
-    console.log("Getting courses...");
-    if (err) {
-      console.log(err);
-      res.err("Something went wrong getting search results.");
-    }
-  });
+  // for this query, the entire clause is the variable, with the question mark being a different user input
+  // 4 different input fields, CRN, courseID, courseName, and Instructor
+  // let whereClause=one of these 4
+  // let inputVariable=?
+  // finalList.crn = '?';
+  // finalList.courseID = '?';
+  // finalList.courseName = '%?%'; (percent symbols are wildcards)
+  // finalList.Instructor = '%?%';
+  // These statements can also be combined by concatinating with AND
 });
 
-router.post("/dropCourse", (req, res) => {
-  // Use login.js as a template
-});
-
-router.post("/degreeAudit", (req, res) => {
-  let query = queries.getDegreeAuditCoursesTakenP1;
-  const testID = 700100828;
-  db.query(query, [testID], (err, result) => {
+router.post("/degreeAuditPt1", (req, res) => {
+  let query = queries.degreeAuditPt1;
+  //USER INPUT: studentID
+  db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting degree audit p1...");
     if (err) {
@@ -56,10 +39,10 @@ router.post("/degreeAudit", (req, res) => {
   });
 });
 
-router.post("/degreeAudit2", (req, res) => {
-  let query = queries.getDegreeAuditCoursesTakenP2;
-  const testID = 700100828;
-  db.query(query, [testID], (err, result) => {
+router.post("/degreeAuditPt2", (req, res) => {
+  let query = queries.degreeAuditPt2;
+  //USER INPUT: studentID
+  db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting degree audit pt2...");
     if (err) {
@@ -69,10 +52,23 @@ router.post("/degreeAudit2", (req, res) => {
   });
 });
 
+router.post("/facultyCoursesTeaching", (req, res) => {
+  let query = queries.facultyCoursesTeaching;
+  //AUTO FILL INPUT: current userID
+  db.query(query, [facultyID], (err, result) => {
+    res.send(result);
+    console.log("Getting courses...");
+    if (err) {
+      console.log(err);
+      res.err("Something went wrong getting courses.");
+    }
+  });
+});
+
 router.post("/facultyLoginInfo", (req, res) => {
   let query = queries.getFacultyLoginInfo;
-  const testID = 900000375;
-  db.query(query, [testID], (err, result) => {
+  //AUTO FILL INPUT: current userID
+  db.query(query, [facultyID], (err, result) => {
     res.send(result);
     console.log("Getting user info...");
     if (err) {
@@ -83,17 +79,14 @@ router.post("/facultyLoginInfo", (req, res) => {
 });
 
 router.post("/recordAttendance", (req, res) => {
-  // Use login.js as a template
+  let query = queries.recordAttendance;
+  //USER INPUT: studentID, crn, select('Yes' or 'No'), date(YYY-MM-DD)) 
 });
 
-router.post("/registerForCourse", (req, res) => {
-  // Use login.js as a template
-});
-
-router.post("/getStudentHistory", (req, res) => {
+router.post("/studentHistory", (req, res) => {
   let query = queries.getStudentHistory;
-  const testID = 700100828;
-  db.query(query, [testID], (err, result) => {
+  //USER INPUT: studentID
+  db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting student history...");
     if (err) {
@@ -103,10 +96,10 @@ router.post("/getStudentHistory", (req, res) => {
   });
 });
 
-router.post("/getTranscript", (req, res) => {
+router.post("/transcript", (req, res) => {
   let query = queries.getTranscript;
-  const testID = 700100828;
-  db.query(query, [testID], (err, result) => {
+  //USER INPUT: studentID
+  db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting transcript...");
     if (err) {
@@ -117,26 +110,15 @@ router.post("/getTranscript", (req, res) => {
 });
 
 router.post("/updatePassword", (req, res) => {
-  // Use login.js as a template
-});
-
-router.post("/viewAdvisees", (req, res) => {
-  let query = queries.viewAdvisees;
-  const testID = 900000375;
-  db.query(query, [testID], (err, result) => {
-    res.send(result);
-    console.log("Getting advisees list...");
-    if (err) {
-      console.log(err);
-      res.err("Something went wrong getting advisees.");
-    }
-  });
+  let query = queries.updatePassword;
+  //AUTO FILL INPUT: current userID
+  //USER INPUT: password
 });
 
 router.post("/viewHolds", (req, res) => {
   let query = queries.viewHolds;
-  const testID = 700727715;
-  db.query(query, [testID], (err, result) => {
+  //USER INPUT: studentID
+  db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting holds...");
     if (err) {
@@ -148,8 +130,8 @@ router.post("/viewHolds", (req, res) => {
 
 router.post("/viewRegistration", (req, res) => {
   let query = queries.viewRegistration;
-  const testID = 700217149;
-  db.query(query, [testID], (err, result) => {
+  //USER INPUT: studentID
+  db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting registration...");
     if (err) {
@@ -159,10 +141,23 @@ router.post("/viewRegistration", (req, res) => {
   });
 });
 
+router.post("/viewStudentAdvisees", (req, res) => {
+  let query = queries.viewStudentAdvisees;
+  //AUTO FILL INPUT: current userID
+  db.query(query, [facultyID], (err, result) => {
+    res.send(result);
+    console.log("Getting advisees list...");
+    if (err) {
+      console.log(err);
+      res.err("Something went wrong getting advisees.");
+    }
+  });
+});
+
 router.post("/viewStudentSchedule", (req, res) => {
   let query = queries.getStudentSchedule;
-  const testID = 700217149;
-  db.query(query, [testID], (err, result) => {
+  //USER INPUT: studentID
+  db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting student's schedule...");
     if (err) {
