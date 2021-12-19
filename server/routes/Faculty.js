@@ -5,7 +5,6 @@ const db = require("../database.js");
 const { response } = require("express");
 const queries = require("../../src/queries/FacultyQueries");
 
-
 router.use(express.json());
 router.use(cors());
 

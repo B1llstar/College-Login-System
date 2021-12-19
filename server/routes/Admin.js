@@ -11,17 +11,10 @@ router.use(express.json());
 router.use(cors());
 
 router.post("/", (req, res) => {});
-
-router.post("/viewAllUsers", (req, res) => {
-  // Use login.js as a template
-});
-
-router.post("/viewUsers", (req, res) => {
-  // Use login.js as a template
-  let someBodyProp = "";
-
-  db.query();
-});
+"View All Users",
+  router.post("/viewAllUsers", (req, res) => {
+    // Use login.js as a template
+  });
 
 router.post("/createUser", (req, res) => {
   // Use login.js as a template

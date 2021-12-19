@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import '../styles/NavigationStyles.css';
+import "../styles/NavigationStyles.css";
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      /*
       nav: [
         "Home",
         "View Registration",
@@ -16,6 +17,7 @@ class NavBar extends Component {
         "Degree Audit",
         "View Advisor",
       ],
+      */
     };
   }
 
@@ -24,21 +26,23 @@ class NavBar extends Component {
   }
 
   render() {
+    let names = this.props.sideBarOptions.eles;
+    console.log(names);
     // Grab the ele array, spit out some buttons
-    let eles = this.state.nav.map((ele) => {
+    let eles = names.map((ele) => {
       return (
         <div>
-        <a
-          class="nav-link"
-          id="barBody"
-          //data-toggle="pill"
-          href="#v-pills-home"
-          role="tabpanel"
-          //aria-controls="v-pills-home"
-          //aria-selected="true"
-        >
-          {ele}
-        </a>
+          <a
+            class="nav-link"
+            id="barBody"
+            //data-toggle="pill"
+            href="#v-pills-home"
+            role="tabpanel"
+            //aria-controls="v-pills-home"
+            //aria-selected="true"
+          >
+            {ele}
+          </a>
         </div>
       );
     });
@@ -52,7 +56,6 @@ class NavBar extends Component {
           aria-orientation="vertical"
         >
           <nav class="menu">{eles}</nav>
-          
         </div>
       </div>
     );

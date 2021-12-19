@@ -11,8 +11,7 @@ import MainPagePlaceholder from "./Components/Main_Page_Placeholder";
 
 ReactDOM.render(
   <div>
-    <Display />
-    {/*<NavBar />*/}
+    {/*    <Display /><NavBar />*/}
     <div className="main">
       {/*
       <MainPagePlaceholder />
