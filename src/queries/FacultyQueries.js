@@ -9,7 +9,7 @@ module.exports = {
 
     // [FACULTY] Retrieve a list of Students Advisees assigned to the Faculty user
     // AUTO-FILL: facultyID for current user
-    getListOfStudentsFacultyIsAdvising:
+    viewAdvisees:
     "SELECT students.studentID AS 'Student ID', CONCAT(students.LastName,', ',students.firstName) AS 'Student Name',\n" +
     "students.phoneNumber AS 'Student Phone', l.userEmail AS 'Student Email' FROM loginInfo l\n" +
     "RIGHT JOIN (SELECT facList.studentID, u.firstName, u.lastName, u.phoneNumber FROM user u\n" +

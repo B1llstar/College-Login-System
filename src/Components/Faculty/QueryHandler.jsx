@@ -12,6 +12,19 @@ class QueryHandler extends Component {
 
   tableMaker = () => {};
 
+  doHandleGetCoursesTeaching = () => {
+    this.curQuery = queries.coursesTeaching;
+    Axios.post("http://localhost:3305/Faculty/coursesTeaching", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
   doHandleCourseSearch = () => {
     this.curQuery = queries.courseSearch;
     Axios.post("http://localhost:3305/Faculty/courseSearch", {}).then(
@@ -62,6 +75,30 @@ class QueryHandler extends Component {
     );
   };
 
+  doHandleGetFacultyLoginInfo = () => {
+    this.curQuery = queries.getStudentLoginInfo;
+    Axios.post("http://localhost:3305/Faculty/facultyLoginInfo", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
+  doHandleRecordAttendance = () => {
+    this.curQuery = queries.registerForCourse;
+    Axios.post("http://localhost:3305/Faculty/registerForCourse", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+      }
+    );
+  };
+
   doHandleRegisterForCourse = () => {
     this.curQuery = queries.registerForCourse;
     Axios.post("http://localhost:3305/Faculty/registerForCourse", {}).then(
@@ -76,19 +113,6 @@ class QueryHandler extends Component {
   doHandleGetStudentHistory = () => {
     this.curQuery = queries.getStudentHistory;
     Axios.post("http://localhost:3305/Faculty/getStudentHistory", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
-  };
-
-  doHandleGetStudentLoginInfo = () => {
-    this.curQuery = queries.getStudentLoginInfo;
-    Axios.post("http://localhost:3305/Faculty/getStudentLoginInfo", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -123,9 +147,9 @@ class QueryHandler extends Component {
     );
   };
 
-  doHandleViewAdvisor = () => {
-    this.curQuery = queries.viewAdvisor;
-    Axios.post("http://localhost:3305/Faculty/viewAdvisor", {}).then(
+  doHandleViewAdvisees = () => {
+    this.curQuery = queries.viewAdvisees;
+    Axios.post("http://localhost:3305/Faculty/viewAdvisees", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -162,23 +186,39 @@ class QueryHandler extends Component {
     );
   };
 
+  doHandleViewStudentSchedule = () => {
+    this.curQuery = queries.viewRegistration;
+    Axios.post("http://localhost:3305/Faculty/viewStudentSchedule", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
 
   render() {
     return (
       <div>
         <Home
+          coursesTeaching={this.doHandleGetCoursesTeaching}
           courseSearch={this.doHandleCourseSearch}
           dropCourse={this.doHandleDropCourse}
           degreeAudit={this.doHandleGetDegreeAuditCoursesTakenP1}
           degreeAudit2={this.doHandleGetDegreeAuditCoursesTakenP2}
+          facultyLoginInfo={this.doHandleGetFacultyLoginInfo}
+          recordAttendance={this.doHandleRecordAttendance}
           registerForCourse={this.doHandleRegisterForCourse}
           studentHistory={this.doHandleGetStudentHistory}
-          studentLoginInfo={this.doHandleGetStudentLoginInfo}
           unofficialTranscript={this.doHandleGetTranscript}
           updatePassword={this.doHandleUpdatePassword}
-          viewAdvisor={this.doHandleViewAdvisor}
+          viewAdvisees={this.doHandleViewAdvisees}
           viewHolds={this.doHandleViewHolds}
           viewRegistration={this.doHandleViewRegistration}
+          viewStudentSchedule={this.doHandleViewStudentSchedule}
         ></Home>
       </div>
     );
