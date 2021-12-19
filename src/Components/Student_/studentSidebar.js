@@ -1,8 +1,8 @@
 import React from 'react'
 import './NavigationStyles.css';
-import {SidebarData} from './researchStaffSidebarData';
+import {SidebarData} from './studentSidebarData';
 
-function researchStaffSidebar() {
+function studentSidebar() {
     return (
         <div className="Sidebar">
             <ul className='SidebarList'>
@@ -12,8 +12,8 @@ function researchStaffSidebar() {
                         key={key} 
                         className='row'
                         id={window.location.pathname === val.link ? "active" : ""}
-                        onClick ={() => {window.location.pathname = val.link;
-                        }}
+                        onClick ={() => {window.location.pathname = val.link;}
+                    }
                     >
                         <div id="icon">{val.icon}</div>{" "}
                         <div id="title">
@@ -27,4 +27,4 @@ function researchStaffSidebar() {
     );
 }
 
-export default researchStaffSidebar
+export default studentSidebar

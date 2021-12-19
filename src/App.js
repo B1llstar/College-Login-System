@@ -4,12 +4,9 @@ import Login from "./Components/Login.jsx";
 import Axios from "axios";
 import "./bootstrap/css/bootstrap.css";
 import "./bootstrap/css/bootstrap.min.css";
-import MasterSchedule from "./Components/MasterSchedule.jsx";
+import MasterSchedule from "./Components/Display";
+import Display from "./Components/Display";
 import Faculty from "./Components/Faculty/Faculty.js";
-import ResearchStaff from "./Components/ResearchStaff/ResearchStaff.js";
-import Admin from "./Components/Admin/Admin.js";
-import Student from "./Components/Student/Student.js";
-import Main from "./Components/Main/Main.js";
 
 class App extends Component {
   constructor(props) {
@@ -63,10 +60,17 @@ class App extends Component {
         </div>
         <div className="row">
           <div id="widget" className="col-4">
+            {/*
+            <Display
+              className="col-8"
+              obj={{ data: [], arrData: [] }}
+            ></Display>*/}
+            {/*
             <MasterSchedule
               className="col-8"
               obj={{ data: [], arrData: [] }}
             ></MasterSchedule>
+            */}
           </div>
         </div>
 
