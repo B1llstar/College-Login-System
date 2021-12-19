@@ -4,7 +4,7 @@ import Axios from "axios";
 import "../bootstrap/css/bootstrap.css";
 import "../bootstrap/css/bootstrap.min.css";
 import PostRequest from "./Post_Request_Template";
-import QueryHandler from "./Faculty/QueryHandler";
+import QueryHandler from "./Admin/QueryHandler";
 
 import "../styles/bodyStyles.css";
 /*

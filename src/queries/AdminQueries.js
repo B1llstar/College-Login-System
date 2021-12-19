@@ -19,13 +19,13 @@ module.exports = {
     "RIGHT JOIN loginInfo l ON u.userID=l.userID WHERE u.userID='?';",
 
     // [ADMIN] Retrieve complete list of Faculty who are Advisors
-    getFullListOfFacultyAdvisors:
+    viewFacultyAdvisors:
     "SELECT adv.facultyID as 'Faculty ID', CONCAT(adv.firstName,' ',adv.lastName) AS 'Advisor Name', adv.phoneNumber AS 'Advisor Phone', l.userEmail AS 'Advisor Email' FROM loginInfo l\n" +
     "RIGHT JOIN (SELECT facID.facultyID, u.firstName, u.lastName, u.phoneNumber FROM user u JOIN\n" +
     "(SELECT facultyID FROM advisor) AS facID WHERE facID.facultyID=u.userID) AS adv ON adv.facultyID=l.userID;",
 
     // [ADMIN] Retrieve complete list of students who have an advisor
-    getStudentsWhoHaveAdvisor:
+    viewStudentAdvisees:
     "SELECT students.studentID AS 'Student ID', CONCAT(students.LastName,', ',students.firstName) AS 'Student Name',\n" +
     "students.phoneNumber AS 'Student Phone', l.userEmail AS 'Student Email' FROM loginInfo l\n" +
     "RIGHT JOIN (SELECT facList.studentID, u.firstName, u.lastName, u.phoneNumber FROM user u\n" +
