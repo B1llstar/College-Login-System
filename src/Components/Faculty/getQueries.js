@@ -1,4 +1,4 @@
-const queries = require("../../queries/StudentQueries.js");
+const queries = require("../../queries/FacultyQueries.js");
 
 const permissibleQueries = {
   courseSearch: queries.courseSearch,
@@ -10,7 +10,7 @@ const permissibleQueries = {
   getStudentLoginInfo: queries.getStudentLoginInfo,
   getTranscript: queries.getTranscript,
   updatePassword: queries.updatePassword,
-  viewAdvisor: queries.getAdvisor,
+  viewAdvisees: queries.getListOfStudentsFacultyIsAdvising,
   viewHolds: queries.viewHolds,
   viewRegistration: queries.viewRegistration,
 };

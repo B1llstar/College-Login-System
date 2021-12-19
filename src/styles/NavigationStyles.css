@@ -1,0 +1,75 @@
+#left {
+  display: flex;
+  flex-direction: row;
+  width: 2500px;
+  height: 100%;
+}
+
+#row {
+  width: 250px;
+  margin: 0%;
+  display: flex;
+  flex-direction: column;
+  color: whitesmoke;
+  justify-content: center;
+  align-items: center;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: x-large;
+  position: fixed;
+}
+
+#barBody {
+  width: 250px;
+  height: 100%;
+  background-color: #2f4050;
+  nav-left: auto;
+  color: whitesmoke;
+}
+
+.Sidebar {
+  position: fixed;
+  height: 100%;
+  width: 250px;
+  background-color: #2f4050;
+  nav-left: auto;
+}
+
+.SidebarList {
+  height: auto;
+  width: 100%;
+  padding: 0;
+}
+
+.SidebarList .row {
+  width: 100%;
+  height: 60px;
+  list-style-type: none;
+  margin: 0%;
+  display: flex;
+  flex-direction: row;
+  color: whitesmoke;
+  justify-content: center;
+  align-items: center;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+.SidebarList .row:hover {
+  cursor: pointer;
+  background-color: #293846;
+}
+
+.SidebarList #active {
+  background-color: #293846;
+}
+
+.row #icon {
+  flex: 30%;
+  display: grid;
+  place-items: center;
+}
+
+.row #title {
+  flex: 70%;
+}

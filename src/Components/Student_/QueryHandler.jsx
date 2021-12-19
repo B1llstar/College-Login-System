@@ -22,11 +22,13 @@ class QueryHandler extends Component {
 
   doHandleCourseSearch = () => {
     this.curQuery = queries.courseSearch;
-    Axios.post("http://localhost:3305/Main/masterSchedule", {}).then(
+    Axios.post("http://localhost:3305/Student/courseSearch", {}).then(
       (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
         console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
+        // this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -43,49 +45,21 @@ class QueryHandler extends Component {
   };
 
   doHandleGetDegreeAuditCoursesTakenP1 = () => {
-    this.curQuery = queries.doHandleGetDegreeAuditCoursesTakenP1;
+    this.curQuery = queries.degreeAudit;
     Axios.post("http://localhost:3305/Student/degreeAudit", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
       }
     );
   };
 
   doHandleGetDegreeAuditCoursesTakenP2 = () => {
-    this.curQuery = queries.doHandleGetDegreeAuditCoursesTakenP2;
-    Axios.post("http://localhost:3305/Student/degreeAudit", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-      }
-    );
-  };
-
-  doHandleGetAdvisor = () => {
-    this.curQuery = queries.doHandleGetAdvisor;
-  };
-
-  doHandleGetStudentLoginInfo = () => {
-    this.curQuery = queries.getStudentLoginInfo;
-  };
-
-  doHandleGetStudentHistory = () => {
-    this.curQuery = queries.getStudentHistory;
-    Axios.post("http://localhost:3305/Student/getStudentHistory", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-      }
-    );
-  };
-
-  doHandleGetTranscript = () => {
-    this.curQuery = queries.getTranscript;
-    Axios.post("http://localhost:3305/Student/getTranscript", {}).then(
+    this.curQuery = queries.degreeAudit2;
+    Axios.post("http://localhost:3305/Student/degreeAudit2", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -107,13 +81,41 @@ class QueryHandler extends Component {
     );
   };
 
-  doHandleViewHolds = () => {
-    this.curQuery = queries.viewHolds;
-    Axios.post("http://localhost:3305/Student/viewHolds", {}).then(
+  doHandleGetStudentHistory = () => {
+    this.curQuery = queries.getStudentHistory;
+    Axios.post("http://localhost:3305/Student/getStudentHistory", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
+  doHandleGetStudentLoginInfo = () => {
+    this.curQuery = queries.getStudentLoginInfo;
+    Axios.post("http://localhost:3305/Student/getStudentLoginInfo", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
+  doHandleGetTranscript = () => {
+    this.curQuery = queries.getTranscript;
+    Axios.post("http://localhost:3305/Student/getTranscript", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -136,6 +138,21 @@ class QueryHandler extends Component {
         console.log(response);
         console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
+  doHandleViewHolds = () => {
+    this.curQuery = queries.viewHolds;
+    Axios.post("http://localhost:3305/Student/viewHolds", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -147,9 +164,12 @@ class QueryHandler extends Component {
         console.log(response);
         console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
       }
     );
   };
+
 
   render() {
     return (
@@ -158,6 +178,7 @@ class QueryHandler extends Component {
           courseSearch={this.doHandleCourseSearch}
           dropCourse={this.doHandleDropCourse}
           degreeAudit={this.doHandleGetDegreeAuditCoursesTakenP1}
+          degreeAudit2={this.doHandleGetDegreeAuditCoursesTakenP2}
           registerForCourse={this.doHandleRegisterForCourse}
           studentHistory={this.doHandleGetStudentHistory}
           studentLoginInfo={this.doHandleGetStudentLoginInfo}
