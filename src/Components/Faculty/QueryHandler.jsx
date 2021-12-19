@@ -77,7 +77,7 @@ class QueryHandler extends Component {
   };
 
   doHandleGetFacultyLoginInfo = () => {
-    this.curQuery = queries.getStudentLoginInfo;
+    this.curQuery = queries.facultyLoginInfo;
     Axios.post("http://localhost:3305/Faculty/facultyLoginInfo", {}).then(
       (response) => {
         console.log(response);
