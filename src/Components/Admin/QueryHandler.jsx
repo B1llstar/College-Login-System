@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import queries from "./getQueries";
 import Home from "./Home";
 import Axios from "axios";
-
+import NavBar from "../NavBar";
 class QueryHandler extends Component {
   constructor(props) {
     super(props);
@@ -24,18 +24,18 @@ class QueryHandler extends Component {
       }
     );
   };
-
   doHandleGetCoursesTeaching = () => {
     this.curQuery = queries.coursesTeaching;
-    Axios.post("http://localhost:3305/Admin/coursesTeaching", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
+
+    Axios.post("http://localhost:3305/Admin/coursesTeaching", {
+      userID: {},
+    }).then((response) => {
+      console.log(response);
+      console.log("QUERY!!!!!");
+      this.props.obj.data = response.data;
+      console.log(this.props.obj.data);
+      this.props.makeTable(this.props.obj.data);
+    });
   };
 
   doHandleCourseSearch = () => {
@@ -66,28 +66,41 @@ class QueryHandler extends Component {
 
   doHandleCreateUser = () => {
     this.curQuery = queries.createUser;
-    Axios.post("http://localhost:3305/Admin/createUser", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        // this.props.makeTable(this.props.obj.data);
-      }
-    );
+
+    Axios.post("http://localhost:3305/Admin/createUser", {
+      /*
+      userID = this.props.tempData.userID,
+      userType = this.props.tempData.userType,
+      firstName = this.props.tempData.firstName,
+      lastName = this.props.tempData.lastName,
+      phoneNum = this.props.tempData.phoneNum,
+      DOB = this.props.tempData.DOB,
+      street = this.props.tempData.street,
+      city = this.props.tempData.city,
+      state = this.props.tempData.state,
+      zip = this.props.tempData.state
+      */
+    }).then((response) => {
+      console.log(response);
+      console.log("QUERY!!!!!");
+      this.props.obj.data = response.data;
+      console.log(this.props.obj.data);
+      // this.props.makeTable(this.props.obj.data);
+    });
   };
 
   doHandleDeleteCourse = () => {
     this.curQuery = queries.courseSearch;
-    Axios.post("http://localhost:3305/Admin/courseSearch", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        // this.props.makeTable(this.props.obj.data);
-      }
-    );
+    let courseID = this.props.tempData.courseID;
+    Axios.post("http://localhost:3305/Admin/courseSearch", {
+      courseID: courseID,
+    }).then((response) => {
+      console.log(response);
+      console.log("QUERY!!!!!");
+      this.props.obj.data = response.data;
+      console.log(this.props.obj.data);
+      // this.props.makeTable(this.props.obj.data);
+    });
   };
 
   doHandleGetDegreeAuditCoursesTakenP1 = () => {
@@ -268,15 +281,13 @@ class QueryHandler extends Component {
 
   doHandleViewHolds = () => {
     this.curQuery = queries.viewHolds;
-    Axios.post("http://localhost:3305/Admin/viewHolds", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
+    Axios.post("http://localhost:3305/Admin/viewHolds", {}).then((response) => {
+      console.log(response);
+      console.log("QUERY!!!!!");
+      this.props.obj.data = response.data;
+      console.log(this.props.obj.data);
+      this.props.makeTable(this.props.obj.data);
+    });
   };
 
   doHandleViewRegistration = () => {
@@ -305,11 +316,11 @@ class QueryHandler extends Component {
     );
   };
 
-
   render() {
+    console.log(this.props.tempData);
     return (
       <div>
-        <Home
+        <NavBar
           adminLoginInfo={this.doHandleGetAdminLoginInfo}
           coursesTeaching={this.doHandleGetCoursesTeaching}
           courseSearch={this.doHandleCourseSearch}
@@ -333,7 +344,8 @@ class QueryHandler extends Component {
           viewHolds={this.doHandleViewHolds}
           viewRegistration={this.doHandleViewRegistration}
           viewStudentSchedule={this.doHandleViewStudentSchedule}
-        ></Home>
+          userType={"Admin"}
+        ></NavBar>
       </div>
     );
   }

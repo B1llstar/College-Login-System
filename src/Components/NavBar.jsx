@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "../styles/NavigationStyles.css";
+import DynamicForms from "./DynamicForms";
+import ReactDOM from "react-dom";
 
 class NavBar extends Component {
   constructor(props) {
@@ -7,22 +9,55 @@ class NavBar extends Component {
 
     this.state = {
       chosenUserTypeNavEleArray: [],
+      curEle: "",
       Admin: [
-        { name: "Home", onClick: "#" },
+        {
+          name: "Home",
+          onClick: this.wrapper,
+          fields: ["studentID, firstName"],
+        },
         {
           name: "Access Student Registration",
           onClick: this.props.accessStudentRegistration,
         },
-        { name: "Create Course", onClick: this.props.createCourse },
-        { name: "Create User", onClick: this.props.createUser },
-        { name: "Delete Course", onClick: this.props.deleteCourse },
-        { name: "Drop Student Course", onClick: this.props.dropStudentCourse },
-        { name: "Modify Course", onClick: this.props.modifyCourse },
+        {
+          name: "Create Course",
+          onClick: this.props.createCourse,
+          fields: ["courseID, courseName, numCredits, deptID"],
+        },
+        {
+          name: "Create User",
+          onClick: this.props.createUser,
+          fields: [
+            "studentID, firstName, lastName, phoneNumber, DOB, street, city, state, zip",
+          ],
+        },
+        {
+          name: "Delete Course",
+          onClick: this.props.deleteCourse,
+          fields: ["courseID"],
+        },
+        {
+          name: "Drop Student Course",
+          onClick: this.props.dropStudentCourse,
+          fields: ["studentID, crn"],
+        },
+        {
+          name: "Modify Course",
+          onClick: this.props.modifyCourse,
+          fields: ["courseID, courseName, numCredits, deptID, courseID"],
+        },
         {
           name: "Modify Master Schedule",
           onClick: this.props.modifyMasterSchedule,
         },
-        { name: "Modify User", onClick: this.props.modifyUser },
+        {
+          name: "Modify User",
+          onClick: this.props.modifyUser,
+          fields: [
+            "firstName, lastName, phoneNumber, DOB, street, city, state, zip",
+          ],
+        },
         {
           name: "Register Student for Course",
           onClick: this.props.registerStudentForCourse,
@@ -106,12 +141,21 @@ class NavBar extends Component {
     // it would affect compile-time, since the state variables would not yet
     // be declared at that point
   }
+  wrapper = (func, val) => {
+    ReactDOM.render(
+      <div>
+        <DynamicForms fields={["crigne"]}></DynamicForms>
+      </div>,
+      document.getElementById("root")
+    );
+  };
 
   render() {
     let arr = [];
     switch (this.props.userType) {
       case "Admin":
         arr = this.state.Admin;
+        console.log("Matched admin");
         break;
       case "Faculty":
         arr = this.state.Faculty;
@@ -125,6 +169,7 @@ class NavBar extends Component {
 
         break;
     }
+
     // let names = this.props.sideBarOptions.eles;
     // console.log(names);
     // Grab the ele array, spit out some buttons
@@ -139,17 +184,14 @@ class NavBar extends Component {
             //data-toggle="pill"
             href="#v-pills-home"
             role="tabpanel"
-            onClick={() => element.onClick()}
-
-            //aria-controls="v-pills-home"
-            //aria-selected="true"
+            onClick={element.onClick}
           >
             {element["name"]}
           </a>
         </div>
       );
     });
-
+    //aria-controls="v-pills-home" //aria-selected="true"
     return (
       <div className="Sidebar">
         <div

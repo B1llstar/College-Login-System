@@ -1,5 +1,6 @@
 import "../styles/Login.css";
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 
 class Login extends Component {
   state = {
@@ -59,6 +60,28 @@ class Login extends Component {
   };
 
   update = () => {};
+
+  makeFields = () => {
+    let fields = ["userID", "firstName"];
+    let eles = [];
+    fields.map((ele, index) => {
+      eles.push(
+        <div className="col-3">
+          <input
+            id={fields[index]}
+            onChange={(e) => {
+              fields[index] = e.target.value;
+              console.log(fields[index]);
+            }}
+            placeholder={fields[index]}
+          ></input>
+        </div>
+      );
+    });
+
+    // ReactDOM.render(eles, document.getElementById("NavBar"));
+  };
+
   render() {
     var { user, pass, userType } = this.state.credentials;
 
@@ -92,6 +115,7 @@ class Login extends Component {
                 }}
               />
             </div>
+            {this.makeFields()}
             <div className="col-3">
               <input
                 id="password"

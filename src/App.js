@@ -12,6 +12,7 @@ import QueryHandlerAdmin from "./Components/Admin/QueryHandler.jsx";
 import QueryHandlerFaculty from "./Components/Faculty/QueryHandler.jsx";
 import QueryHandlerResearchStaff from "./Components/ResearchStaff/QueryHandler";
 import QueryHandlerStudent from "./Components/Student_/QueryHandler";
+import DynamicForms from "./Components/DynamicForms.jsx";
 
 class App extends Component {
   constructor(props) {
@@ -21,6 +22,20 @@ class App extends Component {
         userID: "",
         password: "",
         userEmail: "",
+      },
+      tempData: {
+        // for custom inputs
+        userID: "",
+        courseID: "",
+        userType: "",
+        firstName: "",
+        lastName: "",
+        phoneNum: "",
+        DOB: "",
+        street: "",
+        city: "",
+        state: "",
+        zip: "",
       },
       username: " ",
       password: "",
@@ -139,13 +154,19 @@ class App extends Component {
         switch (userType) {
           case "Admin":
             ReactDOM.render(
-              <QueryHandlerAdmin userType={"Admin"}></QueryHandlerAdmin>,
+              <QueryHandlerAdmin
+                userType={"Admin"}
+                tempData={this.state.tempData}
+              ></QueryHandlerAdmin>,
               document.getElementById("NavBar")
             );
             break;
           case "Faculty":
             ReactDOM.render(
-              <QueryHandlerFaculty userType={"Faculty"}></QueryHandlerFaculty>,
+              <QueryHandlerFaculty
+                userType={"Faculty"}
+                tempData={this.state.tempData}
+              ></QueryHandlerFaculty>,
               document.getElementById("NavBar")
             );
             console.log("Faculty");
@@ -155,12 +176,16 @@ class App extends Component {
             ReactDOM.render(
               <QueryHandlerResearchStaff
                 userType={"ResearchStaff"}
+                tempData={this.state.tempData}
               ></QueryHandlerResearchStaff>,
               document.getElementById("NavBar")
             );
           case "Student":
             ReactDOM.render(
-              <QueryHandlerStudent userType={"Student"}></QueryHandlerStudent>,
+              <QueryHandlerStudent
+                userType={"Student"}
+                tempData={this.state.tempData}
+              ></QueryHandlerStudent>,
               document.getElementById("NavBar")
             );
             console.log("Match");
@@ -201,6 +226,10 @@ class App extends Component {
     });
   };
 
+  doHandleGenerateForms(forms) {
+    ReactDOM.render(<div>{forms}</div>, document.getElementById("NavBar"));
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -212,6 +241,7 @@ class App extends Component {
           </div>
         </div>
         <div className="row">
+          <DynamicForms fields={["studentID"]}></DynamicForms>
           <div id="widget" className="col-4">
             {/*
             <Display
