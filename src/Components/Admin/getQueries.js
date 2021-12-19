@@ -1,8 +1,7 @@
 const queries = require("../../queries/AdminQueries.js");
 
 const permissibleQueries = {
-    adminLoginInfo: queries.getAdminLoginInfo,
-    coursesTeaching: queries.facultyCoursesTeaching,
+    adminLoginInfo: queries.adminLoginInfo,
     courseSearch: queries.courseSearch,
     createCourse: queries.createCourse,
     createUser: queries.createUser,
@@ -10,20 +9,21 @@ const permissibleQueries = {
     degreeAudit: queries.getDegreeAuditCoursesTakenP1,
     degreeAudit2: queries.getDegreeAuditCoursesTakenP2,
     dropCourse: queries.dropCourse,
-    getStudentLoginInfo: queries.getStudentLoginInfo,
-    getStudentHistory: queries.getStudentHistory,
-    getTranscript: queries.getTranscript,
+    facultyCoursesTeaching: queries.facultyCoursesTeaching,
     modifyCourse: queries.modifyCourse,
     modifyUser: queries.modifyUser,
     registerForCourse: queries.registerForCourse,
+    studentLoginInfo: queries.studentLoginInfo,
+    studentHistory: queries.studentHistory,
+    transcript: queries.transcript,
     updatePassword: queries.updatePassword,
-    viewAdvisors: queries.viewFacultyAdvisors,
-    viewAdvisees: queries.viewStudentAdvisees,
-    viewAllUsers: queries.viewAllUserInfo,
+    viewAllUsers: queries.viewAllUsers,
     viewCourseHistory: queries.viewCourseHistory,
+    viewFacultyAdvisors: queries.viewFacultyAdvisors,
     viewHolds: queries.viewHolds,
     viewRegistration: queries.viewRegistration,
-    viewStudentSchedule: queries.getStudentSchedule
+    viewStudentAdvisees: queries.viewStudentAdvisees,
+    viewStudentSchedule: queries.viewStudentSchedule
 };
 
 module.exports = permissibleQueries;
