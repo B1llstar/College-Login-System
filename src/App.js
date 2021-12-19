@@ -41,7 +41,6 @@ class App extends Component {
       password: "",
       studentID: 0,
       displayMsg: "Login",
-      faculty: "",
     };
 
     this.displays = [
