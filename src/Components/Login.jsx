@@ -3,22 +3,86 @@ import React, { Component } from "react";
 
 class Login extends Component {
   state = {
-    user: "",
-    pass: "",
-    userType: "",
-    auth: "",
+    credentials: {
+      user: "",
+      pass: "",
+      userType: "",
+      auth: "",
+    },
+  };
+
+  constructor() {
+    super();
+    let populateFields = this.populateFields.bind(this);
+    this.populateFields = populateFields;
+  }
+
+  populateFields = (type) => {
+    let userEmail = "smashamlw@neweastbury.edu";
+    let pass = "jSNHlqbS";
+    let userType = "Student";
+    switch (type) {
+      case "Admin": {
+        userEmail = "mguyanb6@neweastbury.edu";
+        pass = "6RtZQZWl38TO";
+        userType = type;
+        break;
+      }
+      case "Faculty": {
+        userEmail = "sgoldwater5a@neweastbury.edu";
+        pass = "jyOVzoCb4";
+        userType = type;
+        break;
+      }
+      case "ResearchStaff": {
+        userEmail = "mrapperbd@neweastbury.edu";
+        pass = "ooKCSHmUO";
+        userType = type;
+        break;
+      }
+      case "Student": {
+        userEmail = "smashamlw@neweastbury.edu";
+        pass = "jSNHlqbS";
+        userType = type;
+        break;
+      }
+    }
+
+    let credentials = {
+      user: userEmail,
+      pass: pass,
+      userType: userType,
+    };
+
+    this.setState({ credentials });
+    console.log(this.state.credentials);
   };
 
   update = () => {};
   render() {
-    var { user, pass, userType } = this.state;
+    var { user, pass, userType } = this.state.credentials;
 
     return (
       <div className="container-fluid" id="loginFormContainer" max-height="80%">
+        <button onClick={() => this.populateFields("Admin")}>
+          Auto Populate ADMIN
+        </button>
+        <button onClick={() => this.populateFields("Faculty")}>
+          Auto Populate FACULTY
+        </button>
+        <button onClick={() => this.populateFields("ResearchStaff")}>
+          Auto Populate RESEARCH STAFF
+        </button>
+
+        <button onClick={() => this.populateFields("Student")}>
+          Auto Populate STUDENT
+        </button>
+
         <form>
           <div className="row">
             <div className="col-3">
               <input
+                id="email"
                 type="text"
                 className="form-control"
                 placeholder="E-mail"
@@ -30,6 +94,7 @@ class Login extends Component {
             </div>
             <div className="col-3">
               <input
+                id="password"
                 type="password"
                 className="form-control"
                 placeholder="Password"

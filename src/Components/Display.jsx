@@ -104,14 +104,6 @@ class Display extends Component {
         {/* {() => ReactDOM.render(JSX, document.getElementById("root"))} */}
         {/*<button onClick={() => this.query()}>Click Me</button>*/}
 
-        <button onClick={() => this.query()}>Click Me</button>
-        <button
-          onClick={() => {
-            /* ReactDOM.render(JSX, document.getElementById("test")) */
-          }}
-        >
-          Test
-        </button>
         <QueryHandler
           makeTable={this.makeSomeTables}
           obj={{ data: [] }}

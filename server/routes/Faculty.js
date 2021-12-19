@@ -4,7 +4,6 @@ const cors = require("cors");
 const db = require("../database.js");
 const { response } = require("express");
 
-
 router.use(express.json());
 router.use(cors());
 
@@ -16,7 +15,7 @@ router.post("/", (req, res) => {
 
 router.post("/viewCourses", (req, res) => {
   // Use login.js as a template
-  
+
   db.query();
 });
 
