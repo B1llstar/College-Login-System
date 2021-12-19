@@ -22,11 +22,14 @@ class App extends Component {
         password: "",
         userEmail: "",
       },
-      username: " ",
-      password: "",
-      studentID: 0,
+      requestBodyData: {
+        // for query request body
+        userID: "",
+        password: "",
+        userEmail: "",
+      },
+
       displayMsg: "Login",
-      faculty: "",
     };
 
     this.displays = [
@@ -160,7 +163,7 @@ class App extends Component {
             );
           case "Student":
             ReactDOM.render(
-              <QueryHandlerStudent userType={"Student"}></QueryHandlerStudent>,
+              <QueryHandlerStudent userType={"Student"} user={}></QueryHandlerStudent>,
               document.getElementById("NavBar")
             );
             console.log("Match");

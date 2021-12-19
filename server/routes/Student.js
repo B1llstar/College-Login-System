@@ -145,7 +145,6 @@ router.post("/viewRegistration", (req, res) => {
   });
 });
 
-
 router.post("/logout", (req, res) => {
   // Use login.js as a template
   let someBodyProp = "";

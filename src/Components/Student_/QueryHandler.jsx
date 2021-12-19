@@ -64,7 +64,10 @@ class QueryHandler extends Component {
 
   doHandleGetDegreeAuditCoursesTakenP1 = () => {
     this.curQuery = queries.degreeAudit;
-    Axios.post("http://localhost:3305/Student/degreeAudit", {}).then(
+    
+    Axios.post("http://localhost:3305/Student/degreeAudit", {  username: user,
+    password: pass,
+    userType: userType}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
