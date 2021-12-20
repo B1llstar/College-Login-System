@@ -134,7 +134,7 @@ router.post("/createUser", (req, res) => {
 
 router.post("/degreeAuditPt1", (req, res) => {
   let query = queries.degreeAuditPt1;
-  //USER INPUT = studentID;
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting degree audit p1...");
@@ -147,7 +147,7 @@ router.post("/degreeAuditPt1", (req, res) => {
 
 router.post("/degreeAuditPt2", (req, res) => {
   let query = queries.degreeAuditPt2;
-  //USER INPUT = studentID;
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting degree audit pt2...");
@@ -160,51 +160,89 @@ router.post("/degreeAuditPt2", (req, res) => {
 
 router.post("/deleteCourse", (req, res) => {
   let query = queries.deleteCourse;
-  // USER INPUT: courseID - 5 CHAR (format is 2 letters + 3 numbers, but DB will reject if not correct anyway )
+  let ele = grabVals(req.body.eles);
+  db.query(query, [courseID], (err, result) => {
+    res.send(result);
+    console.log("Deleting course...");
+    if (err) {
+      console.log(err);
+      res.err("Something went wrong deleting the course.");
+    }
+  });
 });
 
 router.post("/dropCourse", (req, res) => {
   let query = queries.dropCourse;
-  // USER INPUT: studentID, crn
-  // Parameters: studentID-9 digits INT starting with 7, 5 digit CRN
+  let ele = grabVals(req.body.eles);
+  db.query(query, [studentID, crn], (err, result) => {
+    res.send(result);
+    console.log("Dropping course...");
+    if (err) {
+      console.log(err);
+      res.err("Something went wrong dropping the course.");
+    }
+  });
 });
 
 router.post("/facultyCourseList", (req, res) => {
   let query = queries.facultyCourseList;
-  // USER INPUT: facultyID
-  // USER INPUT: semYear from Drop Down (Optional if time permits)
-  db.query(query, [testID], (err, result) => {
+  let ele = grabVals(req.body.eles);
+  db.query(query, [facultyID, semYear], (err, result) => {
     res.send(result);
-    console.log("Getting courses...");
+    console.log("Getting faculty assignments...");
     if (err) {
       console.log(err);
-      res.err("Something went wrong getting courses.");
+      res.err("Something went wrong getting faculty assignments.");
     }
   });
 });
 
 router.post("/modifyCourse", (req, res) => {
   let query = queries.modifyCourse;
-  // USER INPUT: each variable for SET condition is optional, if a field is blank it should be removed from the query
-  // Parameters: courseID- 5 CHAR, courseName- String, credits- single digit INT, deptID- 3 CHAR ('D##')
+  let ele = grabVals(req.body.eles);
+  db.query(query, [courseID, courseName, numCredits, deptID], (err, result) => {
+    res.send(result);
+    console.log("Modifying course...");
+    if (err) {
+      console.log(err);
+      res.err("Something went wrong modifying the course.");
+    }
+  });
 });
 
 router.post("/modifyUser", (req, res) => {
   let query = queries.modifyUser;
-  // OPTIONAL USER INPUTS: each variable for SET is optional, if a field is blank it should be removed from the query
-  // SET Parameters: firstName='String', lastName='String', phoneNumber='10 digits no spaces/dashes', DOB='YYYY-MM-DD', street='String' city='String', zip='5 digit INT'
-  // REQUIRED USER INPUT: userID gets inserted WHERE clause
+  let ele = grabVals(req.body.eles);
+  db.query(query, [firsName, lastName, phoneNumber, DOB, 
+                   street, city, state, zip, userID], (err, result) => {
+    res.send(result);
+    console.log("Modifying user info...");
+    if (err) {
+      console.log(err);
+      res.err("Something went wrong modifying the user.");
+    }
+  });
+  // Parameters above are VALUES for the query, 
+  // but there's also a where clause for userID
+  // which is REQUIRED for any input
 });
 
 router.post("/registerForCourse", (req, res) => {
   let query = queries.registerForCourse;
-  // USER INPUT: studentID, crn
-  // Parameters: studentID-9 digits INT starting with 7, 5 digit CRN
+  let ele = grabVals(req.body.eles);
+  db.query(query, [userID, crn], (err, result) => {
+    res.send(result);
+    console.log("Registering for course...");
+    if (err) {
+      console.log(err);
+      res.err("Something went wrong registering.");
+    }
+  });
 });
 
 router.post("/studentHistory", (req, res) => {
   let query = queries.studentHistory;
-  //USER INPUT = studentID;
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting student history...");
@@ -217,7 +255,7 @@ router.post("/studentHistory", (req, res) => {
 
 router.post("/studentLoginInfo", (req, res) => {
   let query = queries.studentLoginInfo;
-  //USER INPUT = studentID;
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting student login info...");
@@ -230,7 +268,7 @@ router.post("/studentLoginInfo", (req, res) => {
 
 router.post("/transcript", (req, res) => {
   let query = queries.transcript;
-  //USER INPUT = studentID;
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting transcript...");
@@ -243,7 +281,15 @@ router.post("/transcript", (req, res) => {
 
 router.post("/updatePassword", (req, res) => {
   let query = queries.updatePassword;
-  //USER INPUT: userID, password
+  let ele = grabVals(req.body.eles);
+  db.query(query, [studentID, password], (err, result) => {
+    res.send(result);
+    console.log("Getting transcript...");
+    if (err) {
+      console.log(err);
+      res.err("Something went wrong getting transcript.");
+    }
+  });
 });
 
 router.post("/viewAllUsers", (req, res) => {
@@ -275,8 +321,7 @@ router.post("/viewCourseHistory", (req, res) => {
 router.post("/viewFacultyAdvisors", (req, res) => {
   //If we have time, we can create a user input filter for facultyID, but not necessary
   let query = queries.viewFacultyAdvisors;
-  const testID = 700100828;
-  db.query(query, [testID], (err, result) => {
+  db.query(query, (err, result) => {
     res.send(result);
     console.log("Getting advisors list...");
     if (err) {
@@ -288,8 +333,7 @@ router.post("/viewFacultyAdvisors", (req, res) => {
 
 router.post("/viewHolds", (req, res) => {
   let query = queries.viewHolds;
-  // USER INPUT: if not null, studentID
-  // If USER INPUT null, return entire table
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting holds...");
@@ -302,8 +346,7 @@ router.post("/viewHolds", (req, res) => {
 
 router.post("/viewRegistration", (req, res) => {
   let query = queries.viewRegistration;
-  // USER INPUT: if not null, studentID
-  // If USER INPUT null, return entire table
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting registration...");
@@ -329,7 +372,7 @@ router.post("/viewStudentAdvisees", (req, res) => {
 
 router.post("/viewStudentSchedule", (req, res) => {
   let query = queries.viewStudentSchedule;
-  // USER INPUT: studentID
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting student's schedule...");
