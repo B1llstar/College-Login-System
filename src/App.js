@@ -13,6 +13,7 @@ import QueryHandlerFaculty from "./Components/Faculty/QueryHandler.jsx";
 import QueryHandlerResearchStaff from "./Components/ResearchStaff/QueryHandler";
 import QueryHandlerStudent from "./Components/Student_/QueryHandler";
 import DynamicForms from "./Components/DynamicForms.jsx";
+import AllForms from "../src/Components/AllForms";
 
 class App extends Component {
   constructor(props) {

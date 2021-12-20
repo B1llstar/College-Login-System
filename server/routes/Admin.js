@@ -5,7 +5,6 @@ const db = require("../database.js");
 const { response } = require("express");
 const queries = require("../../src/queries/AdminQueries");
 
-
 router.use(express.json());
 router.use(cors());
 
@@ -36,12 +35,45 @@ router.post("/courseSearch", (req, res) => {
   // finalList.crn = '?';
   // finalList.courseID = '?';
   // finalList.courseName = '%?%'; (percent symbols are wildcards)
-  // finalList.Instructor = '%?%';
+  // finalList.Instructor = '%?%';d0
   // These statements can also be combined by concatinating with AND
 });
 
 router.post("/createCourse", (req, res) => {
   let query = queries.createCourse;
+  //console.log("Body:");
+  // console.log(req.body);
+
+  let { courseID, courseName, numCredits, deptID } = req.body;
+
+  // console.log(reqObj);
+  console.log("Individual body props:");
+
+  let args = ["12345", "crigne", 3, "D04"];
+
+  db.query(
+    "INSERT INTO course(courseID, courseName, numCredits, deptID) VALUES(" +
+      "'" +
+      courseID +
+      "', " +
+      "'" +
+      courseName +
+      "', " +
+      "'" +
+      numCredits +
+      "', " +
+      "'" +
+      deptID +
+      "')",
+
+    (err, result) => {
+      if (err) {
+        console.log("err");
+      } else {
+        console.log("nice");
+      }
+    }
+  );
   // USER INPUT: All values required, query must fail if any are missing
   // Parameters: courseID- 5 CHAR, courseName- String, credits- single digit INT, deptID- 3 CHAR ('D##')
   // (if we can make deptID a dropdown, I can write a query to pick from existing deptIDs)

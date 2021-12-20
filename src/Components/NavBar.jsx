@@ -18,7 +18,7 @@ class NavBar extends Component {
         },
         {
           name: "Access Student Registration",
-          onClick: this.props.accessStudentRegistration,
+          onClick: this.props.viewRegistration,
         },
         {
           name: "Create Course",
@@ -58,20 +58,34 @@ class NavBar extends Component {
             "firstName, lastName, phoneNumber, DOB, street, city, state, zip",
           ],
         },
+
         {
           name: "Register Student for Course",
           onClick: this.props.registerStudentForCourse,
         },
-        { name: "View All Courses", onClick: this.props.viewAllCourses },
+        {
+          name: "Update Password",
+          onClick: this.props.updatePassword,
+        },
+
+        { name: "View Course History", onClick: this.props.viewCourseHistory },
+        {
+          name: "View Student Advisees",
+          onClick: this.props.viewStudentAdvisees,
+        },
         {
           name: "View Faculty Advisors",
           onClick: this.props.viewFacultyAdvisors,
         },
         {
           name: "View Student Degree Audit",
-          onClick: this.props.viewStudentDegreeAudit,
+          onClick: this.props.viewStudentDegreeAuditPt2,
         },
         { name: "View Student Holds", onClick: this.props.viewStudentHolds },
+        {
+          name: "View Student Schedule",
+          onClick: this.props.viewStudentSchedule,
+        },
         {
           name: "View Student Transcript",
           onClick: this.props.viewStudentTranscript,
@@ -173,9 +187,8 @@ class NavBar extends Component {
     // let names = this.props.sideBarOptions.eles;
     // console.log(names);
     // Grab the ele array, spit out some buttons
-    console.log(arr);
+
     let eles = arr.map((element) => {
-      console.log(element);
       return (
         <div>
           <a

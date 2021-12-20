@@ -64,7 +64,6 @@ class QueryHandler extends Component {
       }
     );
   };
-  
 
   doHandleGetFacultyLoginInfo = () => {
     this.curQuery = queries.facultyLoginInfo;
@@ -197,6 +196,7 @@ class QueryHandler extends Component {
           viewRegistration={this.doHandleViewRegistration}
           viewStudentAdvisees={this.doHandleViewStudentAdvisees}
           viewStudentSchedule={this.doHandleViewStudentSchedule}
+          userType={"Faculty"}
         ></NavBar>
       </div>
     );
