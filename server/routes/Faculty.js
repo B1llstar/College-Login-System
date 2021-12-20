@@ -15,46 +15,46 @@ router.post("/", (req, res) => {
 
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
-  // for this query, the entire clause is the variable, with the question mark being a different user input
-  // 4 different input fields, CRN, courseID, courseName, and Instructor
-  // let whereClause=one of these 4
-  // let inputVariable=?
-  // finalList.crn = '?';
-  // finalList.courseID = '?';
-  // finalList.courseName = '%?%'; (percent symbols are wildcards)
-  // finalList.Instructor = '%?%';
-  // These statements can also be combined by concatinating with AND
+  let ele = grabVals(req.body.eles);
+  db.query(query, [/*course search variables*/], (err, result) => {
+    res.send(result);
+    console.log("Getting search results...");
+    if (err) {
+      console.log(err);
+      res.err("Something went wrong getting search results.");
+    }
+  });
 });
 
 router.post("/degreeAuditPt1", (req, res) => {
   let query = queries.degreeAuditPt1;
-  //USER INPUT: studentID
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting degree audit p1...");
     if (err) {
       console.log(err);
-      res.err("Something went wrong getting degree audit stats.");
+      res.err("Something went wrong getting degree audit overview.");
     }
   });
 });
 
 router.post("/degreeAuditPt2", (req, res) => {
   let query = queries.degreeAuditPt2;
-  //USER INPUT: studentID
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting degree audit pt2...");
     if (err) {
       console.log(err);
-      res.err("Something went wrong getting degree audit.");
+      res.err("Something went wrong getting degree audit details.");
     }
   });
 });
 
 router.post("/facultyCoursesTeaching", (req, res) => {
   let query = queries.facultyCoursesTeaching;
-  //AUTO FILL INPUT: current userID
+  let ele = grabVals(req.body.eles);
   db.query(query, [facultyID], (err, result) => {
     res.send(result);
     console.log("Getting courses...");
@@ -67,7 +67,7 @@ router.post("/facultyCoursesTeaching", (req, res) => {
 
 router.post("/facultyLoginInfo", (req, res) => {
   let query = queries.getFacultyLoginInfo;
-  //AUTO FILL INPUT: current userID
+  let ele = grabVals(req.body.eles);
   db.query(query, [facultyID], (err, result) => {
     res.send(result);
     console.log("Getting user info...");
@@ -80,12 +80,20 @@ router.post("/facultyLoginInfo", (req, res) => {
 
 router.post("/recordAttendance", (req, res) => {
   let query = queries.recordAttendance;
-  //USER INPUT: studentID, crn, select('Yes' or 'No'), date(YYY-MM-DD)) 
+  let ele = grabVals(req.body.eles);
+  db.query(query, [studentID, crn], (err, result) => {
+    res.send(result);
+    console.log("Storing attendance record...");
+    if (err) {
+      console.log(err);
+      res.err("Something went wrong getting login info.");
+    }
+  });
 });
 
 router.post("/studentHistory", (req, res) => {
   let query = queries.getStudentHistory;
-  //USER INPUT: studentID
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting student history...");
@@ -98,7 +106,7 @@ router.post("/studentHistory", (req, res) => {
 
 router.post("/transcript", (req, res) => {
   let query = queries.getTranscript;
-  //USER INPUT: studentID
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting transcript...");
@@ -111,13 +119,21 @@ router.post("/transcript", (req, res) => {
 
 router.post("/updatePassword", (req, res) => {
   let query = queries.updatePassword;
-  //AUTO FILL INPUT: current userID
-  //USER INPUT: password
+  let ele = grabVals(req.body.eles);
+  console.log(ele);
+  db.query(query, [facultyID, password], (err, result) => {
+      if (err) {
+        console.log(err, "Problem updating password");
+      } else {
+        console.log("Successfully updated password");
+      }
+    }
+  );
 });
 
 router.post("/viewHolds", (req, res) => {
   let query = queries.viewHolds;
-  //USER INPUT: studentID
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting holds...");
@@ -130,7 +146,7 @@ router.post("/viewHolds", (req, res) => {
 
 router.post("/viewRegistration", (req, res) => {
   let query = queries.viewRegistration;
-  //USER INPUT: studentID
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting registration...");
@@ -143,7 +159,7 @@ router.post("/viewRegistration", (req, res) => {
 
 router.post("/viewStudentAdvisees", (req, res) => {
   let query = queries.viewStudentAdvisees;
-  //AUTO FILL INPUT: current userID
+  let ele = grabVals(req.body.eles);
   db.query(query, [facultyID], (err, result) => {
     res.send(result);
     console.log("Getting advisees list...");
@@ -156,7 +172,7 @@ router.post("/viewStudentAdvisees", (req, res) => {
 
 router.post("/viewStudentSchedule", (req, res) => {
   let query = queries.getStudentSchedule;
-  //USER INPUT: studentID
+  let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
     console.log("Getting student's schedule...");
