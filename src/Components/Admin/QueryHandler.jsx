@@ -12,6 +12,8 @@ class QueryHandler extends Component {
       tempData: {
         // for custom inputs
         userID: "",
+        Instructor: "",
+        crn: "",
         courseID: "",
         courseName: "",
         numCredits: "",
@@ -60,9 +62,34 @@ class QueryHandler extends Component {
     });
   };
 
+  checkForNeededProps(first_, toBePassed) {
+    let first = first_;
+    let passed = toBePassed;
+    let vals = Object.values("first");
+    let eles = {};
+
+    for (const prop in first) {
+      console.log(prop);
+      if (prop in passed) {
+        eles[prop] = toBePassed[prop];
+      }
+    }
+
+    return eles;
+  }
+
   doHandleCourseSearch = () => {
     this.curQuery = queries.courseSearch;
-    Axios.post("http://localhost:3305/Admin/courseSearch", {}).then(
+    this.getQueryParams();
+
+    let eles = this.checkForNeededProps(
+      { crn: "", courseID: "", courseName: "", Instructor: "" },
+      this.state.tempData
+    );
+
+    console.log(eles);
+
+    Axios.post("http://localhost:3305/Admin/courseSearch", { eles }).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -384,8 +411,6 @@ class QueryHandler extends Component {
   };
 
   render() {
-    console.log(this.props.tempData);
-
     return (
       <div>
         {this.makeForms()}

@@ -26,6 +26,10 @@ class NavBar extends Component {
           fields: ["courseID, courseName, numCredits, deptID"],
         },
         {
+          name: "Search Course",
+          onClick: this.props.courseSearch,
+        },
+        {
           name: "Create User",
           onClick: this.props.createUser,
           fields: [

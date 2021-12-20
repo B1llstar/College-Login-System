@@ -157,6 +157,7 @@ class App extends Component {
               <QueryHandlerAdmin
                 userType={"Admin"}
                 tempData={this.state.tempData}
+                userCredentials={this.state.userCredentials}
               ></QueryHandlerAdmin>,
               document.getElementById("NavBar")
             );

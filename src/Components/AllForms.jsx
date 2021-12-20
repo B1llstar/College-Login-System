@@ -13,11 +13,13 @@ class AllForms extends Component {
       // for custom inputs
       userID: "",
       courseID: "",
+      crn: "",
       courseName: "",
       numCredits: "",
       deptID: "",
       userType: "",
       firstName: "",
+      Instructor: "",
       lastName: "",
       phoneNum: "",
       DOB: "",
@@ -53,7 +55,9 @@ class AllForms extends Component {
       courseID,
       courseName,
       numCredits,
+      crn,
       deptID,
+      
       userType,
       firstName,
       lastName,
@@ -65,6 +69,7 @@ class AllForms extends Component {
       city,
       state,
       zip,
+      Instructor,
     } = this.state.tempData;
 
     let button = (
@@ -112,7 +117,7 @@ class AllForms extends Component {
                 id="courseID"
                 type="text"
                 className="form-control"
-                placeholder="userType"
+                placeholder="courseID"
                 onChange={(e) => {
                   courseID = e.target.value;
                 }}
@@ -247,6 +252,17 @@ class AllForms extends Component {
                 }}
               />
             </div>
+            <div className="col-3">
+              <input
+                id="crn"
+                type="text"
+                className="form-control"
+                placeholder="crn"
+                onChange={(e) => {
+                  crn = e.target.value;
+                }}
+              />
+            </div>
 
             <div className="col-3">
               <input
@@ -256,6 +272,17 @@ class AllForms extends Component {
                 placeholder="deptID"
                 onChange={(e) => {
                   deptID = e.target.value;
+                }}
+              />
+            </div>
+            <div className="col-3">
+              <input
+                id="Instructor"
+                type="text"
+                className="form-control"
+                placeholder="Instructor"
+                onChange={(e) => {
+                  Instructor = e.target.value;
                 }}
               />
             </div>
@@ -290,6 +317,7 @@ class AllForms extends Component {
                   this.props.passQueryParams({
                     userID,
                     courseID,
+                    crn,
                     userType,
                     firstName,
                     lastName,
@@ -303,7 +331,9 @@ class AllForms extends Component {
                     zip,
                     courseName,
                     numCredits,
+
                     deptID,
+                    Instructor,
                   });
                   // this.props.onAllFormsSubmit(user, pass, userType);
                   this.clearFields(2);
@@ -332,6 +362,7 @@ class AllForms extends Component {
     var {
       userID,
       courseID,
+      crn,
       courseName,
       numCredits,
       deptID,
@@ -346,6 +377,7 @@ class AllForms extends Component {
       city,
       state,
       zip,
+      Instructor,
     } = this.state.tempData;
 
     let fields = ["userID", "firstName"];
@@ -529,6 +561,17 @@ class AllForms extends Component {
                 }}
               />
             </div>
+            <div className="col-3">
+              <input
+                id="crn"
+                type="text"
+                className="form-control"
+                placeholder="crn"
+                onChange={(e) => {
+                  crn = e.target.value;
+                }}
+              />
+            </div>
 
             <div className="col-3">
               <input
@@ -538,6 +581,17 @@ class AllForms extends Component {
                 placeholder="deptID"
                 onChange={(e) => {
                   deptID = e.target.value;
+                }}
+              />
+            </div>
+            <div className="col-3">
+              <input
+                id="Instructor"
+                type="text"
+                className="form-control"
+                placeholder="Instructor"
+                onChange={(e) => {
+                  Instructor = e.target.value;
                 }}
               />
             </div>
@@ -573,6 +627,7 @@ class AllForms extends Component {
 
                   this.props.passQueryParams({
                     userID,
+                    crn,
                     courseID,
                     userType,
                     firstName,
@@ -588,6 +643,7 @@ class AllForms extends Component {
                     courseName,
                     numCredits,
                     deptID,
+                    Instructor,
                   });
                   // this.props.onAllFormsSubmit(user, pass, userType);
                 }}
