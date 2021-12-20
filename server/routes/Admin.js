@@ -49,6 +49,15 @@ function grabVals(input) {
 
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
+  // for this query, the entire clause is the variable, with the question mark being a different user input
+  // 4 different input fields, CRN, courseID, courseName, and Instructor
+  // let whereClause=one of these 4
+  // let inputVariable=?
+  // finalList.crn = '?';
+  // finalList.courseID = '?';
+  // finalList.courseName = '%?%'; (percent symbols are wildcards)
+  // finalList.Instructor = '%?%';d0
+  // These statements can also be combined by concatinating with AND
   
   let needed = { crn: "", courseID: "", courseName: "", Instructor: "" };
   // console.log(req.body.eles);

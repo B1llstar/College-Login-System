@@ -31,6 +31,7 @@ class QueryHandler extends Component {
         zip: "",
       },
     };
+    this.state = { display: <NavBar userType={this.props.userType}></NavBar> };
     this.curQuery = "";
   }
 
@@ -38,7 +39,12 @@ class QueryHandler extends Component {
 
   doHandleGetAdminLoginInfo = () => {
     this.curQuery = queries.adminLoginInfo;
-    Axios.post("http://localhost:3305/Admin/adminLoginInfo", {}).then(
+    this.getQueryParams();
+    let adminID = this.props.userCredentials.userID;
+
+    Axios.post("http://localhost:3305/Admin/adminLoginInfo", {
+      adminID: adminID
+    }).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
