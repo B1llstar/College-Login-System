@@ -411,10 +411,32 @@ class QueryHandler extends Component {
   };
 
   render() {
+    let formData = {
+      userID: "",
+      courseID: "",
+      crn: "",
+      courseName: "",
+      numCredits: "",
+      deptID: "",
+      userType: "",
+      firstName: "",
+      Instructor: "",
+      lastName: "",
+      phoneNum: "",
+      DOB: "",
+      street: "",
+      studentID: "",
+      email: "",
+      city: "",
+      state: "",
+      zip: "",
+    };
+
     return (
       <div>
-        {this.makeForms()}
+        {/*this.makeForms()*/}
         <NavBar
+          formData={this.state.tempData}
           adminLoginInfo={this.doHandleGetAdminLoginInfo}
           facultyCourseList={this.doHandleGetFacultyCourseList}
           courseSearch={this.doHandleCourseSearch}
