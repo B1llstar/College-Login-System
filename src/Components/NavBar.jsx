@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../styles/NavigationStyles.css";
 import DynamicForms from "./DynamicForms";
 import ReactDOM from "react-dom";
+import FormTemplate from "./FormTemplate";
 
 class NavBar extends Component {
   constructor(props) {
@@ -10,68 +11,151 @@ class NavBar extends Component {
     this.state = {
       chosenUserTypeNavEleArray: [],
       curEle: "",
+      // This is where we'll store the user inputs sent from FormTemplate!
+      tempData: {
+        // for custom inputs
+        userID: "",
+        Instructor: "",
+        crn: "",
+        courseID: "",
+        courseName: "",
+        numCredits: "",
+        deptID: "",
+        userType: "",
+        firstName: "",
+        lastName: "",
+        phoneNum: "",
+        DOB: "",
+        street: "",
+        studentID: "",
+        email: "",
+        city: "",
+        state: "",
+        zip: "",
+      },
+      userID: "542",
+      // Commenting out the old onClicks because the query methods can be helpful later
       Admin: [
         {
           name: "Home",
-          onClick: this.wrapper,
-          fields: ["studentID, firstName"],
+          onClick: () =>
+            console.log("Pressed home button. Add a redirect somewhere maybe?"),
         },
         {
           name: "Access Student Registration",
-          onClick: this.props.accessStudentRegistration,
+          // onClick: this.props.viewRegistration,
         },
         {
           name: "Create Course",
-          onClick: this.props.createCourse,
-          fields: ["courseID, courseName, numCredits, deptID"],
+          onClick: () => {
+            this.makeForm(
+              ["courseID", "courseName", "numCredits", "deptID"],
+              this.props.createCourse
+            );
+          },
+        },
+        {
+          name: "Search Course",
+          // -------------------------- DO NOTHING FOR NOW onClick: () => this.makeForm(), --------------------------
+          //onClick: this.props.courseSearch,
         },
         {
           name: "Create User",
-          onClick: this.props.createUser,
-          fields: [
-            "studentID, firstName, lastName, phoneNumber, DOB, street, city, state, zip",
-          ],
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+              "firstName",
+              "lastName",
+              "phoneNumber",
+              "DOB",
+              "street",
+              "city",
+              "state",
+              "zip",
+            ]),
+
+          //onClick: this.props.createUser,
         },
         {
           name: "Delete Course",
-          onClick: this.props.deleteCourse,
-          fields: ["courseID"],
+          onClick: () => this.makeForm(["courseID"]),
+
+          //onClick: this.props.deleteCourse,
         },
         {
           name: "Drop Student Course",
-          onClick: this.props.dropStudentCourse,
-          fields: ["studentID, crn"],
+          onClick: () => this.makeForm(["studentID", "crn"]),
+
+          //onClick: this.props.dropStudentCourse,
         },
         {
           name: "Modify Course",
-          onClick: this.props.modifyCourse,
-          fields: ["courseID, courseName, numCredits, deptID, courseID"],
+          onClick: () =>
+            this.makeForm([
+              "courseID",
+              "courseName",
+              "numCredits",
+              "deptID",
+              "courseID",
+            ]),
+
+          //onClick: this.props.modifyCourse,
         },
         {
           name: "Modify Master Schedule",
-          onClick: this.props.modifyMasterSchedule,
+          // -------------------------- DO NOTHING FOR NOW onClick: () => this.makeForm(), --------------------------
+
+          // onClick: this.props.modifyMasterSchedule,
         },
         {
           name: "Modify User",
-          onClick: this.props.modifyUser,
-          fields: [
-            "firstName, lastName, phoneNumber, DOB, street, city, state, zip",
-          ],
+          //          onClick: this.props.modifyUser,
+          onClick: () =>
+            this.makeForm([
+              "firstName",
+              "lastName",
+              "phoneNumber",
+              "DOB",
+              "street",
+              "city",
+              "state",
+              "zip",
+            ]),
         },
+
         {
           name: "Register Student for Course",
-          onClick: this.props.registerStudentForCourse,
+          // -------------------------- DO NOTHING FOR NOW onClick: () => this.makeForm(), --------------------------
+
+          // onClick: this.props.registerStudentForCourse,
         },
-        { name: "View All Courses", onClick: this.props.viewAllCourses },
+        {
+          name: "Update Password",
+          // -------------------------- DO NOTHING FOR NOW onClick: () => this.makeForm(), --------------------------
+
+          //          onClick: this.props.updatePassword,
+        },
+
+        { name: "View Course History", onClick: () => this.makeForm() },
+
+        //onClick: this.props.viewCourseHistory },
+        {
+          name: "View Student Advisees",
+          onClick: this.props.viewStudentAdvisees,
+        },
         {
           name: "View Faculty Advisors",
           onClick: this.props.viewFacultyAdvisors,
         },
         {
           name: "View Student Degree Audit",
-          onClick: this.props.viewStudentDegreeAudit,
+          onClick: this.props.viewStudentDegreeAuditPt2,
         },
         { name: "View Student Holds", onClick: this.props.viewStudentHolds },
+        {
+          name: "View Student Schedule",
+          onClick: this.props.viewStudentSchedule,
+        },
         {
           name: "View Student Transcript",
           onClick: this.props.viewStudentTranscript,
@@ -141,6 +225,28 @@ class NavBar extends Component {
     // it would affect compile-time, since the state variables would not yet
     // be declared at that point
   }
+
+  // Generate the Form Template
+  // Need to get this to take the fields of whatever the button takes
+  makeForm = (fields, query) => {
+    let arr = [];
+    fields.map((ele) => {
+      console.log(ele);
+    });
+
+    arr = fields;
+    let ele = (
+      <FormTemplate
+        fields={arr}
+        tempData={this.state.tempData}
+        updateParams={this.doHandleUpdateParams}
+        relevantQuery={query} // where query is a function reference
+      ></FormTemplate>
+    );
+
+    ReactDOM.render(ele, document.getElementById("root"));
+  };
+
   wrapper = (func, val) => {
     ReactDOM.render(
       <div>
@@ -148,6 +254,12 @@ class NavBar extends Component {
       </div>,
       document.getElementById("root")
     );
+  };
+
+  doHandleUpdateParams = (key, value) => {
+    console.log(key);
+    this.setState({ key, courseName: value });
+    console.log("Changed state of relevant key: ", this.state.key);
   };
 
   render() {
@@ -173,9 +285,8 @@ class NavBar extends Component {
     // let names = this.props.sideBarOptions.eles;
     // console.log(names);
     // Grab the ele array, spit out some buttons
-    console.log(arr);
+
     let eles = arr.map((element) => {
-      console.log(element);
       return (
         <div>
           <a

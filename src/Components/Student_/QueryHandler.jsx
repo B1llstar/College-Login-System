@@ -4,8 +4,27 @@ import Home from "./Home";
 import Axios from "axios";
 import Display from "../Display";
 import NavBar from "../NavBar";
+import AllForms from "../AllForms";
+import ReactDOM from "react-dom";
 
 class QueryHandler extends Component {
+  state = {
+    tempData: {
+      userID: "",
+      courseID: "",
+      userType: "",
+      firstName: "",
+      lastName: "",
+      phoneNum: "",
+      DOB: "",
+      street: "",
+      studentID: "",
+      email: "",
+      city: "",
+      state: "",
+      zip: "",
+    },
+  };
   constructor(props) {
     super(props);
     this.state = {};
@@ -163,11 +182,27 @@ class QueryHandler extends Component {
     );
   };
 
+  getQueryParams = (paramObj) => {
+    let newObj = paramObj;
+    this.setState({ tempData: newObj });
+    console.log(this.state.tempData);
+    console.log("Updated properties");
+  };
+
+  makeForms = () => {
+    let ele = <AllForms passQueryParams={this.getQueryParams}></AllForms>;
+    ReactDOM.render(ele, document.getElementById("root"));
+    this.setState();
+    console.log();
+    console.log("Generating forms");
+  };
+
   render() {
     let display = this.state.display;
     console.log(display);
     return (
       <div>
+        {this.makeForms()}
         <NavBar
           courseSearch={this.doHandleCourseSearch}
           degreeAuditPt1={this.doHandleGetDegreeAuditPt1}
@@ -181,6 +216,7 @@ class QueryHandler extends Component {
           viewHolds={this.doHandleViewHolds}
           viewRegistration={this.doHandleViewRegistration}
           studentLoginInfo={this.doHandleGetViewStudentLoginInfo}
+          userType={"Student"}
         ></NavBar>
       </div>
     );

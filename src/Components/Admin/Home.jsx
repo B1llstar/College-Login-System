@@ -10,14 +10,14 @@ class Home extends Component {
       fields: [],
       nav: [
         { name: "Home", onClick: "#" },
+        { name: "Faculty Course List", onClick: this.props.coursesTeaching },
         { name: "Course Search", onClick: this.props.courseSearch },
         { name: "Create Course", onClick: this.props.createCourse },
         { name: "Create User", onClick: this.props.createUser },
-        { name: "Degree Audit", onClick: this.props.degreeAuditPt1 },
-        { name: "Degree Audit 2", onClick: this.props.degreeAuditPt2 },
+        { name: "Degree Audit", onClick: this.props.degreeAudit },
+        { name: "Degree Audit 2", onClick: this.props.degreeAudit2 },
         { name: "Delete Course", onClick: this.props.deleteCourse },
         { name: "Drop Course", onClick: this.props.dropCourse },
-        { name: "Faculty Course List", onClick: this.props.facultyCourseList },
         { name: "Modify Course", onClick: this.props.modifyCourse },
         { name: "Modify User", onClick: this.props.modifyUser },
         { name: "Register for Course", onClick: this.props.registerForCourse },
@@ -31,7 +31,6 @@ class Home extends Component {
         { name: "View Advisors", onClick: this.props.viewAdvisors },
         { name: "View All Users", onClick: this.props.viewAllUsers },
         { name: "View Course History", onClick: this.props.viewCourseHistory },
-        { name: "View Faculty Advisors", onClick: this.props.viewFacultyAdvisors },
         { name: "View Holds", onClick: this.props.viewHolds },
         { name: "View Registration", onClick: this.props.viewRegistration },
         {
@@ -128,7 +127,6 @@ class Home extends Component {
   };
 
   render() {
-    this.makeFields();
     let eles = this.state.nav.map((ele) => {
       return (
         <div>
@@ -141,12 +139,14 @@ class Home extends Component {
             href="#"
             onClick={() => {
               ele.onClick();
+
+              this.makeFields(ele.fields);
               ReactDOM.render(<div></div>, document.getElementById("test2"));
             }}
             //aria-controls="v-pills-home"
             //aria-selected="true"
           >
-            {ele.name}
+            {"crigne"}
           </a>
         </div>
       );

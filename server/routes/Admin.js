@@ -5,7 +5,6 @@ const db = require("../database.js");
 const { response } = require("express");
 const queries = require("../../src/queries/AdminQueries");
 
-
 router.use(express.json());
 router.use(cors());
 
@@ -16,32 +15,102 @@ router.post("/", (req, res) => {
 
 router.post("/adminLoginInfo", (req, res) => {
   let query = queries.adminLoginInfo;
+  let userID = req.body.userID;
   // AUTO FILL: userID
   db.query(query, [userID], (err, result) => {
     res.send(result);
+
     console.log("Getting admin info...");
     if (err) {
       console.log(err);
       res.err("Something went wrong admin info.");
+    } else {
+      console.log("Got info");
     }
   });
 });
 
+function checkForNeededProps(first_, toBePassed) {
+  let first = first_;
+  let passed = toBePassed;
+  let vals = Object.values("first");
+  let eles = {};
+  for (const prop in first) {
+    if (prop in passed) eles[prop] = toBePassed[prop];
+  }
+  return eles;
+}
+
+function grabVals(input) {
+  let ele = [];
+  ele = Object.values(input);
+  return ele;
+}
+
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
-  // for this query, the entire clause is the variable, with the question mark being a different user input
-  // 4 different input fields, CRN, courseID, courseName, and Instructor
-  // let whereClause=one of these 4
-  // let inputVariable=?
-  // finalList.crn = '?';
-  // finalList.courseID = '?';
-  // finalList.courseName = '%?%'; (percent symbols are wildcards)
-  // finalList.Instructor = '%?%';
-  // These statements can also be combined by concatinating with AND
+  
+  let needed = { crn: "", courseID: "", courseName: "", Instructor: "" };
+  // console.log(req.body.eles);
+  let ele = grabVals(checkForNeededProps(req.body.eles, needed));
+
+  let instructor = "John";
+  console.log(ele);
+  let args = req.body;
+
+  db.query(query, ele, (err, result) => {
+    if (err) {
+      console.log("Err finding course");
+    } else {
+      console.log("result course search: ", result);
+    }
+  });
 });
+// for this query, the entire clause is the variable, with the question mark being a different user input
+// 4 different input fields, CRN, courseID, courseName, and Instructor
+// let whereClause=one of these 4
+// let inputVariable=?
+// finalList.crn = '?';
+// finalList.courseID = '?';
+// finalList.courseName = '%?%'; (percent symbols are wildcards)
+// finalList.Instructor = '%?%';d0
+// These statements can also be combined by concatinating with AND
 
 router.post("/createCourse", (req, res) => {
   let query = queries.createCourse;
+  //console.log("Body:");
+  // console.log(req.body);
+
+  let { courseID, courseName, numCredits, deptID } = req.body;
+
+  // console.log(reqObj);
+  console.log("Individual body props:");
+
+  let args = ["12345", "crigne", 3, "D04"];
+
+  db.query(
+    "INSERT INTO course(courseID, courseName, numCredits, deptID) VALUES(" +
+      "'" +
+      courseID +
+      "', " +
+      "'" +
+      courseName +
+      "', " +
+      "'" +
+      numCredits +
+      "', " +
+      "'" +
+      deptID +
+      "')",
+
+    (err, result) => {
+      if (err) {
+        console.log("err");
+      } else {
+        console.log("nice");
+      }
+    }
+  );
   // USER INPUT: All values required, query must fail if any are missing
   // Parameters: courseID- 5 CHAR, courseName- String, credits- single digit INT, deptID- 3 CHAR ('D##')
   // (if we can make deptID a dropdown, I can write a query to pick from existing deptIDs)

@@ -13,6 +13,7 @@ import QueryHandlerFaculty from "./Components/Faculty/QueryHandler.jsx";
 import QueryHandlerResearchStaff from "./Components/ResearchStaff/QueryHandler";
 import QueryHandlerStudent from "./Components/Student_/QueryHandler";
 import DynamicForms from "./Components/DynamicForms.jsx";
+import AllForms from "../src/Components/AllForms";
 
 class App extends Component {
   constructor(props) {
@@ -156,6 +157,7 @@ class App extends Component {
               <QueryHandlerAdmin
                 userType={"Admin"}
                 tempData={this.state.tempData}
+                userCredentials={this.state.userCredentials}
               ></QueryHandlerAdmin>,
               document.getElementById("NavBar")
             );
