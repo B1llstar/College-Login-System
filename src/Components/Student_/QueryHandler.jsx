@@ -7,13 +7,21 @@ import NavBar from "../NavBar";
 import AllForms from "../AllForms";
 import ReactDOM from "react-dom";
 
+<<<<<<< HEAD
 class QueryHandler extends Component {
+=======
+class QueryHandler extends Component { //student
+>>>>>>> Chris_Dev_new
   state = {
     tempData: {
       userID: "",
       courseID: "",
       userType: "",
       firstName: "",
+<<<<<<< HEAD
+=======
+      crn:"",
+>>>>>>> Chris_Dev_new
       lastName: "",
       phoneNum: "",
       DOB: "",

@@ -5,6 +5,7 @@ import Axios from "axios";
 import NavBar from "../NavBar";
 import AllForms from "../AllForms";
 import ReactDOM from "react-dom";
+<<<<<<< HEAD
 class QueryHandler extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +32,29 @@ class QueryHandler extends Component {
         zip: "",
       },
     };
+=======
+class QueryHandler extends Component { //admin
+  state = {
+    tempData: {
+      userID: "",
+      courseID: "",
+      userType: "",
+      firstName: "",
+      crn:"",
+      lastName: "",
+      phoneNum: "",
+      DOB: "",
+      street: "",
+      studentID: "",
+      email: "",
+      city: "",
+      state: "",
+      zip: "",
+    },
+  };
+  constructor(props) {
+    super(props);
+>>>>>>> Chris_Dev_new
     this.state = { display: <NavBar userType={this.props.userType}></NavBar> };
     this.curQuery = "";
   }
@@ -56,9 +80,10 @@ class QueryHandler extends Component {
   };
   doHandleGetCoursesTeaching = () => {
     this.curQuery = queries.coursesTeaching;
+    let facultyID = this.state.tempData.facultyID;
 
     Axios.post("http://localhost:3305/Admin/coursesTeaching", {
-      userID: {},
+      facultyID: facultyID,
     }).then((response) => {
       console.log(response);
       console.log("QUERY!!!!!");
@@ -86,6 +111,7 @@ class QueryHandler extends Component {
 
   doHandleCourseSearch = () => {
     this.curQuery = queries.courseSearch;
+<<<<<<< HEAD
     this.getQueryParams();
 
     let eles = this.checkForNeededProps(
@@ -96,12 +122,19 @@ class QueryHandler extends Component {
     console.log(eles);
 
     Axios.post("http://localhost:3305/Admin/courseSearch", { eles }).then(
+=======
+
+    Axios.post("http://localhost:3305/Admin/courseSearch", {
+      //course search parameters - just by courseID if can't do multiquery
+      //I might have to rewrite search query to accomodate, but no problem
+    }).then(
+>>>>>>> Chris_Dev_new
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
         console.log(this.props.obj.data);
-        // this.props.makeTable(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -127,45 +160,54 @@ class QueryHandler extends Component {
 
   doHandleCreateUser = () => {
     this.curQuery = queries.createUser;
+    this.getQueryParams();
+    let { userID, userType, firstName, lastName, phoneNum, DOB, street,
+          city, state, zip } = this.state.tempData;
 
     Axios.post("http://localhost:3305/Admin/createUser", {
-      /*
-      userID = this.props.tempData.userID,
-      userType = this.props.tempData.userType,
-      firstName = this.props.tempData.firstName,
-      lastName = this.props.tempData.lastName,
-      phoneNum = this.props.tempData.phoneNum,
-      DOB = this.props.tempData.DOB,
-      street = this.props.tempData.street,
-      city = this.props.tempData.city,
-      state = this.props.tempData.state,
-      zip = this.props.tempData.state
-      */
+      userID: userID,
+      userType: userType,
+      firstName: firstName,
+      lastName: lastName,
+      phoneNum: phoneNum,
+      DOB: DOB,
+      street: street,
+      city: city,
+      state: state,
+      zip: zip
     }).then((response) => {
       console.log(response);
       console.log("QUERY!!!!!");
       this.props.obj.data = response.data;
       console.log(this.props.obj.data);
-      // this.props.makeTable(this.props.obj.data);
     });
   };
 
   doHandleDeleteCourse = () => {
     this.curQuery = queries.courseSearch;
-    Axios.post("http://localhost:3305/Admin/courseSearch", {}).then(
+    this.getQueryParams();
+    let { courseID } = this.state.tempData;
+
+    Axios.post("http://localhost:3305/Admin/deleteCourse", {
+      courseID: courseID
+    }).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
         console.log(this.props.obj.data);
-        // this.props.makeTable(this.props.obj.data);
       }
     );
   };
 
-  doHandleGetDegreeAuditPt2 = () => {
-    this.curQuery = queries.degreeAuditPt2;
-    Axios.post("http://localhost:3305/Admin/degreeAuditPt2", {}).then(
+  doHandleGetDegreeAuditPt1 = () => {
+    this.curQuery = queries.degreeAuditPt1;
+    this.getQueryParams();
+    let { studentID } = this.state.tempData;
+
+    Axios.post("http://localhost:3305/Admin/degreeAuditPt1", {
+        studentID: studentID
+    }).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -176,22 +218,33 @@ class QueryHandler extends Component {
     );
   };
 
-  doHandleDeleteCourse = () => {
-    this.curQuery = queries.deleteCourse;
-    Axios.post("http://localhost:3305/Admin/deleteCourse", {}).then(
+  doHandleGetDegreeAuditPt2 = () => {
+    this.curQuery = queries.degreeAuditPt2;
+    this.getQueryParams();
+    let { studentID } = this.state.tempData;
+
+    Axios.post("http://localhost:3305/Admin/degreeAuditPt2", {
+        studentID: studentID
+    }).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
         console.log(this.props.obj.data);
-        // this.props.makeTable(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
       }
     );
   };
 
   doHandleDropCourse = () => {
     this.curQuery = queries.dropCourse;
-    Axios.post("http://localhost:3305/Admin/dropCourse", {}).then(
+    this.getQueryParams();
+    let { studentID, crn } = this.state.tempData;
+
+    Axios.post("http://localhost:3305/Admin/dropCourse", {
+      studentID: studentID,
+      crn: crn
+    }).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -215,26 +268,47 @@ class QueryHandler extends Component {
 
   doHandleModifyCourse = () => {
     this.curQuery = queries.modifyCourse;
-    Axios.post("http://localhost:3305/Admin/modifyCourse", {}).then(
+    this.getQueryParams();
+    let { courseID, courseName, numCredits, deptID } = this.state.tempData;
+
+    Axios.post("http://localhost:3305/Admin/modifyCourse", {
+      courseID: courseID,
+      courseName: courseName,
+      numCredits: numCredits,
+      deptID: deptID
+    }).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
         console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
       }
     );
   };
 
   doHandleModifyUser = () => {
     this.curQuery = queries.modifyUser;
-    Axios.post("http://localhost:3305/Admin/modifyUser", {}).then(
+    this.getQueryParams();
+    let { userID, userType, firstName, lastName, phoneNum, DOB, street,
+      city, state, zip } = this.state.tempData;
+
+    Axios.post("http://localhost:3305/Admin/modifyUser", {
+      userID: userID,
+      userType: userType,
+      firstName: firstName,
+      lastName: lastName,
+      phoneNum: phoneNum,
+      DOB: DOB,
+      street: street,
+      city: city,
+      state: state,
+      zip: zip
+    }).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
         this.props.obj.data = response.data;
         console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -417,6 +491,7 @@ class QueryHandler extends Component {
   };
 
   render() {
+<<<<<<< HEAD
     let formData = {
       userID: "",
       courseID: "",
@@ -441,6 +516,13 @@ class QueryHandler extends Component {
     return (
       <div>
         {/*this.makeForms()*/}
+=======
+    console.log(this.props.tempData);
+
+    return (
+      <div>
+        {this.makeForms()}
+>>>>>>> Chris_Dev_new
         <NavBar
           formData={this.state.tempData}
           adminLoginInfo={this.doHandleGetAdminLoginInfo}
