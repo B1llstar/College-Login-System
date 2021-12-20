@@ -12,9 +12,9 @@ module.exports = {
     // replaced depending on field, can be more than one by using AND
     // VARIABLE VALUES:
     // finalList.crn = '?';
-    // finalList.courseID = '?';
-    // finalList.courseName = '%?%'; (percent symbols are wildcards, this returns anything containing whats between them
-    // finalList.Instructor = '%?%'; */
+    // finalList.courseID LIKE '%?%';
+    // finalList.courseName LIKE '%?%'; (percent symbols are wildcards, this returns anything containing whats between them
+    // finalList.Instructor LIKE '%?%'; */
     courseSearch:
     "SELECT finalList.crn AS 'CRN', finalList.courseID AS 'Course ID', finalList.courseName AS 'Course Name', finalList.roomID AS 'Room', \n" +
     "finalList.Instructor, finalList.Days, finalList.Time, finalList.semYear AS 'Semester' FROM\n" +
