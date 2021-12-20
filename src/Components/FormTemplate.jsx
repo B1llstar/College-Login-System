@@ -65,8 +65,8 @@ class FormTemplate extends Component {
               e.preventDefault();
 
               this.props.updateParams();
+              this.props.relevantQuery();
               // this.props.onAllFormsSubmit(user, pass, userType);
-              this.clearFields(2);
             }}
           >
             Sign in
