@@ -47,12 +47,8 @@ class NavBar extends Component {
         },
         {
           name: "Create Course",
-          onClick: () => {
-            this.makeForm(
-              ["courseID", "courseName", "numCredits", "deptID"],
-              this.props.createCourse
-            );
-          },
+          onClick: () =>
+            this.makeForm(["courseID", "courseName", "numCredits", "deptID"]),
         },
         {
           name: "Search Course",
@@ -228,7 +224,7 @@ class NavBar extends Component {
 
   // Generate the Form Template
   // Need to get this to take the fields of whatever the button takes
-  makeForm = (fields, query) => {
+  makeForm = (fields) => {
     let arr = [];
     fields.map((ele) => {
       console.log(ele);
@@ -240,7 +236,6 @@ class NavBar extends Component {
         fields={arr}
         tempData={this.state.tempData}
         updateParams={this.doHandleUpdateParams}
-        relevantQuery={query} // where query is a function reference
       ></FormTemplate>
     );
 
