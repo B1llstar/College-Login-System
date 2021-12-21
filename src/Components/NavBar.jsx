@@ -41,9 +41,20 @@ class NavBar extends Component {
           onClick: () =>
             console.log("Pressed home button. Add a redirect somewhere maybe?"),
         },
+
         {
           name: "Access Student Registration",
           // onClick: this.props.viewRegistration,
+        },
+        {
+          name: "Test Login",
+          onClick: () => {
+            this.makeForm(
+              ["userEmail", "password"],
+
+              this.props.testLogin
+            );
+          },
         },
         {
           name: "Create Course",
@@ -56,6 +67,13 @@ class NavBar extends Component {
         },
         {
           name: "Search Course",
+          onClick: () => {
+            this.makeForm(
+              // ["crn", "courseID", "courseName", "Instructor"],
+              ["crn"],
+              this.props.courseSearch
+            );
+          },
 
           // -------------------------- DO NOTHING FOR NOW onClick: () => this.makeForm(), --------------------------
           //onClick: this.props.courseSearch,
@@ -136,7 +154,7 @@ class NavBar extends Component {
 
           //          onClick: this.props.updatePassword,
         },
-
+        { name: "View All Users", onClick: () => this.props.viewAllUsers },
         { name: "View Course History", onClick: () => this.makeForm() },
 
         //onClick: this.props.viewCourseHistory },
