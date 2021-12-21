@@ -171,7 +171,7 @@ class NavBar extends Component {
         //onClick: this.props.viewCourseHistory },
         {
           name: "View Student Advisees",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.props.viewStudentAdvisees(),
         },
 
         {

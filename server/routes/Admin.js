@@ -92,13 +92,10 @@ function grabVals(input) {
 // SELECT
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
+  req.body.newObj["crn"] = parseInt(req.body.newObj["crn"]);
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
 
-  let { crn } = req.body.newObj;
-
-  console.log("crn ", crn);
-  console.log(req.body);
-
-  db.query(query, [parseInt(crn)], (err, result) => {
+  db.query(newQuery, (err, result) => {
     if (err) {
       console.log("Err finding course");
     } else {
@@ -383,9 +380,11 @@ router.post("/viewRegistration", (req, res) => {
 router.post("/viewStudentAdvisees", (req, res) => {
   //If we have time, we can create a user input filter for studentID, but not necessary
   let query = queries.viewStudentAdvisees;
+
   db.query(query, (err, result) => {
     res.send(result);
     console.log("Getting advisees list...");
+    console.log(result);
     if (err) {
       console.log(err);
       res.err("Something went wrong getting advisees.");
