@@ -110,7 +110,7 @@ class NavBar extends Component {
 
         {
           name: "Drop Student Course",
-          onClick: () => this.makeForm(["studentID", "crn"]),
+          onClick: () => this.makeForm(["studentID", "crn"], this.props.dropCourse),
         },
 
         {
@@ -122,7 +122,7 @@ class NavBar extends Component {
               "numCredits",
               "deptID",
               "courseID",
-            ]),
+            ], this.props.modifyCourse),
         },
 
         {
@@ -153,12 +153,12 @@ class NavBar extends Component {
 
         {
           name: "Register Student for Course",
-          onClick: () => this.makeForm(["studentID", "crn"]),
+          onClick: () => this.makeForm(["studentID", "crn"], this.props.registerStudentForCourse),
         },
 
         {
           name: "Update Password",
-          onClick: () => this.makeForm(["password", "userID"]),
+          onClick: () => this.makeForm(["password", "userID"], this.props.updatePassword),
         },
 
         {
@@ -166,42 +166,42 @@ class NavBar extends Component {
           //onClick: () => this.makeForm()
         },
         { name: "View All Users", onClick: () => this.props.viewAllUsers },
-        { name: "View Course History", onClick: () => this.makeForm() },
+        { name: "View Course History", onClick: () => this.props.viewCourseHistory },
 
         //onClick: this.props.viewCourseHistory },
         {
           name: "View Student Advisees",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.props.viewStudentAdvisees
         },
 
         {
           name: "View Faculty Advisors",
-          onClick: () => this.makeForm(["facultyID"]),
+          onClick: () => this.makeForm(["facultyID"], this.props.viewFacultyAdvisors),
         },
 
         {
           name: "View Student Degree Audit Pt1",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.makeForm(["studentID"], this.props.degreeAuditPt2),
         },
 
         {
           name: "View Student Holds",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.makeForm(["studentID"], this.props.viewStudentHolds),
         },
 
         {
           name: "View Student Registration",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.makeForm(["studentID"], this.props.viewRegistration),
         },
 
         {
           name: "View Student Schedule",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.makeForm(["studentID"], this.props.viewStudentSchedule ),
         },
 
         {
           name: "View Student Transcript",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.makeForm(["studentID"], this.props.viewStudentTranscript),
         },
       ],
 

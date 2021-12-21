@@ -309,12 +309,21 @@ router.post("/transcript", (req, res) => {
 
 router.post("/updatePassword", (req, res) => {
   let query = queries.updatePassword;
-  //USER INPUT: userID, password
+  //input order: password, userID
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
+  console.log(req.body.newObj);
+  db.query(newQuery, (err, result) => {
+    if (err) {
+      console.log("err");
+    } else {
+      console.log("nice");
+    }
+  });
 });
 
 router.post("/viewAllUsers", (req, res) => {
   let query = queries.viewAllUsers;
-  //We should create a user input filter by userID for at least this category
+  //no query input
   db.query(query, (err, result) => {
     res.send(result);
     console.log("Getting full user list...");
@@ -328,6 +337,7 @@ router.post("/viewAllUsers", (req, res) => {
 router.post("/viewCourseHistory", (req, res) => {
   //If we have time, we can create user input filters for courseID and semYear, but not necessary
   let query = queries.viewCourseHistory;
+  //no query input
   db.query(query, (err, result) => {
     res.send(result);
     console.log("Getting course history...");
@@ -341,8 +351,8 @@ router.post("/viewCourseHistory", (req, res) => {
 router.post("/viewFacultyAdvisors", (req, res) => {
   //If we have time, we can create a user input filter for facultyID, but not necessary
   let query = queries.viewFacultyAdvisors;
-  const testID = 700100828;
-  db.query(query, [testID], (err, result) => {
+  //no query input
+  db.query(query,  (err, result) => {
     res.send(result);
     console.log("Getting advisors list...");
     if (err) {
@@ -354,9 +364,12 @@ router.post("/viewFacultyAdvisors", (req, res) => {
 
 router.post("/viewHolds", (req, res) => {
   let query = queries.viewHolds;
-  // USER INPUT: if not null, studentID
-  // If USER INPUT null, return entire table
-  db.query(query, [studentID], (err, result) => {
+  let studentID = req.body.newObj["studentID"];
+
+  console.log("student ID: ", studentID);
+  console.log(req.body);
+
+  db.query(query, studentID, (err, result) => {
     res.send(result);
     console.log("Getting holds...");
     if (err) {
@@ -368,9 +381,12 @@ router.post("/viewHolds", (req, res) => {
 
 router.post("/viewRegistration", (req, res) => {
   let query = queries.viewRegistration;
-  // USER INPUT: if not null, studentID
-  // If USER INPUT null, return entire table
-  db.query(query, [studentID], (err, result) => {
+  let studentID = req.body.newObj["studentID"];
+
+  console.log("student ID: ", studentID);
+  console.log(req.body);
+
+  db.query(query, studentID, (err, result) => {
     res.send(result);
     console.log("Getting registration...");
     if (err) {
@@ -383,7 +399,8 @@ router.post("/viewRegistration", (req, res) => {
 router.post("/viewStudentAdvisees", (req, res) => {
   //If we have time, we can create a user input filter for studentID, but not necessary
   let query = queries.viewStudentAdvisees;
-  db.query(query, (err, result) => {
+
+  db.query(query, studentID, (err, result) => {
     res.send(result);
     console.log("Getting advisees list...");
     if (err) {
@@ -395,8 +412,13 @@ router.post("/viewStudentAdvisees", (req, res) => {
 
 router.post("/viewStudentSchedule", (req, res) => {
   let query = queries.viewStudentSchedule;
-  // USER INPUT: studentID
-  db.query(query, [studentID], (err, result) => {
+
+  let studentID = req.body.newObj["studentID"];
+
+  console.log("student ID: ", studentID);
+  console.log(req.body);
+
+  db.query(query, studentID, (err, result) => {
     res.send(result);
     console.log("Getting student's schedule...");
     if (err) {
