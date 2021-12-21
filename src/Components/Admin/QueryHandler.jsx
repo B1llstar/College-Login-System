@@ -1,22 +1,15 @@
 import React, { Component } from "react";
 import queries from "./getQueries";
-
 import Home from "./Home";
 import Axios from "axios";
 import NavBar from "../NavBar";
 import AllForms from "../AllForms";
 import ReactDOM from "react-dom";
-import "../../styles/bodyStyles.css";
-
 class QueryHandler extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      res: [],
-      msg: "",
       reqBodyObj: {},
-      data: [],
-      password: "",
       tempData: {
         // for custom inputs
         userID: "",
@@ -40,63 +33,9 @@ class QueryHandler extends Component {
       },
     };
     this.curQuery = "";
-    let temp = this.makeSomeTables.bind(this);
-    this.makeSomeTables = temp;
   }
 
-  makeSomeTables = (arr, domTarget) => {
-    this.setState({ data: arr });
-    let unique = [];
-    let thList = [];
-    let counter = 0;
-    let result = arr.map((element, index) => {
-      let keys = Object.keys(element);
-      let tdList = [];
-
-      // grab unique elements
-      keys.map((ele) => {
-        if (!unique.includes(ele)) {
-          unique.push(ele);
-        }
-      });
-
-      // make data consisting of each property
-      // map each unique property into an object map containing elements of property unique
-      let tdElements = unique.map((ele, index) => {
-        tdList.push(<td>{element[ele]}</td>);
-
-        if (counter < unique.length) {
-          thList.push(<th id="dbHead">{unique[index]}</th>);
-          counter++;
-        }
-      });
-
-      return <tr id="dbRow">{tdList}</tr>;
-    });
-
-    let ele_ = (
-      <table className="table">
-        <thead class="thead-dark">
-          <tr>{thList}</tr>
-        </thead>
-        <tbody>{result}</tbody>
-      </table>
-    );
-    ReactDOM.render(
-      <div className="main">{ele_}</div>,
-      document.getElementById(domTarget)
-    );
-    console.log(unique);
-  };
-
-  doHandleGetTranscript = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
-    Axios.post("http://localhost:3305/Admin/transcript", { newObj }).then(
-      (response) => {
-        this.makeSomeTables(response.data, "test2");
-      }
-    );
-  };
+  tableMaker = () => {};
 
   doHandleGetAdminLoginInfo = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly(["userID"]);
@@ -107,11 +46,17 @@ class QueryHandler extends Component {
     );
   };
   doHandleGetCoursesTeaching = () => {
-    Axios.post("http://localhost:3305/Admin/coursesTeaching", {}).then(
-      (response) => {
-        console.log(response);
-      }
-    );
+    this.curQuery = queries.coursesTeaching;
+
+    Axios.post("http://localhost:3305/Admin/coursesTeaching", {
+      userID: {},
+    }).then((response) => {
+      console.log(response);
+      console.log("QUERY!!!!!");
+      this.props.obj.data = response.data;
+      console.log(this.props.obj.data);
+      this.props.makeTable(this.props.obj.data);
+    });
   };
 
   checkForNeededProps(first_, toBePassed) {
@@ -131,12 +76,8 @@ class QueryHandler extends Component {
   }
 
   doHandleCourseSearch = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "crn",
-      "courseID",
-      "courseName",
-      "Instructor",
-    ]);
+    this.curQuery = queries.courseSearch;
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["crn"]);
     console.log(newObj);
     Axios.post("http://localhost:3305/Admin/courseSearch", { newObj }).then(
       (response) => {
@@ -160,7 +101,7 @@ class QueryHandler extends Component {
       (response) => {
         console.log("Response");
         console.log(response);
-        this.makeSomeTables(response.data, "test2");
+
         // this.props.makeTable(this.props.obj.data);
       }
     );
@@ -169,7 +110,7 @@ class QueryHandler extends Component {
   doHandleCreateUser = () => {
     this.curQuery = queries.createUser;
     let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "userID",
+      "studentID",
       "userType",
       "firstName",
       "lastName",
@@ -180,12 +121,13 @@ class QueryHandler extends Component {
       "state",
       "zip",
     ]);
-    Axios.post("http://localhost:3305/Admin/createUser", { newObj }).then(
+    console.log("Submitted request body: " + newObj);
+    Axios.post("http://localhost:3305/Admin/createUser", {}).then(
       (response) => {
         console.log(response);
-
-        this.makeSomeTables(response.data, "test2");
-
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
         // this.props.makeTable(this.props.obj.data);
       }
     );
@@ -202,70 +144,57 @@ class QueryHandler extends Component {
     );
   };
 
-  doHandleGetDegreeAudit = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
-    let res = [];
-    Axios.post("http://localhost:3305/Admin/degreeAuditPt1", { newObj }).then(
+  doHandleGetDegreeAuditPt2 = () => {
+    this.curQuery = queries.degreeAuditPt2;
+    Axios.post("http://localhost:3305/Admin/degreeAuditPt2", {}).then(
       (response) => {
-        console.log("RESPONSE PT 1", response);
-        res = response.data;
-        this.makeSomeTables(res, "test2");
-      }
-    );
-
-    Axios.post("http://localhost:3305/Admin/degreeAuditPt2", { newObj }).then(
-      (response) => {
-        console.log("RESPONSE PT 2", response);
-        res = response.data;
-
-        this.makeSomeTables(res, "test3");
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
       }
     );
   };
 
   doHandleDropCourse = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "studentID",
-      "crn",
-    ]);
-
-    Axios.post("http://localhost:3305/Admin/dropCourse", { newObj }).then(
+    this.curQuery = queries.dropCourse;
+    Axios.post("http://localhost:3305/Admin/dropCourse", {}).then(
       (response) => {
         console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
       }
     );
   };
 
   doHandleGetFacultyCourseList = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly(["facultyID"]);
-    Axios.post("http://localhost:3305/Admin/facultyCourseList", {
-      newObj,
-    }).then((response) => {
-      console.log(response);
-    });
+    this.curQuery = queries.coursesTeaching;
+    Axios.post("http://localhost:3305/Admin/facultyCourseList", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
   };
 
   doHandleModifyCourse = () => {
-    let res = [];
-
     this.curQuery = queries.modifyCourse;
-    let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "courseID",
-      "courseName",
-      "numCredits",
-      "deptID",
-    ]);
-    Axios.post("http://localhost:3305/Admin/modifyCourse", { newObj }).then(
+    Axios.post("http://localhost:3305/Admin/modifyCourse", {}).then(
       (response) => {
         console.log(response);
-        res = response.data;
-        this.makeSomeTables(res, "test2");
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
       }
     );
   };
 
   doHandleModifyUser = () => {
-    let res = [];
     let newObj = this.generateObjectWithNeededPropertiesOnly([
       "firstName",
       "lastName",
@@ -281,48 +210,46 @@ class QueryHandler extends Component {
     console.log(newObj);
 
     Axios.post("http://localhost:3305/Admin/modifyUser", { newObj }).then(
-      (response) => {
-        res = response.data;
-        this.makeSomeTables(res, "test2");
-      }
+      (response) => {}
     );
   };
 
   doHandleRegisterForCourse = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "studentID",
-      "crn",
-    ]);
-    Axios.post("http://localhost:3305/Admin/registerForCourse", {
-      newObj,
-    }).then((response) => {
-      console.log(response);
-      // this.makeSomeTables(res, "test2");
-      ReactDOM.render(
-        <div className="main">
-          <h2>Registered for course {newObj["crn"]}</h2>
-        </div>,
-        document.getElementById("test2")
-      );
-    });
+    this.curQuery = queries.registerForCourse;
+    Axios.post("http://localhost:3305/Admin/registerForCourse", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+      }
+    );
   };
 
   doHandleGetStudentHistory = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
-    Axios.post("http://localhost:3305/Admin/viewStudentHistory", {
-      newObj,
-    }).then((response) => {
-      console.log(response);
-    });
+    Axios.post("http://localhost:3305/Admin/viewStudentHistory", { newObj }).then(
+      (response) => {
+        console.log(response);
+      }
+    );
   };
 
   doHandleGetStudentLoginInfo = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly(["userID"]);
-    Axios.post("http://localhost:3305/Admin/adminLoginInfo", {
-      newObj,
-    }).then((response) => {
-      console.log(response);
-    });
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
+    Axios.post("http://localhost:3305/Admin/viewStudentLoginInfo", { newObj }).then(
+      (response) => {
+        console.log(response);
+      }
+    );
+  };
+
+  doHandleGetTranscript = () => {
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
+    Axios.post("http://localhost:3305/Admin/viewStudentSchedule", { newObj }).then(
+      (response) => {
+        console.log(response);
+      }
+    );
   };
 
   doHandleLogin = () => {
@@ -344,6 +271,11 @@ class QueryHandler extends Component {
       }
     });
 
+    console.log(newObj);
+    console.log(newObj[0]);
+    let eles2 = [];
+    console.log(Object.values(newObj));
+
     Axios.post("http://localhost:3305/Admin/courseSearch", {
       newObj,
     }).then((response) => {
@@ -353,36 +285,39 @@ class QueryHandler extends Component {
 
   doHandleUpdatePassword = () => {
     this.curQuery = queries.updatePassword;
-    let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "password",
-      "userID",
-    ]);
-
-    Axios.post("http://localhost:3305/Admin/updatePassword", { newObj }).then(
+    Axios.post("http://localhost:3305/Admin/updatePassword", {}).then(
       (response) => {
         console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
       }
     );
   };
 
   doHandleViewAllUsers = () => {
     this.curQuery = queries.viewAllUsers;
-
     Axios.post("http://localhost:3305/Admin/viewAllUsers", {}).then(
       (response) => {
         console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
       }
     );
   };
 
-  doHandleViewStudentHistory = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
-
-    Axios.post("http://localhost:3305/Admin/viewCourseHistory", {
-      newObj,
-    }).then((response) => {
-      console.log(response);
-    });
+  doHandleViewCourseHistory = () => {
+    this.curQuery = queries.viewCourseHistory;
+    Axios.post("http://localhost:3305/Admin/viewCourseHistory", {}).then(
+      (response) => {
+        console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
+      }
+    );
   };
 
   doHandleViewFacultyAdvisors = () => {
@@ -390,6 +325,10 @@ class QueryHandler extends Component {
     Axios.post("http://localhost:3305/Admin/viewFacultyAdvisors", {}).then(
       (response) => {
         console.log(response);
+        console.log("QUERY!!!!!");
+        this.props.obj.data = response.data;
+        console.log(this.props.obj.data);
+        this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -422,11 +361,11 @@ class QueryHandler extends Component {
 
   doHandleViewStudentSchedule = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
-    Axios.post("http://localhost:3305/Admin/viewStudentSchedule", {
-      newObj,
-    }).then((response) => {
-      console.log(response);
-    });
+    Axios.post("http://localhost:3305/Admin/viewStudentSchedule", { newObj }).then(
+      (response) => {
+        console.log(response);
+      }
+    );
   };
 
   generateObjectWithNeededPropertiesOnly = (neededPropsArr) => {
@@ -458,16 +397,7 @@ class QueryHandler extends Component {
       }
     );
   };
-  /*
-  doHandleGetTranscript = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
-    Axios.post("http://localhost:3305/Admin/transcript", { newObj }).then(
-      (response) => {
-        console.log(response[0]);
-      }
-    );
-  };
-*/
+
   getQueryParams = (paramObj) => {
     let newObj = paramObj;
     console.log("Trying to update query: " + paramObj);
@@ -538,8 +468,8 @@ class QueryHandler extends Component {
           createCourse={this.doHandleCreateCourse}
           createUser={this.doHandleCreateUser}
           deleteCourse={this.doHandleDeleteCourse}
-          degreeAudit={this.doHandleGetDegreeAudit}
-          getTranscript={this.doHandleGetTranscript}
+          // degreeAuditPt1={this.doHandleGetDegreeAuditPt1}
+          degreeAuditPt2={this.doHandleGetDegreeAuditPt2}
           dropStudentCourse={this.doHandleDropCourse}
           testLogin={this.doHandleTestLogin}
           modifyCourse={this.doHandleModifyCourse}
@@ -550,10 +480,9 @@ class QueryHandler extends Component {
           viewStudentTranscript={this.doHandleGetTranscript}
           updatePassword={this.doHandleUpdatePassword}
           viewAllUsers={this.doHandleViewAllUsers}
-          viewCourseHistory={this.doHandleViewStudentHistory}
-          viewStudentHistory={this}
+          viewCourseHistory={this.doHandleViewCourseHistory}
           viewFacultyAdvisors={this.doHandleViewFacultyAdvisors}
-          // viewFacultyAdvisors={this.doHandleViewAdvisors}
+          viewFacultyAdvisors={this.doHandleViewAdvisors}
           viewStudentHolds={this.doHandleViewHolds}
           viewRegistration={this.doHandleViewRegistration}
           viewStudentAdvisees={this.doHandleViewStudentAdvisees}
