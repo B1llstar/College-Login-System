@@ -81,18 +81,8 @@ class QueryHandler extends Component {
 
   doHandleCourseSearch = () => {
     this.curQuery = queries.courseSearch;
-    let reqBody = this.state.reqBodyObj;
-    let newObj = {};
-    let needed = ["crn", "courseID", "courseName", "Instructor"];
-    let eles = needed.map((ele) => {
-      if (ele in reqBody) {
-        console.log(ele);
-        newObj[ele] = reqBody[ele];
-      } else {
-        newObj[ele] = "";
-      }
-    });
-
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["crn"]);
+    console.log(newObj);
     Axios.post("http://localhost:3305/Admin/courseSearch", { newObj }).then(
       (response) => {
         console.log(response);
@@ -104,29 +94,13 @@ class QueryHandler extends Component {
 
   doHandleCreateCourse = () => {
     this.curQuery = queries.createCourse;
-    let reqBody = this.state.reqBodyObj;
-    let newObj = {};
-    let needed = ["courseID", "courseName", "numCredits", "deptID"];
-    let eles = needed.map((ele) => {
-      if (ele in reqBody) {
-        console.log(ele);
-        //   if (ele == "numCredits") {
-        //   console.log("Found an integer");
-        // newObj[ele] = parseInt(reqBody[ele]);
-
-        // using in instead of includes, it's better apparently
-        newObj[ele] = reqBody[ele];
-      } else {
-        newObj[ele] = "";
-      }
-    });
-
-    console.log(newObj);
-    console.log(newObj[0]);
-    let eles2 = [];
-    console.log(Object.values(newObj));
-
-    console.log("Query");
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "courseID",
+      "courseName",
+      "numCredits",
+      "deptID",
+    ]);
+    console.log("Submitted request body: " + newObj);
     Axios.post("http://localhost:3305/Admin/createCourse", { newObj }).then(
       (response) => {
         console.log("Response");
@@ -139,18 +113,19 @@ class QueryHandler extends Component {
 
   doHandleCreateUser = () => {
     this.curQuery = queries.createUser;
-    let needed = [
-      "userID",
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "studentID",
       "userType",
       "firstName",
       "lastName",
-      "phoneNum",
+      "phoneNumber",
       "DOB",
       "street",
       "city",
       "state",
       "zip",
-    ];
+    ]);
+    console.log("Submitted request body: " + newObj);
     Axios.post("http://localhost:3305/Admin/createUser", {}).then(
       (response) => {
         console.log(response);
@@ -301,6 +276,37 @@ class QueryHandler extends Component {
     );
   };
 
+  doHandleLogin = () => {
+    this.curQuery = queries.createCourse;
+    let reqBody = this.state.reqBodyObj;
+    let newObj = {};
+    let needed = ["userName", "password", "userType"];
+    let eles = needed.map((ele) => {
+      if (ele in reqBody) {
+        console.log(ele);
+        //   if (ele == "numCredits") {
+        //   console.log("Found an integer");
+        // newObj[ele] = parseInt(reqBody[ele]);
+
+        // using in instead of includes, it's better apparently
+        newObj[ele] = reqBody[ele];
+      } else {
+        newObj[ele] = "";
+      }
+    });
+
+    console.log(newObj);
+    console.log(newObj[0]);
+    let eles2 = [];
+    console.log(Object.values(newObj));
+
+    Axios.post("http://localhost:3305/Admin/courseSearch", {
+      newObj,
+    }).then((response) => {
+      console.log(response);
+    });
+  };
+
   doHandleUpdatePassword = () => {
     this.curQuery = queries.updatePassword;
     Axios.post("http://localhost:3305/Admin/updatePassword", {}).then(
@@ -389,6 +395,7 @@ class QueryHandler extends Component {
 
   doHandleViewRegistration = () => {
     this.curQuery = queries.viewRegistration;
+
     Axios.post("http://localhost:3305/Admin/viewRegistration", {}).then(
       (response) => {
         console.log(response);
@@ -409,6 +416,39 @@ class QueryHandler extends Component {
         this.props.obj.data = response.data;
         console.log(this.props.obj.data);
         this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
+  generateObjectWithNeededPropertiesOnly = (neededPropsArr) => {
+    let newObj = {};
+    let reqBody = this.state.reqBodyObj;
+    let neededProps = neededPropsArr;
+    neededProps.map((ele) => {
+      if (ele in reqBody) {
+        //   if (ele == "numCredits") {
+        //   console.log("Found an integer");
+        // newObj[ele] = parseInt(reqBody[ele]);
+
+        // using in instead of includes, it's better apparently
+        newObj[ele] = reqBody[ele];
+      } else {
+        newObj[ele] = "";
+      }
+    });
+
+    return newObj;
+  };
+
+  doHandleTestLogin = () => {
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "userEmail",
+      "password",
+    ]);
+
+    Axios.post("http://localhost:3305/Admin/testLogin", { newObj }).then(
+      (response) => {
+        console.log(response);
       }
     );
   };
@@ -487,6 +527,7 @@ class QueryHandler extends Component {
           // degreeAuditPt1={this.doHandleGetDegreeAuditPt1}
           degreeAuditPt2={this.doHandleGetDegreeAuditPt2}
           dropStudentCourse={this.doHandleDropCourse}
+          testLogin={this.doHandleTestLogin}
           modifyCourse={this.doHandleModifyCourse}
           modifyUser={this.doHandleModifyUser}
           registerStudentForCourse={this.doHandleRegisterForCourse}

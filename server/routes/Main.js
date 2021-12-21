@@ -64,68 +64,66 @@ router.post("/login", (req, res) => {
           console.log("User ID: " + result[0].userID);
           console.log(userType);
 
-          switch (userType) {
-            case "Admin":
-              if (userIDString === "6") {
-                console.log("Success! Logged in as Admin");
-                res.send({
-                  firstName: firstName,
-                  userType: userType,
-                  validated: true,
-                  auth: makeAuth(),
-                  userID: userID,
-                  userEmail: email,
-                  password: password,
+          switch (userIDString) {
+            case "6": {
+              console.log("Success! Logged in as Admin");
+              res.send({
+                firstName: firstName,
+                userType: userType,
+                validated: true,
+                auth: makeAuth(),
+                userID: userID,
+                userEmail: email,
+                password: password,
 
-                  // issue an auth token upon successful login
-                });
-              }
-              break;
+                // issue an auth token upon successful login
+              });
 
-            case "Faculty":
-              if (userIDString === "9") {
-                console.log("Success! Logged in as Faculty.");
-                res.send({
-                  firstName: firstName,
-                  userType: "Faculty",
-                  validated: true,
-                  auth: makeAuth(),
-                  userID: userID,
-                  userEmail: email,
-                  password: password,
-                });
-              }
               break;
+            }
+            case "9": {
+              console.log("Success! Logged in as Faculty.");
+              res.send({
+                firstName: firstName,
+                userType: "Faculty",
+                validated: true,
+                auth: makeAuth(),
+                userID: userID,
+                userEmail: email,
+                password: password,
+              });
 
-            case "ResearchStaff":
-              if (userIDString === "5") {
-                console.log("Success! Logged in as Research Staff.");
-                res.send({
-                  firstName: firstName,
-                  userType: userType,
-                  validated: true,
-                  auth: makeAuth(),
-                  userID: userID,
-                  userEmail: email,
-                  password: password,
-                });
-              }
               break;
+            }
 
-            case "Student":
-              if (userIDString === "7") {
-                console.log("Success! Logged in as Student.");
-                res.send({
-                  firstName: firstName,
-                  userType: userType,
-                  validated: true,
-                  auth: makeAuth(),
-                  userID: userID,
-                  userEmail: email,
-                  password: password,
-                });
-              }
+            case "5": {
+              console.log("Success! Logged in as Research Staff.");
+              res.send({
+                firstName: firstName,
+                userType: userType,
+                validated: true,
+                auth: makeAuth(),
+                userID: userID,
+                userEmail: email,
+                password: password,
+              });
               break;
+            }
+
+            case "7": {
+              console.log("Success! Logged in as Student.");
+              res.send({
+                firstName: firstName,
+                userType: userType,
+                validated: true,
+                auth: makeAuth(),
+                userID: userID,
+                userEmail: email,
+                password: password,
+              });
+              break;
+            }
+
             default:
               console.log("No cases were satisfied.");
               res.send({
