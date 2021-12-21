@@ -38,14 +38,10 @@ class QueryHandler extends Component {
   tableMaker = () => {};
 
   doHandleGetAdminLoginInfo = () => {
-    this.curQuery = queries.adminLoginInfo;
-    Axios.post("http://localhost:3305/Admin/adminLoginInfo", {}).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["userID"]);
+    Axios.post("http://localhost:3305/Admin/adminLoginInfo", { newObj }).then(
       (response) => {
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -138,13 +134,11 @@ class QueryHandler extends Component {
   };
 
   doHandleDeleteCourse = () => {
-    this.curQuery = queries.courseSearch;
-    Axios.post("http://localhost:3305/Admin/courseSearch", {}).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["courseID"]);
+    console.log(newObj);
+    Axios.post("http://localhost:3305/Admin/deleteCourse", { newObj }).then(
       (response) => {
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
         // this.props.makeTable(this.props.obj.data);
       }
     );
@@ -159,19 +153,6 @@ class QueryHandler extends Component {
         this.props.obj.data = response.data;
         console.log(this.props.obj.data);
         this.props.makeTable(this.props.obj.data);
-      }
-    );
-  };
-
-  doHandleDeleteCourse = () => {
-    this.curQuery = queries.deleteCourse;
-    Axios.post("http://localhost:3305/Admin/deleteCourse", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        // this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -214,15 +195,22 @@ class QueryHandler extends Component {
   };
 
   doHandleModifyUser = () => {
-    this.curQuery = queries.modifyUser;
-    Axios.post("http://localhost:3305/Admin/modifyUser", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "firstName",
+      "lastName",
+      "phoneNumber",
+      "DOB",
+      "street",
+      "city",
+      "state",
+      "zip",
+      "userID",
+    ]);
+
+    console.log(newObj);
+
+    Axios.post("http://localhost:3305/Admin/modifyUser", { newObj }).then(
+      (response) => {}
     );
   };
 
@@ -441,10 +429,7 @@ class QueryHandler extends Component {
   };
 
   doHandleTestLogin = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "userEmail",
-      "password",
-    ]);
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["userID"]);
 
     Axios.post("http://localhost:3305/Admin/testLogin", { newObj }).then(
       (response) => {
@@ -476,7 +461,6 @@ class QueryHandler extends Component {
     let reqBodyObj = this.state.reqBodyObj;
     reqBodyObj[key] = value;
     this.setState({ reqBodyObj });
-    console.log("And the req body obj is: ", reqBodyObj);
 
     let needed = [];
     let values = [];
