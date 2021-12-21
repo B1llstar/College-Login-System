@@ -6,19 +6,19 @@ import App from "./App";
 import "./styles/bodyStyles.css";
 import NavBar from "./Components/NavBar";
 import Display from "./Components/Display";
+import FrontPage from "./FrontPage.jsx";
 
 import MainPagePlaceholder from "./Components/Main_Page_Placeholder";
 
 ReactDOM.render(
   <div>
     {/*    <Display /><NavBar />*/}
-    <div className="main">
-      {/*
+    {/*
       <MainPagePlaceholder />
         <App />
       */}
-      <App />
-    </div>
+    <App></App>
+    {/*<App />*/}
   </div>,
   document.getElementById("root")
 );
