@@ -9,6 +9,7 @@ class QueryHandler extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      reqBodyObj: {},
       tempData: {
         // for custom inputs
         userID: "",
@@ -31,7 +32,6 @@ class QueryHandler extends Component {
         zip: "",
       },
     };
-    this.state = { display: <NavBar userType={this.props.userType}></NavBar> };
     this.curQuery = "";
   }
 
@@ -39,12 +39,7 @@ class QueryHandler extends Component {
 
   doHandleGetAdminLoginInfo = () => {
     this.curQuery = queries.adminLoginInfo;
-    this.getQueryParams();
-    let adminID = this.props.userCredentials.userID;
-
-    Axios.post("http://localhost:3305/Admin/adminLoginInfo", {
-      adminID: adminID
-    }).then(
+    Axios.post("http://localhost:3305/Admin/adminLoginInfo", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -86,16 +81,77 @@ class QueryHandler extends Component {
 
   doHandleCourseSearch = () => {
     this.curQuery = queries.courseSearch;
-    this.getQueryParams();
+    let reqBody = this.state.reqBodyObj;
+    let newObj = {};
+    let needed = ["crn", "courseID", "courseName", "Instructor"];
+    let eles = needed.map((ele) => {
+      if (ele in reqBody) {
+        console.log(ele);
+        newObj[ele] = reqBody[ele];
+      } else {
+        newObj[ele] = "";
+      }
+    });
 
-    let eles = this.checkForNeededProps(
-      { crn: "", courseID: "", courseName: "", Instructor: "" },
-      this.state.tempData
+    Axios.post("http://localhost:3305/Admin/courseSearch", { newObj }).then(
+      (response) => {
+        console.log(response);
+
+        // this.props.makeTable(this.props.obj.data);
+      }
     );
+  };
 
-    console.log(eles);
+  doHandleCreateCourse = () => {
+    this.curQuery = queries.createCourse;
+    let reqBody = this.state.reqBodyObj;
+    let newObj = {};
+    let needed = ["courseID", "courseName", "numCredits", "deptID"];
+    let eles = needed.map((ele) => {
+      if (ele in reqBody) {
+        console.log(ele);
+        //   if (ele == "numCredits") {
+        //   console.log("Found an integer");
+        // newObj[ele] = parseInt(reqBody[ele]);
 
-    Axios.post("http://localhost:3305/Admin/courseSearch", { eles }).then(
+        // using in instead of includes, it's better apparently
+        newObj[ele] = reqBody[ele];
+      } else {
+        newObj[ele] = "";
+      }
+    });
+
+    console.log(newObj);
+    console.log(newObj[0]);
+    let eles2 = [];
+    console.log(Object.values(newObj));
+
+    console.log("Query");
+    Axios.post("http://localhost:3305/Admin/createCourse", { newObj }).then(
+      (response) => {
+        console.log("Response");
+        console.log(response);
+
+        // this.props.makeTable(this.props.obj.data);
+      }
+    );
+  };
+
+  doHandleCreateUser = () => {
+    this.curQuery = queries.createUser;
+    let needed = [
+      "userID",
+      "userType",
+      "firstName",
+      "lastName",
+      "phoneNum",
+      "DOB",
+      "street",
+      "city",
+      "state",
+      "zip",
+    ];
+    Axios.post("http://localhost:3305/Admin/createUser", {}).then(
       (response) => {
         console.log(response);
         console.log("QUERY!!!!!");
@@ -104,50 +160,6 @@ class QueryHandler extends Component {
         // this.props.makeTable(this.props.obj.data);
       }
     );
-  };
-
-  doHandleCreateCourse = () => {
-    this.curQuery = queries.createCourse;
-    this.getQueryParams();
-    let { courseID, courseName, numCredits, deptID } = this.state.tempData;
-    console.log("Query");
-
-    Axios.post("http://localhost:3305/Admin/createCourse", {
-      courseID: courseID,
-      courseName: courseName,
-      numCredits: numCredits,
-      deptID: deptID,
-    }).then((response) => {
-      console.log("Response");
-      console.log(response);
-
-      // this.props.makeTable(this.props.obj.data);
-    });
-  };
-
-  doHandleCreateUser = () => {
-    this.curQuery = queries.createUser;
-
-    Axios.post("http://localhost:3305/Admin/createUser", {
-      /*
-      userID = this.props.tempData.userID,
-      userType = this.props.tempData.userType,
-      firstName = this.props.tempData.firstName,
-      lastName = this.props.tempData.lastName,
-      phoneNum = this.props.tempData.phoneNum,
-      DOB = this.props.tempData.DOB,
-      street = this.props.tempData.street,
-      city = this.props.tempData.city,
-      state = this.props.tempData.state,
-      zip = this.props.tempData.state
-      */
-    }).then((response) => {
-      console.log(response);
-      console.log("QUERY!!!!!");
-      this.props.obj.data = response.data;
-      console.log(this.props.obj.data);
-      // this.props.makeTable(this.props.obj.data);
-    });
   };
 
   doHandleDeleteCourse = () => {
@@ -409,6 +421,29 @@ class QueryHandler extends Component {
     console.log("Updated properties");
   };
 
+  updateParams = (key, value) => {
+    console.log(key);
+
+    let tempData = this.state.tempData;
+    tempData[key] = value;
+    this.setState({ tempData });
+    // Had to create another object and then overwrite it
+    // Interesting... lol
+    console.log("QUERY HANDLER: changed state of relevant key: ", key);
+    console.log("Temp Data: ", this.state.tempData);
+
+    let eles = [];
+    let reqBodyObj = this.state.reqBodyObj;
+    reqBodyObj[key] = value;
+    this.setState({ reqBodyObj });
+    console.log("And the req body obj is: ", reqBodyObj);
+
+    let needed = [];
+    let values = [];
+
+    console.log("Needed", needed);
+  };
+
   makeForms = () => {
     // let ele = <AllForms passQueryParams={this.getQueryParams()}></AllForms>;
     // ReactDOM.render(ele, document.getElementById("root"));
@@ -468,6 +503,7 @@ class QueryHandler extends Component {
           viewStudentAdvisees={this.doHandleViewStudentAdvisees}
           viewStudentSchedule={this.doHandleViewStudentSchedule}
           userType={"Admin"}
+          updateParams={this.updateParams}
         ></NavBar>
       </div>
     );

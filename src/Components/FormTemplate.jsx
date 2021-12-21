@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 class FormTemplate extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { value: "" };
   }
 
   process = (array) => {

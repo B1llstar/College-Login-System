@@ -58,7 +58,7 @@ router.post("/courseSearch", (req, res) => {
   // finalList.courseName = '%?%'; (percent symbols are wildcards)
   // finalList.Instructor = '%?%';d0
   // These statements can also be combined by concatinating with AND
-  
+
   let needed = { crn: "", courseID: "", courseName: "", Instructor: "" };
   // console.log(req.body.eles);
   let ele = grabVals(checkForNeededProps(req.body.eles, needed));
@@ -85,41 +85,40 @@ router.post("/courseSearch", (req, res) => {
 // finalList.Instructor = '%?%';d0
 // These statements can also be combined by concatinating with AND
 
+function replaceQuestionMarks(obj, str) {
+  let keys = Object.keys(obj);
+  let valReplacements = Object.values(obj);
+  let newString = str;
+  let temp = "";
+
+  valReplacements.map((ele) => {
+    // anything that takes an integer,
+    // may make an array for this later
+    console.log(ele);
+    // if (ele > 0 && ele < 10) newString = newString.replace("'?'", ele);
+    newString = newString.replace("?", ele);
+  });
+  return newString;
+}
+
 router.post("/createCourse", (req, res) => {
   let query = queries.createCourse;
+  let newQuery = replaceQuestionMarks(req.body.newObj, query);
+  console.log(newQuery);
+
   //console.log("Body:");
   // console.log(req.body);
-
-  let { courseID, courseName, numCredits, deptID } = req.body;
 
   // console.log(reqObj);
   console.log("Individual body props:");
 
-  let args = ["12345", "crigne", 3, "D04"];
-
-  db.query(
-    "INSERT INTO course(courseID, courseName, numCredits, deptID) VALUES(" +
-      "'" +
-      courseID +
-      "', " +
-      "'" +
-      courseName +
-      "', " +
-      "'" +
-      numCredits +
-      "', " +
-      "'" +
-      deptID +
-      "')",
-
-    (err, result) => {
-      if (err) {
-        console.log("err");
-      } else {
-        console.log("nice");
-      }
+  db.query(newQuery, (err, result) => {
+    if (err) {
+      console.log("err");
+    } else {
+      console.log("nice");
     }
-  );
+  });
   // USER INPUT: All values required, query must fail if any are missing
   // Parameters: courseID- 5 CHAR, courseName- String, credits- single digit INT, deptID- 3 CHAR ('D##')
   // (if we can make deptID a dropdown, I can write a query to pick from existing deptIDs)
