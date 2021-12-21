@@ -305,18 +305,6 @@ class QueryHandler extends Component {
       }
     );
   };
-  doHandleViewStudentAdvisees = () => {
-    this.curQuery = queries.viewStudentSchedule;
-    Axios.post("http://localhost:3305/Admin/viewAdvisees", {}).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
-  };
 
   doHandleViewAllUsers = () => {
     this.curQuery = queries.viewAllUsers;
@@ -358,14 +346,9 @@ class QueryHandler extends Component {
   };
 
   doHandleViewStudentAdvisees = () => {
-    this.curQuery = queries.viewStudentAdvisees;
     Axios.post("http://localhost:3305/Admin/viewStudentAdvisees", {}).then(
       (response) => {
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
       }
     );
   };
