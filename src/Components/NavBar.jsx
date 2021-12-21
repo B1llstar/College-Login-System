@@ -49,6 +49,16 @@ class NavBar extends Component {
         },
 
         {
+          name: "Test Login",
+          onClick: () => {
+            this.makeForm(
+              ["userEmail", "password"],
+
+              this.props.testLogin
+            );
+          },
+        },
+        {
           name: "Create Course",
           onClick: () => {
             this.makeForm(
@@ -60,11 +70,13 @@ class NavBar extends Component {
 
         {
           name: "Search Course",
-          onClick: () =>
-          this.makeForm([
-            "courseID",
-          ]),
-        },
+          onClick: () => {
+            this.makeForm(
+              // ["crn", "courseID", "courseName", "Instructor"],
+              ["crn"],
+              this.props.courseSearch
+            );
+          },
 
         {
           name: "Create User",
@@ -155,7 +167,10 @@ class NavBar extends Component {
           name: "View Course History", 
           //onClick: () => this.makeForm() 
         },
+        { name: "View All Users", onClick: () => this.props.viewAllUsers },
+        { name: "View Course History", onClick: () => this.makeForm() },
 
+        //onClick: this.props.viewCourseHistory },
         {
           name: "View Student Advisees",
           onClick: () =>

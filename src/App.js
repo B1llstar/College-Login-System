@@ -126,6 +126,7 @@ class App extends Component {
     var displayMsg = "";
     console.log("Type: ", userType);
 
+    let testArgs = {};
     console.log("Calling");
     Axios.post("http://localhost:3305/Main/login", {
       args: { username: user, password: pass, userType: userType },

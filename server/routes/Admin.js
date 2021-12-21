@@ -13,19 +13,57 @@ router.post("/", (req, res) => {
   // Use login.js as a template
 });
 
+// TEMPLATE FOR INSERTS: -----------------
+/*
+  let query = queries.createCourse;
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query); PUT THIS BEFORE DB. QUERY, THAT'S IT!
+*/
+// ---------------------
+
+// TEMPLATE FOR SELECTS (this should work even if you have optional parameters, query handler gives them empty strings.)
+/*
+ let { userEmail, password } = req.body.newObj; -- FIRST DECONSTRUCT THE NEEDED PROPERTIES
+  db.query( 
+    "SELECT * FROM loginInfo WHERE (userEmail = ? AND password = ?)",
+     [userEmail, password], -------------- THEN PASS THEM AS PARAMETERS WITHIN THE SQUARE BRACES.
+    (err, result) => { 
+*/
+
+// TEMPLATE FOR SELECTS
+
+router.post("/testLogin", (req, res) => {
+  let { userEmail, password } = req.body.newObj;
+  db.query(
+    "SELECT * FROM loginInfo WHERE (userEmail = ? AND password = ?)",
+    [userEmail, password],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result);
+        if (result.length > 0) {
+          // maybe testing the length could be a good litmus test for all the others?
+          console.log("Logged in as ", result[0].userType); // looks like we need to access the first index THEN grab property
+        } else {
+          console.log("Incorrect info!!");
+        }
+      }
+    }
+  );
+});
+
 router.post("/adminLoginInfo", (req, res) => {
   let query = queries.adminLoginInfo;
-  let userID = req.body.userID;
+  let { userID } = req.body.newObj;
   // AUTO FILL: userID
   db.query(query, [userID], (err, result) => {
     res.send(result);
-
     console.log("Getting admin info...");
     if (err) {
       console.log(err);
-      res.err("Something went wrong admin info.");
+      res.err("(ADMIN) Failed to get login info");
     } else {
-      console.log("Got info");
+      console.log("Got info", result);
     }
   });
 });
@@ -47,70 +85,47 @@ function grabVals(input) {
   return ele;
 }
 
+// SELECT
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
-  // for this query, the entire clause is the variable, with the question mark being a different user input
-  // 4 different input fields, CRN, courseID, courseName, and Instructor
-  // let whereClause=one of these 4
-  // let inputVariable=?
-  // finalList.crn = '?';
-  // finalList.courseID = '?';
-  // finalList.courseName = '%?%'; (percent symbols are wildcards)
-  // finalList.Instructor = '%?%';d0
-  // These statements can also be combined by concatinating with AND
 
-  let needed = { crn: "", courseID: "", courseName: "", Instructor: "" };
-  // console.log(req.body.eles);
-  let ele = grabVals(checkForNeededProps(req.body.eles, needed));
+  let { crn } = req.body.newObj;
 
-  let instructor = "John";
-  console.log(ele);
-  let args = req.body;
+  console.log("crn ", crn);
+  console.log(req.body);
 
-  db.query(query, ele, (err, result) => {
+  db.query(query, [25247], (err, result) => {
     if (err) {
       console.log("Err finding course");
     } else {
-      console.log("result course search: ", result);
+      console.log("Result of course search: ", result);
     }
   });
 });
-// for this query, the entire clause is the variable, with the question mark being a different user input
-// 4 different input fields, CRN, courseID, courseName, and Instructor
-// let whereClause=one of these 4
-// let inputVariable=?
-// finalList.crn = '?';
-// finalList.courseID = '?';
-// finalList.courseName = '%?%'; (percent symbols are wildcards)
-// finalList.Instructor = '%?%';d0
-// These statements can also be combined by concatinating with AND
 
-function replaceQuestionMarks(obj, str) {
-  let keys = Object.keys(obj);
-  let valReplacements = Object.values(obj);
+function replaceQueryQuestionMarkTokens(requestBodyObj, str) {
+  let valReplacements = Object.values(requestBodyObj);
   let newString = str;
-  let temp = "";
 
   valReplacements.map((ele) => {
-    // anything that takes an integer,
-    // may make an array for this later
     console.log(ele);
-    // if (ele > 0 && ele < 10) newString = newString.replace("'?'", ele);
+
     newString = newString.replace("?", ele);
   });
   return newString;
 }
 
+// TEMPLATE FOR INSERTS: -----------------
+/*
+  let query = queries.createCourse;
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query); PUT THIS BEFORE DB. QUERY, THAT'S IT!
+*/
+// ---------------------
+
+// TEMPLATE FOR INSERTS
 router.post("/createCourse", (req, res) => {
   let query = queries.createCourse;
-  let newQuery = replaceQuestionMarks(req.body.newObj, query);
-  console.log(newQuery);
-
-  //console.log("Body:");
-  // console.log(req.body);
-
-  // console.log(reqObj);
-  console.log("Individual body props:");
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
 
   db.query(newQuery, (err, result) => {
     if (err) {
@@ -119,9 +134,6 @@ router.post("/createCourse", (req, res) => {
       console.log("nice");
     }
   });
-  // USER INPUT: All values required, query must fail if any are missing
-  // Parameters: courseID- 5 CHAR, courseName- String, credits- single digit INT, deptID- 3 CHAR ('D##')
-  // (if we can make deptID a dropdown, I can write a query to pick from existing deptIDs)
 });
 
 router.post("/createUser", (req, res) => {
