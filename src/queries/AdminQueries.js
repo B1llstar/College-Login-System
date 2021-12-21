@@ -252,5 +252,5 @@ module.exports = {
     "JOIN day d ON tsd.dayID=d.dayID JOIN period p ON tsp.periodID=p.periodID) AS timeTable) as tSlots2\n" +
     "ON s.timeslot2=tSlots2.TSID) AS timeset ON c.courseID=timeset.courseID) AS courseSet\n" +
     "ON u.userID=courseSet.facultyID) AS facultySet ON e.crn=facultySet.crn) AS studentSet\n" +
-    "ON studentSet.studentID=u2.userID) AS final WHERE final.studentID='?';",
+    "ON studentSet.studentID=u2.userID) AS final WHERE final.studentID=?;",
 };

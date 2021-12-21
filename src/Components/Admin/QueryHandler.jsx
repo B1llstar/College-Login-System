@@ -226,40 +226,28 @@ class QueryHandler extends Component {
   };
 
   doHandleGetStudentHistory = () => {
-    this.curQuery = queries.studentHistory;
-    Axios.post("http://localhost:3305/Admin/studentHistory", {}).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
+    Axios.post("http://localhost:3305/Admin/viewStudentHistory", { newObj }).then(
       (response) => {
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
       }
     );
   };
 
   doHandleGetStudentLoginInfo = () => {
-    this.curQuery = queries.studentLoginInfo;
-    Axios.post("http://localhost:3305/Admin/studentLoginInfo", {}).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
+    Axios.post("http://localhost:3305/Admin/viewStudentLoginInfo", { newObj }).then(
       (response) => {
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
       }
     );
   };
 
   doHandleGetTranscript = () => {
-    this.curQuery = queries.transcript;
-    Axios.post("http://localhost:3305/Admin/transcript", {}).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
+    Axios.post("http://localhost:3305/Admin/viewStudentSchedule", { newObj }).then(
       (response) => {
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -354,39 +342,28 @@ class QueryHandler extends Component {
   };
 
   doHandleViewHolds = () => {
-    this.curQuery = queries.viewHolds;
-    Axios.post("http://localhost:3305/Admin/viewHolds", {}).then((response) => {
-      console.log(response);
-      console.log("QUERY!!!!!");
-      this.props.obj.data = response.data;
-      console.log(this.props.obj.data);
-      this.props.makeTable(this.props.obj.data);
-    });
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
+    Axios.post("http://localhost:3305/Admin/viewHolds", { newObj }).then(
+      (response) => {
+        console.log(response);
+      }
+    );
   };
 
   doHandleViewRegistration = () => {
-    this.curQuery = queries.viewRegistration;
-
-    Axios.post("http://localhost:3305/Admin/viewRegistration", {}).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
+    Axios.post("http://localhost:3305/Admin/viewRegistration", { newObj }).then(
       (response) => {
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
       }
     );
   };
 
   doHandleViewStudentSchedule = () => {
-    this.curQuery = queries.viewStudentSchedule;
-    Axios.post("http://localhost:3305/Admin/viewStudentSchedule", {}).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
+    Axios.post("http://localhost:3305/Admin/viewStudentSchedule", { newObj }).then(
       (response) => {
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
       }
     );
   };
@@ -505,7 +482,7 @@ class QueryHandler extends Component {
           viewAllUsers={this.doHandleViewAllUsers}
           viewCourseHistory={this.doHandleViewCourseHistory}
           viewFacultyAdvisors={this.doHandleViewFacultyAdvisors}
-          //viewFacultyAdvisors={this.doHandleViewAdvisors}
+          viewFacultyAdvisors={this.doHandleViewAdvisors}
           viewStudentHolds={this.doHandleViewHolds}
           viewRegistration={this.doHandleViewRegistration}
           viewStudentAdvisees={this.doHandleViewStudentAdvisees}
