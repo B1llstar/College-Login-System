@@ -41,10 +41,13 @@ class NavBar extends Component {
           onClick: () =>
             console.log("Pressed home button. Add a redirect somewhere maybe?"),
         },
-        {
-          name: "Access Student Registration",
-          // onClick: this.props.viewRegistration,
+
+        { 
+          name: "Admin Login Info", 
+          onClick: () => { //this.props.facultyLoginInfo 
+          }, 
         },
+
         {
           name: "Create Course",
           onClick: () => {
@@ -54,17 +57,21 @@ class NavBar extends Component {
             );
           },
         },
+
         {
           name: "Search Course",
-
-          // -------------------------- DO NOTHING FOR NOW onClick: () => this.makeForm(), --------------------------
-          //onClick: this.props.courseSearch,
+          onClick: () =>
+          this.makeForm([
+            "courseID",
+          ]),
         },
+
         {
           name: "Create User",
           onClick: () =>
             this.makeForm([
-              "studentID",
+              "userID",
+              "userType",
               "firstName",
               "lastName",
               "phoneNumber",
@@ -74,21 +81,24 @@ class NavBar extends Component {
               "state",
               "zip",
             ]),
-
-          //onClick: this.props.createUser,
         },
         {
           name: "Delete Course",
-          onClick: () => this.makeForm(["courseID"]),
-
-          //onClick: this.props.deleteCourse,
+          onClick: () => 
+            this.makeForm([
+              "courseID"
+            ]),
         },
+
         {
           name: "Drop Student Course",
-          onClick: () => this.makeForm(["studentID", "crn"]),
-
-          //onClick: this.props.dropStudentCourse,
+          onClick: () => 
+            this.makeForm([
+              "studentID", 
+              "crn"
+            ]),
         },
+
         {
           name: "Modify Course",
           onClick: () =>
@@ -99,18 +109,17 @@ class NavBar extends Component {
               "deptID",
               "courseID",
             ]),
-
-          //onClick: this.props.modifyCourse,
         },
+
         {
           name: "Modify Master Schedule",
           // -------------------------- DO NOTHING FOR NOW onClick: () => this.makeForm(), --------------------------
-
+          // query still needs to be written for this
           // onClick: this.props.modifyMasterSchedule,
         },
+
         {
           name: "Modify User",
-          //          onClick: this.props.modifyUser,
           onClick: () =>
             this.makeForm([
               "firstName",
@@ -126,93 +135,293 @@ class NavBar extends Component {
 
         {
           name: "Register Student for Course",
-          // -------------------------- DO NOTHING FOR NOW onClick: () => this.makeForm(), --------------------------
-
-          // onClick: this.props.registerStudentForCourse,
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+              "crn"
+            ]),
         },
+
         {
           name: "Update Password",
-          // -------------------------- DO NOTHING FOR NOW onClick: () => this.makeForm(), --------------------------
-
-          //          onClick: this.props.updatePassword,
+          onClick: () =>
+            this.makeForm([
+              "password",
+              "userID"
+            ]),          
         },
 
-        { name: "View Course History", onClick: () => this.makeForm() },
+        { 
+          name: "View Course History", 
+          //onClick: () => this.makeForm() 
+        },
 
-        //onClick: this.props.viewCourseHistory },
         {
           name: "View Student Advisees",
-          onClick: this.props.viewStudentAdvisees,
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]),
         },
+
         {
           name: "View Faculty Advisors",
-          onClick: this.props.viewFacultyAdvisors,
+          onClick: () =>
+            this.makeForm([
+              "facultyID",
+            ]),
         },
+
         {
-          name: "View Student Degree Audit",
-          onClick: this.props.viewStudentDegreeAuditPt2,
+          name: "View Student Degree Audit Pt1",
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]),
         },
-        { name: "View Student Holds", onClick: this.props.viewStudentHolds },
+        
+        { 
+          name: "View Student Holds", 
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]),  
+        },
+
+        {
+          name: "View Student Registration",
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]),
+        },
+
         {
           name: "View Student Schedule",
-          onClick: this.props.viewStudentSchedule,
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]), 
         },
+        
         {
           name: "View Student Transcript",
-          onClick: this.props.viewStudentTranscript,
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]), 
         },
       ],
 
       Student: [
-        { name: "Home", onClick: "#" },
-        { name: "Course Search", onClick: this.props.courseSearch },
-        { name: "Drop Course", onClick: this.props.dropCourse },
-        { name: "Degree Audit", onClick: this.props.degreeAudit },
-        { name: "Degree Audit 2", onClick: this.props.degreeAudit2 },
-        { name: "Register for Course", onClick: this.props.registerForCourse },
-        { name: "Student History", onClick: this.props.studentHistory },
-        { name: "Student Login Info", onClick: this.props.studentLoginInfo },
+        { 
+          name: "Home", 
+          onClick: "#" 
+        },
+
+        { 
+          name: "Faculty Login Info", 
+          onClick: () => { //this.props.facultyLoginInfo 
+          }, 
+        },
+        
+        { 
+          name: "Course Search", 
+          onClick: () =>
+            this.makeForm([
+              "courseID",
+            ]),  
+        },
+        
+        { 
+          name: "Drop Course", //This one auto-fills student and password is an input field
+          onClick: () => { //this.props.studentID,
+            this.makeForm([
+              "crn"
+            ])},  
+        },
+        
+        { 
+          name: "Degree Audit Pt1", 
+          onClick: () => { //this.props.degreeAuditPt1 
+          },
+        },
+        
+        { 
+          name: "Degree Audit Pt2", 
+          onClick: () => { //this.props.degreeAuditPt2 
+          }, 
+        },
+        
+        { 
+          name: "Register for Course", 
+          onClick: () => { //this.props.registerForCourse 
+          },
+        },
+        
+        { 
+          name: "Student History", 
+          onClick: () => { //this.props.studentHistory 
+          },
+        },
+        
+        { 
+          name: "Student Login Info", 
+          onClick: () => { //this.props.studentLoginInfo 
+          },
+        },
+        
         {
           name: "Unofficial Transcript",
-          onClick: this.props.unofficialTranscript,
+          onClick: () => { //this.props.transcript 
+          },
         },
-        { name: "Update Password", onClick: this.props.updatePasswprd },
-        { name: "View Advisor", onClick: this.props.viewAdvisor },
-        { name: "View Holds", onClick: this.props.viewHolds },
-        { name: "View Registration", onClick: this.props.viewRegistration },
-        { name: "Logout", onClick: "#" }, // some arbitrary location atm
+        
+        { 
+          name: "Update Password", 
+          onClick: () =>
+            this.makeForm([
+              "password",
+              "userID"
+            ]),  
+        },
+        
+        { 
+          name: "View Advisor",
+          onClick: () => { //this.props.viewAdvisor 
+          }, 
+        },
+        
+        { 
+          name: "View Holds", 
+          onClick: () => { //this.props.viewHolds 
+          },
+        },
+        { 
+          name: "View Registration", 
+          onClick: () => { //this.props.viewRegistration 
+          }, 
+        },
+        
+        { 
+          name: "Logout", 
+          onClick: "#" 
+        }, // some arbitrary location atm
       ],
 
       Faculty: [
-        { name: "Home", onClick: "#" },
+        { 
+          name: "Home", 
+          onClick: "#" 
+        },
+
         {
           name: "Assigned Course List",
-          onClick: this.props.coursesTeaching,
+          onClick: () => { //this.props.facultyLoginInfo 
+          }, 
         },
-        { name: "Course Search", onClick: this.props.courseSearch },
-        { name: "Drop Course", onClick: this.props.dropCourse },
-        { name: "Degree Audit", onClick: this.props.degreeAudit },
-        { name: "Degree Audit 2", onClick: this.props.degreeAudit2 },
-        { name: "Faculty Login Info", onClick: this.props.facultyLoginInfo },
-        { name: "Record Attendance", onClick: this.props.recordAttendance },
-        {
-          name: "Register for Course",
-          onClick: this.props.registerForCourse,
+
+        { 
+          name: "Course Search", 
+          onClick: () =>
+            this.makeForm([
+              "courseID",
+            ]),  
         },
-        { name: "Student History", onClick: this.props.studentHistory },
+        
+        { 
+          name: "Degree Audit", 
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]), 
+        },
+        
+        { 
+          name: "Degree Audit 2", 
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]), 
+        },
+        
+        { 
+          name: "Faculty Login Info", 
+          onClick: () => { //this.props.facultyLoginInfo 
+          }, 
+        },
+
+        { 
+          name: "Record Attendance", 
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+              "crn",
+              "isPresent",
+              "date"
+            ]),
+        },
+
+        { 
+          name: "Student History", 
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]), 
+        },
+
         {
           name: "Unofficial Transcript",
-          onClick: this.props.unofficialTranscript,
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]),
         },
-        { name: "Update Password", onClick: this.props.updatePassword },
-        { name: "View Advisees", onClick: this.props.viewAdvisees },
-        { name: "View Holds", onClick: this.props.viewHolds },
-        { name: "View Registration", onClick: this.props.viewRegistration },
+
+        { 
+          name: "Update Password", //AUTO FILL facultyID, user input password
+          onClick: () => //this.props.facultyID
+            this.makeForm([
+              "password",
+            ]), 
+        },
+
+        { 
+          name: "View Advisees", 
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]), 
+        },
+
+        { 
+          name: "View Holds", 
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]), 
+        },
+
+        { 
+          name: "View Registration", 
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]), 
+        },
+
         {
           name: "View Student Schedule",
-          onClick: this.props.viewStudentSchedule,
+          onClick: () =>
+            this.makeForm([
+              "studentID",
+            ]),
         },
-        { name: "Logout", onClick: "./Logout" }, // some arbitrary location atm
+
+        { 
+          name: "Logout", 
+          onClick: "./Logout" 
+        }, // some arbitrary location atm
       ],
 
       /* Will do research staff at a later time
