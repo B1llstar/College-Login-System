@@ -56,6 +56,7 @@ class NavBar extends Component {
         },
         {
           name: "Search Course",
+
           // -------------------------- DO NOTHING FOR NOW onClick: () => this.makeForm(), --------------------------
           //onClick: this.props.courseSearch,
         },
@@ -258,8 +259,18 @@ class NavBar extends Component {
 
   doHandleUpdateParams = (key, value) => {
     console.log(key);
-    this.setState({ key, courseName: value });
-    console.log("Changed state of relevant key: ", this.state.key);
+    this.setState({ key, key: value });
+    console.log("NAVBAR: Changed state of relevant key: ", key);
+    console.log(
+      "Temp Data ",
+      key,
+      " within NavBar is now set to ",
+      value,
+      "!",
+      " Now attempting to bubble up to Query Handler..."
+    );
+
+    this.props.updateParams(key, value);
   };
 
   render() {
