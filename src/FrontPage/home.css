@@ -1,0 +1,122 @@
+.header_Welcome_Marquee {
+  width: 100%;
+  height: 33px;
+  background-color: black;
+}
+
+.banner_Contact_Info {
+  width: 100%;
+  height: 100px;
+  background-color: #add8e6;
+}
+
+#bannerImageTint {
+  width: 100%;
+  height: 45em;
+}
+
+.contact_Block {
+  width: 200em;
+  height: 80em;
+  display: inline-block;
+  text-align: center;
+  font-size: 1px;
+  margin-right: 10%;
+  margin-top: 18em;
+  overflow: hidden;
+  padding-right: 10em;
+  /* Each element is spread 10% apart, basically */
+}
+
+.contact_Block_Heading {
+  font-size: 20em;
+  overflow: hidden;
+}
+
+.contact_Block_Paragraph {
+  font-size: 20em;
+  color: black;
+  font-weight: bold;
+}
+
+.marqueeText {
+}
+
+.bannerImage {
+  width: 100%;
+  height: 45em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 80%;
+
+  /* background-image: 'url(./images/banner_img.png)'; */
+}
+
+.bannerOuterTextBox {
+  height: 45em;
+  vertical-align: middle;
+  align-items: center;
+  text-align: center;
+  display: flex;
+}
+
+.bannerInnerTextBox {
+  height: 15em;
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+}
+
+.bannerHeadText {
+  text-align: center;
+  color: white;
+  vertical-align: middle;
+  font-weight: bold;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Display: Flex would break the text-align center, just a note */
+
+#bannerMiddleTextBox {
+  font-size: 3em;
+  text-align: center;
+  color: white;
+  font-family: "Roboto";
+  vertical-align: middle;
+  font-weight: bold;
+  overflow: hidden;
+  max-width: 15em; /* kinda guessed with this since it was being stubborn */
+  letter-spacing: 2px;
+  padding-bottom: 5em;
+  position: absolute;
+  display: flex;
+}
+
+#bannerInnerTextBox {
+  font-size: 2.5em;
+  text-align: center;
+  color: white;
+  font-family: "Georgia, Times New Roman";
+  vertical-align: middle;
+  font-weight: bold;
+  display: flex;
+  position: relative;
+  background-color: "rgba(0, 0, 0, 0.5)";
+}
+
+.bannerHeadText {
+  color: white;
+  font-size: 1em;
+}
+
+p {
+  color: white;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-family: "Calibri";
+}

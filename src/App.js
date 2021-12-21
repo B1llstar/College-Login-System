@@ -14,7 +14,7 @@ import QueryHandlerResearchStaff from "./Components/ResearchStaff/QueryHandler";
 import QueryHandlerStudent from "./Components/Student_/QueryHandler";
 import DynamicForms from "./Components/DynamicForms.jsx";
 import AllForms from "../src/Components/AllForms";
-
+import FrontPage from "./FrontPage/FrontPage.jsx";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -151,7 +151,6 @@ class App extends Component {
         };
         console.log(response.data.userType);
 
-        let ele;
         switch (userType) {
           case "Admin":
             ReactDOM.render(
@@ -166,13 +165,14 @@ class App extends Component {
           case "Faculty":
             ReactDOM.render(
               <QueryHandlerFaculty
+                userCredentials={this.state.userCredentials}
                 userType={"Faculty"}
                 tempData={this.state.tempData}
               ></QueryHandlerFaculty>,
               document.getElementById("NavBar")
             );
             console.log("Faculty");
-
+            let userID = this.props.userCredentials["userID"];
             break;
           case "Research Staff":
             ReactDOM.render(
@@ -235,6 +235,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
+        <FrontPage></FrontPage>
         <div className="row">
           <div className="col-2"></div>
           <h1>{this.state.displayMsg}</h1>

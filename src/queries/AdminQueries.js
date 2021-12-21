@@ -47,7 +47,7 @@ module.exports = {
   // Parameters: userID-9 digits INT, userType-dropdown selection, first/last - String
   // phoneNumber-10 digits no spaces/dashes, DOB- YYYY-MM-DD, street/city - String, zip-5 digit INT
   createUser:
-    "INSERT INTO user(studentID, userType, firstName, lastName, phoneNumber, DOB, street, city, state, zip)\n" +
+    "INSERT INTO user(userID, userType, firstName, lastName, phoneNumber, DOB, street, city, state, zip)\n" +
     "VALUES('?', '?', '?', '?', '?', '?', '?', '?', '?', '?');",
 
   // [STUDENT, FACULTY, ADMIN] Degree Audit - Two Part Query, first gets % complete, second gets courses
