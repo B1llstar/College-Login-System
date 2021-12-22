@@ -374,15 +374,13 @@ router.post("/studentLoginInfo", (req, res) => {
 
 router.post("/transcript", (req, res) => {
   let query = queries.transcript;
-  // let { studentID } = req.body.newObj;
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
+  let studentID = req.body.newObj["studentID"];
 
-  //USER INPUT = studentID;
-  db.query(newQuery, (err, result) => {
+  db.query(query, studentID, (err, result) => {
+    console.log("Getting transcript...");
     if (err) {
-      console.log("Error getting transcript");
+      res.sendStatus(400);
     } else {
-      console.log("Success: ", result);
       res.send(result);
     }
   });

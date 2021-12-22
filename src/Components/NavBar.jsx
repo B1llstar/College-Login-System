@@ -384,21 +384,6 @@ class NavBar extends Component {
           name: "View Registration",
           onClick: () =>
             this.makeForm(["studentID"], this.props.viewRegistration),
-
-          onClick: () =>
-            //this.props.facultyID
-            this.makeForm(["password"]),
-        },
-
-        {
-          name: "View Holds",
-          onClick: () => this.makeForm(["studentID"], this.props.viewHolds),
-        },
-
-        {
-          name: "View Registration",
-          onClick: () =>
-            this.makeForm(["studentID"], this.props.viewRegistration),
         },
 
         {

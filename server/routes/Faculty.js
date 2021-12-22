@@ -133,16 +133,12 @@ router.post("/transcript", (req, res) => {
   let query = queries.transcript;
   let studentID = req.body.newObj["studentID"];
 
-  console.log("student ID: ", studentID);
-  console.log(req.body);
-
   db.query(query, studentID, (err, result) => {
-    res.send(result);
     console.log("Getting transcript...");
-    console.log(result);
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting transcript.");
+      res.sendStatus(400);
+    } else {
+      res.send(result);
     }
   });
 });
@@ -150,13 +146,15 @@ router.post("/transcript", (req, res) => {
 router.post("/updatePassword", (req, res) => {
   let query = queries.updatePassword;
   let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  console.log(req.body.newObj);
+  //input order: password, userID
+
   db.query(newQuery, (err, result) => {
     if (err) {
-      console.log("err");
+      console.log("err updating pass");
+      res.sendStatus(400);
     } else {
-      console.log("nice");
-      console.log(result);
+      console.log("Updated pass for user: ", req.body.newObj["userID"]);
+      res.send(result);
     }
   });
 });
@@ -165,34 +163,28 @@ router.post("/viewHolds", (req, res) => {
   let query = queries.viewHolds;
   let studentID = req.body.newObj["studentID"];
 
-  console.log("student ID: ", studentID);
-  console.log(req.body);
-
   db.query(query, studentID, (err, result) => {
-    res.send(result);
     console.log("Getting holds...");
-    console.log(result);
+
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting holds.");
+      res.sendStatus(400);
+    } else {
+      console.log("Got holds for user: ", req.body.newObj["studentID"]);
+      res.send(result);
     }
   });
 });
 
 router.post("/viewRegistration", (req, res) => {
   let query = queries.viewRegistration;
-  let studentID = req.body.newObj["studentID"];
+  let { studentID } = req.body.newObj;
 
-  console.log("student ID: ", studentID);
-  console.log(req.body);
-
-  db.query(query, studentID, (err, result) => {
-    res.send(result);
-    console.log("Getting registration...");
-    console.log(result);
+  db.query(query, [studentID], (err, result) => {
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting registration.");
+      res.sendStatus(400);
+    } else {
+      console.log("Registration: ", result);
+      res.send(result);
     }
   });
 });
@@ -214,18 +206,13 @@ router.post("/viewStudentAdvisees", (req, res) => {
 router.post("/viewStudentSchedule", (req, res) => {
   let query = queries.viewStudentSchedule;
 
-  let studentID = req.body.newObj["studentID"];
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
 
-  console.log("student ID: ", studentID);
-  console.log(req.body);
-
-  db.query(query, studentID, (err, result) => {
-    res.send(result);
-    console.log("Getting student's schedule...");
-    console.log(result);
+  db.query(query, [req.body.newObj["studentID"]], (err, result) => {
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting schedule.");
+      res.sendStatus(400);
+    } else {
+      res.send(result);
     }
   });
 });
