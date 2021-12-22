@@ -14,7 +14,6 @@ import QueryHandlerResearchStaff from "./Components/ResearchStaff/QueryHandler";
 import QueryHandlerStudent from "./Components/Student_/QueryHandler";
 import DynamicForms from "./Components/DynamicForms.jsx";
 import AllForms from "../src/Components/AllForms";
-import FrontPage from "./FrontPage/FrontPage.jsx";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -121,13 +120,8 @@ class App extends Component {
   }
 
   handleLogin = (user, pass, userType) => {
-    // is there a better way to do this?
-    // using states b/c i need this data to be persistent
     var displayMsg = "";
-    console.log("Type: ", userType);
 
-    let testArgs = {};
-    console.log("Calling");
     Axios.post("http://localhost:3305/Main/login", {
       args: { username: user, password: pass, userType: userType },
       username: user,
@@ -135,7 +129,6 @@ class App extends Component {
       userType: userType,
     }).then((response) => {
       console.log(response.data.validated);
-      // console.log(response, "gay");
       if (response.data.validated) {
         console.log(response.data);
         console.log(response.data.validated + "crigne");
@@ -149,7 +142,6 @@ class App extends Component {
           userEmail: userEmail,
           userType: response.data.userType,
         };
-        console.log(response.data.userType);
 
         switch (userType) {
           case "Admin":
@@ -172,7 +164,6 @@ class App extends Component {
               document.getElementById("NavBar")
             );
             console.log("Faculty");
-            let userID = this.props.userCredentials["userID"];
             break;
           case "Research Staff":
             ReactDOM.render(
@@ -196,28 +187,11 @@ class App extends Component {
             console.log("Nothing of import.");
         }
 
-        /*
-        let eles = this.displays;
-        eles.forEach((element) => {
-          console.log(element);
-          if (element.props.userType == userType) {
-            console.log("Rendering NavBar for type: " + userType);
-            ReactDOM.render(
-              <div>{element}</div>,
-              document.getElementById("NavBar")
-            );
-          }
-        }); */
         this.setState({ userCredentials });
-        console.log(this.state.userCredentials);
 
         displayMsg =
           "Success! Logged in as " + this.state.userCredentials.userID;
 
-        console.log("crigne");
-
-        // console.log(response.data[0].userEmail);
-        // console.reselog(response);
         this.setState({ displayMsg });
 
         // whatever res.send is basically
@@ -235,7 +209,6 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <FrontPage></FrontPage>
         <div className="row">
           <div className="col-2"></div>
           <h1>{this.state.displayMsg}</h1>
@@ -245,39 +218,10 @@ class App extends Component {
         </div>
         <div className="row">
           <DynamicForms fields={["studentID"]}></DynamicForms>
-          <div id="widget" className="col-4">
-            {/*
-            <Display
-              className="col-8"
-              obj={{ data: [], arrData: [] }}
-            ></Display>*/}
-            {/*
-            <MasterSchedule
-              className="col-8"
-              obj={{ data: [], arrData: [] }}
-            ></MasterSchedule>
-            */}
-          </div>
+          <div id="widget" className="col-4"></div>
         </div>
 
-        <div>
-          {/* Landing Page Routes THESE ARE HOME FOR EACH USER
-                Root, Student, Faculty, Admin, ResearchStaff
-                */}
-
-          {/* EVERYTHING IS A SIDEBAR OPTION
-                
-                Student Navigation Routes
-                CourseSearch, ViewRegistration, RegisterCourse, DropCourse, ViewHolds,
-                ViewTranscript, DegreeAudit, ViewAdviconst 
-                 = useSelector(state => state.
-                  )
-                */}
-
-          {/* Error Page Route 
-                \asterisk
-                */}
-        </div>
+        <div></div>
       </React.Fragment>
     );
   }

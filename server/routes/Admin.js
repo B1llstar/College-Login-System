@@ -92,7 +92,7 @@ function grabVals(input) {
 // SELECT
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
-  //req.body.newObj["crn"] = parseInt(req.body.newObj["crn"]);
+  req.body.newObj["crn"] = parseInt(req.body.newObj["crn"]);
   let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
 
   db.query(newQuery, (err, result) => {
@@ -121,14 +121,6 @@ function replaceQueryQuestionMarkTokens(requestBodyObj, str) {
   return newString;
 }
 
-// TEMPLATE FOR INSERTS: -----------------
-/*
-  let query = queries.createCourse;
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query); PUT THIS BEFORE DB. QUERY, THAT'S IT!
-*/
-// ---------------------
-
-// TEMPLATE FOR INSERTS
 router.post("/createCourse", (req, res) => {
   let query = queries.createCourse;
   let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
