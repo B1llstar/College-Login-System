@@ -108,6 +108,9 @@ module.exports = {
         GPA = floatval(gradeadder/len(grades));
     } Then you'd return GPA of course */
 
+    updateGrade:
+    "UPDATE enrollment SET grade='?' WHERE studentID='?' AND crn='?';",
+
   // [STUDENT, FACULTY, ADMIN] Query to update password
   // USER INPUTS: password
   // AUTO-FILL: userID for current user
