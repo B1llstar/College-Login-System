@@ -240,11 +240,8 @@ class NavBar extends Component {
         },
 
         {
-          name: "Drop Course", //This one auto-fills student and password is an input field
-          onClick: () => {
-            //this.props.studentID,
-            this.makeForm(["studentID", "crn"], this.props.dropCourse);
-          },
+          name: "Drop Course",
+          onClick: () => { this.makeForm(["crn"], this.props.dropCourse); },
         },
 
         {
@@ -255,7 +252,7 @@ class NavBar extends Component {
         {
           name: "Register for Course",
           onClick: () =>
-            this.makeForm(["studentID", "crn"], this.props.registerForCourse),
+            this.makeForm(["crn"], this.props.registerForCourse),
         },
 
         {
@@ -276,7 +273,7 @@ class NavBar extends Component {
         {
           name: "Update Password",
           onClick: () =>
-            this.makeForm(["password", "userID"], this.props.updatePassword),
+            this.makeForm(["password"], this.props.updatePassword),
         },
 
         {

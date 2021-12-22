@@ -109,17 +109,16 @@ class QueryHandler extends Component {
   };
 
   doHandleGetDegreeAudit = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID",]);
-    newObj["studenID"] = this.props.userCredentials["studentID"];
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
+    newObj["studentID"] = this.props.userCredentials["userID"];
     let res = [];
-    console.log(newObj);
-    Axios.post("http://localhost:3305/Admin/degreeAuditPt1", { newObj }).then(
+    Axios.post("http://localhost:3305/Student/degreeAuditPt1", { newObj }).then(
       (response) => {
         this.generateAndDisplayTableFromObject(response.data, "test2");
       }
     );
 
-    Axios.post("http://localhost:3305/Admin/degreeAuditPt2", { newObj }).then(
+    Axios.post("http://localhost:3305/Student/degreeAuditPt2", { newObj }).then(
       (response) => {
         console.log("RESPONSE PT 2", response);
         res = response.data;
@@ -133,10 +132,10 @@ class QueryHandler extends Component {
   doHandleDropCourse = () => {
     this.curQuery = queries.dropCourse;
     let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "studentID",
       "crn",
-      "userID",
     ]);
-    newObj["userID"] = this.props.userCredentials["userID"];
+    newObj["studentID"] = this.props.userCredentials["userID"];
     console.log("Submitted request body: " + newObj);
     Axios.post("http://localhost:3305/Student/dropCourse", { newObj }).then(
       (response) => {
@@ -146,12 +145,12 @@ class QueryHandler extends Component {
   };
 
   doHandleRegisterForCourse = () => {
-    this.curQuery = queries.updatePassword;
+    this.curQuery = queries.registerForCourse;
     let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "studentID",
       "crn",
-      "userID",
     ]);
-    newObj["userID"] = this.props.userCredentials["userID"];
+    newObj["studentID"] = this.props.userCredentials["userID"];
     console.log("Submitted request body: " + newObj);
     Axios.post("http://localhost:3305/Student/registerForCourse", { newObj }).then(
       (response) => {
@@ -169,8 +168,7 @@ class QueryHandler extends Component {
     console.log("Submitted request body: " + newObj);
     Axios.post("http://localhost:3305/Student/studentHistory", { newObj }).then(
       (response) => {
-        console.log("Response");
-        console.log(response);
+        this.generateAndDisplayTableFromObject(response.data, "test2");
       });
   };
 
@@ -183,8 +181,7 @@ class QueryHandler extends Component {
     console.log("Submitted request body: " + newObj);
     Axios.post("http://localhost:3305/Student/transcript", { newObj }).then(
       (response) => {
-        console.log("Response");
-        console.log(response);
+        this.generateAndDisplayTableFromObject(response.data, "test2");
       });
   };
 
@@ -192,9 +189,9 @@ class QueryHandler extends Component {
     this.curQuery = queries.updatePassword;
     let newObj = this.generateObjectWithNeededPropertiesOnly([
       "password",
-      "userID",
+      "studentID"
     ]);
-    newObj["userID"] = this.props.userCredentials["userID"];
+    newObj["studentID"] = this.props.userCredentials["userID"];
     console.log("Submitted request body: " + newObj);
     Axios.post("http://localhost:3305/Student/updatePassword", { newObj }).then(
       (response) => {
@@ -212,8 +209,7 @@ class QueryHandler extends Component {
     console.log("Submitted request body: " + newObj);
     Axios.post("http://localhost:3305/Student/viewAdvisor", { newObj }).then(
       (response) => {
-        console.log("Response");
-        console.log(response);
+        this.generateAndDisplayTableFromObject(response.data, "test2");
       });
   };
 
@@ -226,8 +222,7 @@ class QueryHandler extends Component {
     console.log("Submitted request body: " + newObj);
     Axios.post("http://localhost:3305/Student/viewHolds", { newObj }).then(
       (response) => {
-        console.log("Response");
-        console.log(response);
+        this.generateAndDisplayTableFromObject(response.data, "test2");
       });
   };
 
@@ -240,8 +235,7 @@ class QueryHandler extends Component {
     console.log("Submitted request body: " + newObj);
     Axios.post("http://localhost:3305/Student/viewRegistration", { newObj }).then(
       (response) => {
-        console.log("Response");
-        console.log(response);
+        this.generateAndDisplayTableFromObject(response.data, "test2");
       });
   };
 
@@ -254,8 +248,7 @@ class QueryHandler extends Component {
     console.log("Submitted request body: " + newObj);
     Axios.post("http://localhost:3305/Student/studentLoginInfo", { newObj }).then(
       (response) => {
-        console.log("Response");
-        console.log(response);
+        this.generateAndDisplayTableFromObject(response.data, "test2");
       });
   };
 
