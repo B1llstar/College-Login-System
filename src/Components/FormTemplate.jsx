@@ -69,7 +69,7 @@ class FormTemplate extends Component {
               // this.props.onAllFormsSubmit(user, pass, userType);
             }}
           >
-            Sign in
+            Submit
           </button>
         </form>
       </div>
