@@ -28,7 +28,7 @@ module.exports = {
     "(SELECT ts.timeSlotID, ts.dayID, ts.periodID, d.weekday, p.periodStart, p.periodEnd FROM timeSlot ts\n" +
     "JOIN tsDay tsd ON ts.timeSlotID=tsd.timeSlotID JOIN tsPeriod tsp ON ts.timeslotID=tsp.timeSlotID\n" +
     "JOIN day d ON tsd.dayID=d.dayID JOIN period p ON tsp.periodID=p.periodID) AS timeTable) as times2\n" +
-    "ON courseList.timeslot2=times2.TSID) AS finalList WHERE ?;",
+    "ON courseList.timeslot2=times2.TSID) AS finalList WHERE finalList.courseID LIKE '%?%';",
 
     // [STUDENT, FACULTY, ADMIN] Degree Audit - Two Part Query, first gets % complete, second gets courses
     // AUTO-FILL INPUT: studentID for current user
@@ -37,7 +37,8 @@ module.exports = {
     "CONCAT(FORMAT((COUNT(*)/total.total)*100,2),'%') AS 'Percent Complete' FROM studentHistory sh\n" +
     "JOIN (SELECT sm.studentID, sm.majorID, COUNT(*) AS 'total' FROM studentMajor sm\n" +
     "JOIN majorCourse mc ON sm.majorID=mc.majorID\n" +
-    "WHERE sm.studentID='?') AS total ON sh.studentID=total.studentID;",
+    "WHERE sm.studentID='?') AS total\n" +
+    "ON sh.studentID=total.studentID;",
 
     degreeAuditPt2:
     "SELECT c1.courseID AS 'Course', c1.courseName AS 'Title', sh2.grade AS 'Grade', \n" +

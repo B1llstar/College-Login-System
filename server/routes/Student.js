@@ -34,42 +34,44 @@ function replaceQueryQuestionMarkTokens(requestBodyObj, str) {
 
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
-  let ele = grabVals(req.body.eles);
-  db.query(query, [studentID], (err, result) => {
-    res.send(result);
-    console.log("Getting search results...");
-    console.log(result);
+  let courseID = req.body.newObj;
+  let newQuery = replaceQueryQuestionMarkTokens(courseID, query);
+
+  db.query(newQuery, (err, result) => {
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting search results.");
+      console.log("Err finding course");
+    } else {
+      console.log("Result of course search: ", result);
+      res.send(result);
     }
   });
 });
 
 router.post("/degreeAuditPt1", (req, res) => {
   let query = queries.degreeAuditPt1;
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  console.log(req.body.newObj);
-  db.query(newQuery, (err, result) => {
+  let studentID  = req.body.newObj;
+  studentID = parseInt(studentID);
+  db.query(query, studentID, (err, result) => {
+    console.log("Getting degree audit p1...");
     if (err) {
-      console.log("err");
+      console.log(err);
     } else {
-      console.log("nice");
-      console.log(result);
+      res.send(result);
     }
   });
 });
 
 router.post("/degreeAuditPt2", (req, res) => {
   let query = queries.degreeAuditPt2;
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  console.log(req.body.newObj);
-  db.query(newQuery, (err, result) => {
+  let studentID = req.body.newObj;
+  studentID = parseInt(studentID);
+
+  db.query(query, studentID, (err, result) => {
+    console.log("Getting degree audit pt2...");
     if (err) {
-      console.log("err");
+      console.log(err);
     } else {
-      console.log("nice");
-      console.log(result);
+      res.send(result);
     }
   });
 });

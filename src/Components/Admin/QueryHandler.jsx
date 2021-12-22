@@ -144,10 +144,7 @@ class QueryHandler extends Component {
 */
   doHandleCourseSearch = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "crn",
-      "courseID",
-      "courseName",
-      "Instructor",
+      "courseID"
     ]);
     Axios.post("http://localhost:3305/Admin/courseSearch", { newObj }).then(
       (response) => {
@@ -158,12 +155,9 @@ class QueryHandler extends Component {
 
   doHandleCreateCourse = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "courseID",
-      "courseName",
-      "numCredits",
-      "deptID",
+      "courseID"
     ]);
-    Axios.post("http://localhost:3305/Admin/createCourse", { newObj }).then(
+    Axios.post("http://localhost:3305/Admin/courseSearch", { newObj }).then(
       (response) => {
         this.generateAndDisplayTableFromObject(response.data, "test2");
       }

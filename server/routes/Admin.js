@@ -96,8 +96,8 @@ function grabVals(input) {
 // SELECT
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
-  req.body.newObj["crn"] = parseInt(req.body.newObj["crn"]);
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
+  let courseID = req.body.newObj;
+  let newQuery = replaceQueryQuestionMarkTokens(courseID, query);
 
   db.query(newQuery, (err, result) => {
     if (err) {
