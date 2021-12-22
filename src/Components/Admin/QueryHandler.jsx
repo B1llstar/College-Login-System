@@ -5,6 +5,7 @@ import Axios from "axios";
 import NavBar from "../NavBar";
 import AllForms from "../AllForms";
 import ReactDOM from "react-dom";
+
 class QueryHandler extends Component {
   constructor(props) {
     super(props);

@@ -13,6 +13,7 @@ class NavBar extends Component {
       chosenUserTypeNavEleArray: [],
       curEle: "",
       // This is where we'll store the user inputs sent from FormTemplate!
+      reqBodyObj: {},
       tempData: {
         // for custom inputs
         userID: "",
@@ -238,10 +239,10 @@ class NavBar extends Component {
 
         {
           name: "Drop Course", //This one auto-fills student and password is an input field
-          onClick: () =>  
-            this.makeForm(
-              ["crn"],
-              this.props.dropCourse),  
+          onClick: () => {
+            //this.props.studentID,
+            this.makeForm(["crn"], this.props.dropCourse);
+          },
         },
 
         {
@@ -260,30 +261,22 @@ class NavBar extends Component {
 
         {
           name: "Register for Course",
-          onClick: () => {
-            //this.props.registerForCourse
-          },
+          onClick: () => this.makeForm(["studentID", "crn"], this.props.registerForCourse)
         },
 
         {
           name: "Student History",
-          onClick: () => {
-            //this.props.studentHistory
-          },
+          onClick: () => this.props.studentHistory(),
         },
 
         {
           name: "Student Login Info",
-          onClick: () => {
-            //this.props.studentLoginInfo
-          },
+          onClick: () => this.props.studentLoginInfo(),
         },
 
         {
           name: "Unofficial Transcript",
-          onClick: () => {
-            //this.props.transcript
-          },
+          onClick: () => this.props.transcript(),
         },
         
         { 
@@ -297,22 +290,16 @@ class NavBar extends Component {
 
         {
           name: "View Advisor",
-          onClick: () => {
-            //this.props.viewAdvisor
-          },
+          onClick: () => this.props.viewAdvisor(),
         },
 
         {
           name: "View Holds",
-          onClick: () => {
-            //this.props.viewHolds
-          },
+          onClick: () => this.props.viewHolds(),
         },
         {
           name: "View Registration",
-          onClick: () => {
-            //this.props.viewRegistration
-          },
+          onClick: () => this.props.viewRegistration(),
         },
 
         {
@@ -362,10 +349,24 @@ class NavBar extends Component {
         },
 
         {
+          name: "Course Search",
+          onClick: () => this.makeForm(["courseID"]),
+        },
+
+        {
+          name: "Degree Audit",
+          onClick: () => this.makeForm(["studentID"]),
+        },
+
+        {
+          name: "Degree Audit 2",
+          onClick: () => this.makeForm(["studentID"]),
+>>>>>>>>> Temporary merge branch 2
+        },
+
+        {
           name: "Faculty Login Info",
-          onClick: () => {
-            //this.props.facultyLoginInfo
-          },
+          onClick: () => this.props.facultyLoginInfo()
         },
 
         {
@@ -388,11 +389,14 @@ class NavBar extends Component {
         },
 
         {
+          name: "Student History",
+          onClick: () => this.makeForm(["studentID"]),
+>>>>>>>>> Temporary merge branch 2
+        },
+
+        {
           name: "Unofficial Transcript",
-          onClick: () =>
-            this.makeForm(
-              ["studentID"],
-              this.props.transcript),
+          onClick: () => this.makeForm(["studentID"], this.props.transcript),
         },
 
         {
@@ -425,14 +429,30 @@ class NavBar extends Component {
             this.makeForm(
               ["studentID"],
               this.props.viewRegistration), 
+=========
+          onClick: () =>
+            //this.props.facultyID
+            this.makeForm(["password"]),
+        },
+
+        {
+          name: "View Advisees",
+          onClick: () => this.makeForm(["userID"], this.props.viewStudentAdvisees),
+        },
+
+        {
+          name: "View Holds",
+          onClick: () => this.makeForm(["studentID"], this.props.viewHolds),
+        },
+
+        {
+          name: "View Registration",
+          onClick: () => this.makeForm(["studentID"], this.props.viewRegistration),
         },
 
         {
           name: "View Student Schedule",
-          onClick: () =>
-            this.makeForm(
-              ["studentID"],
-              this.props.viewStudentSchedule),
+          onClick: () => this.makeForm(["studentID"], this.props.viewStudentSchedule ),
         },
 
         {

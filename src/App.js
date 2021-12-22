@@ -150,6 +150,7 @@ class App extends Component {
           userType: response.data.userType,
         };
         console.log(response.data.userType);
+        this.setState({ userCredentials });
 
         let ele;
         switch (userType) {
@@ -168,6 +169,7 @@ class App extends Component {
               <QueryHandlerFaculty
                 userType={"Faculty"}
                 tempData={this.state.tempData}
+                userCredentials={this.state.userCredentials}
               ></QueryHandlerFaculty>,
               document.getElementById("NavBar")
             );
@@ -179,6 +181,7 @@ class App extends Component {
               <QueryHandlerResearchStaff
                 userType={"ResearchStaff"}
                 tempData={this.state.tempData}
+                userCredentials={this.state.userCredentials}
               ></QueryHandlerResearchStaff>,
               document.getElementById("NavBar")
             );
@@ -187,6 +190,7 @@ class App extends Component {
               <QueryHandlerStudent
                 userType={"Student"}
                 tempData={this.state.tempData}
+                userCredentials={this.state.userCredentials}
               ></QueryHandlerStudent>,
               document.getElementById("NavBar")
             );
@@ -208,7 +212,7 @@ class App extends Component {
             );
           }
         }); */
-        this.setState({ userCredentials });
+        
         console.log(this.state.userCredentials);
 
         displayMsg =

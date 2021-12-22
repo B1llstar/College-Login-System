@@ -31,7 +31,7 @@ class Login extends Component {
       }
       case "Faculty": {
         userEmail = "sgoldwater5a@neweastbury.edu";
-        pass = "jyOVzoCb4";
+        pass = "sbzd";
         userType = type;
         break;
       }

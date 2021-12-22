@@ -37,14 +37,14 @@ module.exports = {
     "CONCAT(FORMAT((COUNT(*)/total.total)*100,2),'%') AS 'Percent Complete' FROM studentHistory sh\n" +
     "JOIN (SELECT sm.studentID, sm.majorID, COUNT(*) AS 'total' FROM studentMajor sm\n" +
     "JOIN majorCourse mc ON sm.majorID=mc.majorID\n" +
-    "WHERE sm.studentID='?') AS total ON sh.studentID=total.studentID;",
+    "WHERE sm.studentID=?) AS total ON sh.studentID=total.studentID;",
     
     degreeAuditPt2:
     "SELECT c1.courseID AS 'Course', c1.courseName AS 'Title', sh2.grade AS 'Grade', \n" +
     "c1.numCredits AS 'Credits', sh2.semYear AS 'Term' FROM course c1\n" +
     "JOIN (SELECT sh1.studentID, sh1.crn, sh1.semYear, sec1.courseID, sh1.grade FROM studentHistory sh1\n" +
     "JOIN section sec1 ON sh1.crn=sec1.crn) AS sh2 ON c1.courseID=sh2.courseID\n" +
-    "WHERE sh2.studentID='?' ORDER BY SUBSTRING(sh2.semYear,2,4) ASC;",
+    "WHERE sh2.studentID=? ORDER BY SUBSTRING(sh2.semYear,2,4) ASC;",
 
     // [FACULTY] View courses assigned to as Instructor
     // AUTO-FILL INPUT: facultyID for current user
@@ -71,13 +71,13 @@ module.exports = {
     // This is the query that should be used to display info on the FACULTY landing page
     facultyLoginInfo:
     "SELECT u.userID, u.userType, u.firstName, u.lastName, l.userEmail, l.password FROM\n" +
-    "user u RIGHT JOIN loginInfo l ON u.userID=l.userID WHERE u.userID=?;",
+    "user u RIGHT JOIN loginInfo l ON u.userID=l.userID WHERE u.userID='?';",
 
     // [FACULTY] Record Attendance
     // USER INPUT: All values required, query must fail if any are missing
     // Parameters: studentID- 9 digit INT, CRN-5 digit INT, eNum- ('Yes' or 'No'), date- YYYY-MM-DD format
     recordAttendance:
-    "INSERT INTO attendance(studentID, crn, isPresent, date) VALUES ('?', '?', '?' '?');",
+    "INSERT INTO attendance(studentID, crn, isPresent, date) VALUES ('?', '?', '?', '?');",
 
     // [STUDENT, FACULTY, ADMIN] Query to retrieve student's history*/
     // USER INPUT: studentID
@@ -90,7 +90,7 @@ module.exports = {
     "JOIN (SELECT sh.studentID, sh.crn, s.courseID, sh.semYear, sh.grade, s.facultyID FROM studentHistory sh JOIN \n" +
     "section s ON sh.crn=s.crn) AS history ON history.courseID=course.courseID) AS courseHistory\n" +
     "ON courseHistory.facultyID=f.facultyID) AS instructor ON u.userID=instructor.facultyID\n" +
-    "WHERE studentID='?' ORDER BY studentID ASC;",
+    "WHERE studentID=? ORDER BY studentID ASC;",
 
     // [STUDENT, FACULTY, ADMIN] View student transcript
     // USER INPUT: studentID
@@ -99,7 +99,7 @@ module.exports = {
     "c1.numCredits AS 'Credit Hours', sh2.semYear AS 'Term' FROM course c1\n" +
     "JOIN (SELECT sh1.studentID, sh1.crn, sh1.semYear, sec1.courseID, sh1.grade FROM studentHistory sh1\n" +
     "JOIN section sec1 ON sh1.crn=sec1.crn) AS sh2 ON c1.courseID=sh2.courseID\n" +
-    "WHERE sh2.studentID='?' ORDER BY SUBSTRING(sh2.semYear,2,4) ASC;",
+    "WHERE sh2.studentID=? ORDER BY SUBSTRING(sh2.semYear,2,4) ASC;",
     /* Amir gave me this algorithm to convert a grade letter into a GPA, which we should display somewhere on the Transcript page:
     arrayOfGradeLatters= ["A","A-","B+","B","B-","C+","C","C-","D+","D","F"];
     arrayOfGradeValues= [4.0,3.7,3.3,3.0,2.7,2.3,2.0,1.7,1.3,1.0,0.0];
@@ -113,7 +113,7 @@ module.exports = {
     // USER INPUTS: password
     // AUTO-FILL: userID for current user
     updatePassword:
-    "UPDATE loginInfo SET password='?' WHERE userID=?;",
+    "UPDATE loginInfo SET password='?' WHERE userID='?';",
 
     // [FACULTY] Retrieve a list of Students Advisees assigned to the Faculty user
     // AUTO-FILL: facultyID for current user
@@ -121,7 +121,7 @@ module.exports = {
     "SELECT students.studentID AS 'Student ID', CONCAT(students.LastName,', ',students.firstName) AS 'Student Name',\n" +
     "students.phoneNumber AS 'Student Phone', l.userEmail AS 'Student Email' FROM loginInfo l\n" +
     "RIGHT JOIN (SELECT facList.studentID, u.firstName, u.lastName, u.phoneNumber FROM user u\n" +
-    "JOIN (SELECT studentID FROM advisor WHERE facultyID='?') AS facList\n" +
+    "JOIN (SELECT studentID FROM advisor WHERE facultyID=?) AS facList\n" +
     "WHERE facList.studentID=u.userID) AS students ON students.studentID=l.userID\n" +
     "ORDER BY students.lastName ASC;",
 
@@ -133,7 +133,7 @@ module.exports = {
     "JOIN (SELECT sh.holdName, sh.DateAdded, studentInfo.studentID, studentInfo.studentName FROM studentHold sh\n" +
     "JOIN (SELECT s.studentID, CONCAT(u.lastName,', ',u.firstName) AS studentName FROM user u\n" +
     "JOIN student s ON u.userID=s.studentID) AS studentInfo ON studentInfo.studentID=sh.studentID) AS sHolds\n" +
-    "ON h.holdName=sHolds.holdName WHERE sHolds.studentID='?';",
+    "ON h.holdName=sHolds.holdName WHERE sHolds.studentID=?;",
 
     // [STUDENT, FACULTY, ADMIN] View Student's registration for next semester*/
     // USER INPUT: studentID (for Faculty, Admin)
@@ -154,7 +154,7 @@ module.exports = {
     "JOIN tsDay tsd ON ts.timeSlotID=tsd.timeSlotID JOIN tsPeriod tsp ON ts.timeslotID=tsp.timeSlotID\n"+
     "JOIN day d ON tsd.dayID=d.dayID	JOIN period p ON tsp.periodID=p.periodID) AS timeTable) as tSlots2\n"+
     "ON s.timeslot2=tSlots2.TSID) AS list ON list.courseID=c.courseID ORDER BY list.semYear DESC, list.courseID) AS courseHist\n"+
-    "ON e.crn=courseHist.crn WHERE courseHist.Semester='S2022' AND studentID='700217149';",
+    "ON e.crn=courseHist.crn WHERE courseHist.Semester='S2022' AND studentID=?;",
 
     // [FACULTY, ADMIN] Access a Student's schedule
     // USER INPUT: studentID
@@ -179,6 +179,6 @@ module.exports = {
     "JOIN day d ON tsd.dayID=d.dayID JOIN period p ON tsp.periodID=p.periodID) AS timeTable) as tSlots2\n" +
     "ON s.timeslot2=tSlots2.TSID) AS timeset ON c.courseID=timeset.courseID) AS courseSet\n" +
     "ON u.userID=courseSet.facultyID) AS facultySet ON e.crn=facultySet.crn) AS studentSet\n" +
-    "ON studentSet.studentID=u2.userID) AS final WHERE final.studentID='?';",
+    "ON studentSet.studentID=u2.userID) AS final WHERE final.studentID=?;",
     
 }
