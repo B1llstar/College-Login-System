@@ -87,8 +87,8 @@ function checkForNeededProps(first_, toBePassed) {
 // SELECT
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
-  let courseID = req.body.newObj;
-  let newQuery = replaceQueryQuestionMarkTokens(courseID, query);
+  req.body.newObj["crn"] = parseInt(req.body.newObj["crn"]);
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
 
   db.query(newQuery, (err, result) => {
     if (err) {
@@ -110,81 +110,67 @@ function replaceQueryQuestionMarkTokens(requestBodyObj, str) {
       newString = newString.replace("'?'", ele);
     } // may only need to use parseInt on that prop
     // in the route instead, i hope it's that easy
-    else newString = newString.replace("?", ele);
+    else {
+      newString = newString.replace("?", ele);
+    }
   });
-  console.log(newString);
   return newString;
 }
-
 router.post("/createCourse", (req, res) => {
   let query = queries.createCourse;
+  req.body.newObj["numCredits"] = parseInt(req.body.newObj["numCredits"]);
   let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  let { courseID, courseName, numCredits, deptID } = req.body.newObj;
   console.log(req.body.newObj);
+  console.log(newQuery);
   db.query(newQuery, (err, result) => {
     if (err) {
-      console.log("err");
+      console.log(err);
     } else {
-      console.log("nice");
-      let arr = [
-        {
-          courseID: courseID,
-          courseName: courseName,
-          numCredits: numCredits,
-          deptID: deptID,
-        },
-      ];
-      res.send(arr);
+      res.send(result);
     }
   });
 });
 
 router.post("/createUser", (req, res) => {
   let query = queries.createUser;
-  let reqBody = req.body.newObj;
-  reqBody["zip"] = parseInt(reqBody["zip"]);
-  let newQuery = replaceQueryQuestionMarkTokens(reqBody, query);
-
-  db.query(newQuery, (err, result) => {
-    if (err) {
-      console.log("err");
-    } else {
-      console.log(
-        "Made user with ID: ",
-        reqBody["userID"],
-        " and type: ",
-        reqBody["userType"]
-      );
-
-      let {
-        userID,
-        userType,
-        firstName,
-        lastName,
-        phoneNumber,
-        DOB,
-        street,
-        city,
-        state,
-        zip,
-      } = req.body.newObj;
-      let arr = [
-        {
-          userID: userID,
-          userType: userType,
-          firstName: firstName,
-          lastName: lastName,
-          phoneNumber: phoneNumber,
-          DOB: DOB,
-          street: street,
-          city: city,
-          state: state,
-          zip: zip,
-        },
-      ];
-      res.send(arr);
+  req.body.newObj["zip"] = parseInt(req.body.newObj["zip"]);
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
+  console.log(newQuery);
+  let {
+    userID,
+    userType,
+    firstName,
+    lastName,
+    phoneNumber,
+    DOB,
+    street,
+    city,
+    state,
+    zip,
+  } = req.body.newObj;
+  console.log(req.body.newObj);
+  db.query(
+    query,
+    [
+      userID,
+      userType,
+      firstName,
+      lastName,
+      phoneNumber,
+      DOB,
+      street,
+      city,
+      state,
+      zip,
+    ],
+    (err, result) => {
+      if (err) {
+        console.log("err");
+      } else {
+        console.log("nice");
+      }
     }
-  });
+  );
   // USER INPUT: All values required, query must fail if any are missing
   // Parameters: userID-9 digits INT, userType-dropdown selection, first/last - String
   // phoneNumber-10 digits no spaces/dashes, DOB- YYYY-MM-DD, street/city - String, zip-5 digit INT
@@ -346,13 +332,14 @@ router.post("/registerForCourse", (req, res) => {
 
 router.post("/studentHistory", (req, res) => {
   let query = queries.studentHistory;
-  let { studentID } = req.body.newObj;
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
   //USER INPUT = studentID;
-  db.query(query, [studentID], (err, result) => {
+  db.query(newQuery, (err, result) => {
+    console.log("Getting student history...");
     if (err) {
-      console.log("err");
+      res.sendStatus(400);
     } else {
-      console.log("Got student history:", result);
+      res.send(result);
     }
   });
 });
@@ -372,10 +359,11 @@ router.post("/studentLoginInfo", (req, res) => {
 router.post("/transcript", (req, res) => {
   let query = queries.transcript;
   let studentID = req.body.newObj["studentID"];
-
-  db.query(query, studentID, (err, result) => {
+  console.log(studentID);
+  db.query(query, [studentID], (err, result) => {
     console.log("Getting transcript...");
     if (err) {
+      console.log(err);
       res.sendStatus(400);
     } else {
       res.send(result);
@@ -442,14 +430,17 @@ router.post("/viewFacultyAdvisors", (req, res) => {
 
 router.post("/viewHolds", (req, res) => {
   let query = queries.viewHolds;
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  // let { studentID } = req.body.newObj;
-
-  db.query(newQuery, (err, result) => {
+  let { studentID } = req.body.newObj;
+  studentID = parseInt(studentID);
+  // USER INPUT: if not null, studentID
+  // If USER INPUT null, return entire table
+  db.query(query, [studentID], (err, result) => {
+    console.log("Getting holds...");
     if (err) {
-      console.log("Error getting holds");
+      console.log(err);
+      res.sendStatus(400);
     } else {
-      console.log("Holds: ", result);
+      res.send(result);
     }
   });
 });
@@ -486,16 +477,14 @@ router.post("/viewStudentAdvisees", (req, res) => {
 
 router.post("/viewStudentSchedule", (req, res) => {
   let query = queries.viewStudentSchedule;
-  // console.log(req.body.newObj["studentID"]);
-  // req.body.newObj["studentID"] = "'" + req.body.newObj["studentID"] + "'";
-  //  let { studentID } = req.body.newObj;
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-
-  db.query(query, [req.body.newObj["studentID"]], (err, result) => {
+  // USER INPUT: studentID
+  let { studentID } = req.body.newObj;
+  db.query(query, [studentID], (err, result) => {
+    res.send(result);
+    console.log("Getting student's schedule...");
     if (err) {
-      console.log("Error getting schedule");
-    } else {
-      console.log("Student schedule: ", result);
+      console.log(err);
+      res.err("Something went wrong getting schedule.");
     }
   });
 });

@@ -103,15 +103,24 @@ class QueryHandler extends Component {
 
   // I put the above function after makeSomeTables because makeSomeTables
   // must be defined for this to compile, even though this is not alphabetical
-
   doHandleGetTranscript = () => {
+    this.clear();
     let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
-    Axios.post("http://localhost:3305/Admin/transcript", { newObj }).then(
-      (response) => {
-        // this.makeSomeTables(response.data, "test2");
-        this.generateAndDisplayTableFromObject(response.data, "test2");
-      }
-    );
+    newObj["studentID"] = parseInt(newObj["studentID"]);
+    Axios.post("http://localhost:3305/Admin/transcript", { newObj })
+      .then((response) => {
+        console.log(response.status);
+        // If response exists - A.K.A. in JS, if it is 'truthy'.
+        if (response.status == 200) {
+          this.generateAndDisplayTableFromObject(response.data, "test3");
+        }
+      })
+      .catch(function (error) {
+        if (error) {
+          if (error.response.status == 400)
+            console.log("Bad request. Incorrect studentID maybe?");
+        }
+      });
   };
 
   /*
@@ -139,24 +148,52 @@ class QueryHandler extends Component {
   }
 */
   doHandleCourseSearch = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly(["courseID"]);
+    this.clear();
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "crn, courseID, courseName, Instructor",
+    ]);
     Axios.post("http://localhost:3305/Admin/courseSearch", { newObj }).then(
       (response) => {
-        this.generateAndDisplayTableFromObject(response.data, "test2");
+        this.generateAndDisplayTableFromObject(response.data, "test3");
       }
     );
   };
 
   doHandleCreateCourse = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly(["courseID"]);
-    Axios.post("http://localhost:3305/Admin/courseSearch", { newObj }).then(
-      (response) => {
-        this.generateAndDisplayTableFromObject(response.data, "test2");
-      }
-    );
+    this.clear();
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "courseID",
+      "courseName",
+      "numCredits",
+      "deptID",
+    ]);
+
+    newObj["deptID"] = newObj.deptID.replace("'");
+
+    Axios.post("http://localhost:3305/Admin/createCourse", { newObj })
+      .then((response) => {
+        console.log(response.status);
+        // If response exists - A.K.A. in JS, if it is 'truthy'.
+        if (response.status == 200) {
+          // this.generateAndDisplayTableFromObject(response.data, "test3");
+
+          this.displayNewMsgOnScreen(
+            "Successfully created courseID: " + newObj["courseID"]
+          );
+        }
+      })
+      .catch(
+        function (error) {
+          this.displayNewMsgOnScreen("Bad request. Check fields.");
+          if (error) {
+            if (error.response.status == 400) console.log("Bad request");
+          }
+        }.bind(this)
+      );
   };
 
   displayTextMessageOnScreen = (msg) => {
+    this.clear();
     console.log("Displaying");
     let ele = <h2>{msg}</h2>;
     ReactDOM.render(
@@ -166,17 +203,17 @@ class QueryHandler extends Component {
   };
 
   displayNewMsgOnScreen = (msg) => {
+    this.clear();
     console.log("Displaying");
     let ele = <h2>{msg}</h2>;
     ReactDOM.render(
-      <div className="main" style={{ float: "left" }}>
-        {ele}
-      </div>,
-      document.getElementById("test1")
+      <div className="d-flex justify-content-center">{ele}</div>,
+      document.getElementById("output")
     );
   };
 
   doHandleCreateUser = () => {
+    this.clear();
     let newObj = this.generateObjectWithNeededPropertiesOnly([
       "userID",
       "userType",
@@ -197,6 +234,7 @@ class QueryHandler extends Component {
   };
 
   doHandleDeleteCourse = () => {
+    this.clear();
     let newObj = this.generateObjectWithNeededPropertiesOnly(["courseID"]);
     Axios.post("http://localhost:3305/Admin/deleteCourse", { newObj })
       .then((response) => {
@@ -221,6 +259,7 @@ class QueryHandler extends Component {
   };
 
   doHandleGetDegreeAudit = () => {
+    this.clear();
     let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
     let res = [];
     Axios.post("http://localhost:3305/Admin/degreeAuditPt1", { newObj }).then(
@@ -235,12 +274,18 @@ class QueryHandler extends Component {
         res = response.data;
         // Note how I use the div underneath the first table, since both will be
         // displayed at once and on the same page
-        this.generateAndDisplayTableFromObject(response.data, "test3");
+        this.generateAndDisplayTableFromObject(response.data, "test4");
       }
     );
   };
 
+  clear = () => {
+    ReactDOM.render(<div></div>, document.getElementById("test3"));
+    ReactDOM.render(<div></div>, document.getElementById("test4"));
+  };
+
   doHandleDropCourse = () => {
+    this.clear();
     let newObj = this.generateObjectWithNeededPropertiesOnly([
       "studentID",
       "crn",
@@ -263,6 +308,7 @@ class QueryHandler extends Component {
   };
 
   doHandleGetFacultyCourseList = () => {
+    this.clear();
     let newObj = this.generateObjectWithNeededPropertiesOnly(["facultyID"]);
     Axios.post("http://localhost:3305/Admin/facultyCourseList", {
       newObj,
@@ -272,6 +318,7 @@ class QueryHandler extends Component {
   };
 
   doHandleModifyCourse = () => {
+    this.clear();
     let newObj = this.generateObjectWithNeededPropertiesOnly([
       "courseID",
       "courseName",
@@ -286,6 +333,7 @@ class QueryHandler extends Component {
   };
 
   doHandleModifyUser = () => {
+    this.clear();
     let res = [];
     let newObj = this.generateObjectWithNeededPropertiesOnly([
       "firstName",
@@ -301,15 +349,28 @@ class QueryHandler extends Component {
 
     console.log(newObj);
 
-    Axios.post("http://localhost:3305/Admin/modifyUser", { newObj }).then(
-      (response) => {
-        res = response.data;
-        this.makeSomeTables(res, "test3");
-      }
-    );
+    Axios.post("http://localhost:3305/Admin/modifyUser", { newObj })
+      .then((response) => {
+        console.log(response.status);
+        // If response exists - A.K.A. in JS, if it is 'truthy'.
+        if (response.status == 200) {
+          console.log(response);
+          this.displayTextMessageOnScreen(
+            "Modified User " + newObj["userID"] + "!"
+          );
+        }
+      })
+      .catch(
+        function (error) {
+          if (error) {
+            // this.displayTextMessageOnScreen("Bad Request.");
+          }
+        }.bind(this)
+      );
   };
 
   doHandleRegisterForCourse = () => {
+    this.clear();
     let newObj = this.generateObjectWithNeededPropertiesOnly([
       "studentID",
       "crn",
@@ -321,12 +382,15 @@ class QueryHandler extends Component {
       // this.makeSomeTables(res, "test3");
       ReactDOM.render(
         <div className="main">
-          <h2>Registered for course {newObj["crn"]}</h2>
+          <h2>
+            Registered {newObj["studentID"]} for course {newObj["crn"]}!
+          </h2>
         </div>,
         document.getElementById("test3")
       );
     });
   };
+  700129072;
   componentDidMount = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly(["userID"]);
 
@@ -360,12 +424,16 @@ class QueryHandler extends Component {
 
   doHandleGetStudentHistory = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
-    Axios.post("http://localhost:3305/Admin/viewStudentHistory", {
+    Axios.post("http://localhost:3305/Admin/studentHistory", {
       newObj,
-    }).then((response) => {});
+    }).then((response) => {
+      console.log(response);
+      this.generateAndDisplayTableFromObject(response.data, "test3");
+    });
   };
 
   doHandleGetAdminLoginInfo = () => {
+    this.clear();
     let newObj = this.generateObjectWithNeededPropertiesOnly(["userID"]);
 
     newObj["userID"] = this.props.userCredentials["userID"];
@@ -377,6 +445,7 @@ class QueryHandler extends Component {
   };
 
   doHandleLogin = () => {
+    this.clear();
     let reqBody = this.state.reqBodyObj;
     let newObj = {};
     let needed = ["userName", "password", "userType"];
@@ -394,6 +463,7 @@ class QueryHandler extends Component {
   };
 
   doHandleUpdatePassword = () => {
+    this.clear();
     let newObj = this.generateObjectWithNeededPropertiesOnly([
       "password",
       "userID",
@@ -401,24 +471,26 @@ class QueryHandler extends Component {
 
     Axios.post("http://localhost:3305/Admin/updatePassword", { newObj }).then(
       (response) => {
-        this.displayNewMsgOnScreen(
-          <div style={{ float: "left" }}>
-            <p>HI!!!!!! WE'RE FLOATY</p>
-          </div>
+        this.displayTextMessageOnScreen(
+          "Updated password for user " + newObj["userID"] + "!"
         );
       }
     );
   };
 
   doHandleViewAllUsers = () => {
+    this.clear();
     this.curQuery = queries.viewAllUsers;
 
     Axios.post("http://localhost:3305/Admin/viewAllUsers", {}).then(
-      (response) => {}
+      (response) => {
+        this.generateAndDisplayTableFromObject(response.data, "test3");
+      }
     );
   };
 
   doHandleViewStudentHistory = () => {
+    this.clear();
     let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
 
     Axios.post("http://localhost:3305/Admin/viewCourseHistory", {
@@ -427,6 +499,7 @@ class QueryHandler extends Component {
   };
 
   doHandleViewFacultyAdvisors = () => {
+    this.clear();
     this.curQuery = queries.viewFacultyAdvisors;
     Axios.post("http://localhost:3305/Admin/viewFacultyAdvisors", {}).then(
       (response) => {}
@@ -434,22 +507,29 @@ class QueryHandler extends Component {
   };
 
   doHandleViewStudentAdvisees = () => {
+    this.clear();
     Axios.post("http://localhost:3305/Admin/viewStudentAdvisees", {}).then(
-      (response) => {}
+      (response) => {
+        this.generateAndDisplayTableFromObject(response.data, "test3");
+      }
     );
   };
 
   doHandleViewHolds = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
     Axios.post("http://localhost:3305/Admin/viewHolds", { newObj }).then(
-      (response) => {}
+      (response) => {
+        this.generateAndDisplayTableFromObject(response.data, "test3");
+      }
     );
   };
 
   doHandleViewRegistration = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
     Axios.post("http://localhost:3305/Admin/viewRegistration", { newObj }).then(
-      (response) => {}
+      (response) => {
+        this.generateAndDisplayTableFromObject(response.data, "test3");
+      }
     );
   };
 
@@ -457,7 +537,9 @@ class QueryHandler extends Component {
     let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
     Axios.post("http://localhost:3305/Admin/viewStudentSchedule", {
       newObj,
-    }).then((response) => {});
+    }).then((response) => {
+      this.generateAndDisplayTableFromObject(response.data, "test3");
+    });
   };
 
   generateObjectWithNeededPropertiesOnly = (neededPropsArr) => {

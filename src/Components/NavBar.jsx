@@ -43,6 +43,7 @@ class NavBar extends Component {
             console.log("Pressed home button. Add a redirect somewhere maybe?"),
         },
 
+        /*
         {
           name: "Admin Login Info",
           onClick: () => {
@@ -57,6 +58,7 @@ class NavBar extends Component {
             this.makeForm(["userEmail", "password"], this.props.testLogin);
           },
         },
+        */
         {
           name: "Create Course",
           onClick: () => {
@@ -103,8 +105,9 @@ class NavBar extends Component {
 
         {
           name: "Drop Course",
-          onClick: () =>
-            this.makeForm(["studentID", "crn"], this.props.dropStudentCourse),
+          onClick: () => {
+            this.makeForm(["studentID", "crn"], this.props.dropStudentCourse);
+          },
         },
 
         {
@@ -114,13 +117,6 @@ class NavBar extends Component {
               ["courseID", "courseName", "numCredits", "deptID"],
               this.props.modifyCourse
             ),
-        },
-
-        {
-          name: "Modify Master Schedule",
-          // -------------------------- DO NOTHING FOR NOW onClick: () => this.makeForm(), --------------------------
-          // query still needs to be written for this
-          // onClick: this.props.modifyMasterSchedule,
         },
 
         {
@@ -182,7 +178,11 @@ class NavBar extends Component {
             this.makeForm(["facultyID"], this.props.facultyCourseList),
         },
         */
-
+        {
+          name: "View Student Course History",
+          onClick: () =>
+            this.makeForm(["studentID"], this.props.studentHistory),
+        },
         {
           name: "View Student Degree Audit",
           onClick: () => {
@@ -203,12 +203,6 @@ class NavBar extends Component {
         },
 
         {
-          name: "View Course History",
-          onClick: () =>
-            this.makeForm(["studentID"], this.props.viewCourseHistory),
-        },
-
-        {
           name: "View Student Schedule",
           onClick: () =>
             this.makeForm(["studentID"], this.props.viewStudentSchedule),
@@ -219,10 +213,11 @@ class NavBar extends Component {
           onClick: () =>
             this.makeForm(["studentID"], this.props.viewStudentTranscript),
         },
+        /*
         {
           name: "View User Login Info",
           onClick: () => this.makeForm(["userID"], this.props.studentLoginInfo),
-        },
+        }, */
       ],
 
       Student: [
@@ -422,7 +417,7 @@ class NavBar extends Component {
       </div>
     );
 
-    ReactDOM.render(ele, document.getElementById("test2"));
+    ReactDOM.render(ele, document.getElementById("forms"));
   };
 
   wrapper = (func, val) => {

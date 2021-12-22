@@ -49,6 +49,11 @@ class FormTemplate extends Component {
     return eles;
   };
 
+  clear = () => {
+    ReactDOM.render(<div></div>, document.getElementById("test2"));
+    ReactDOM.render(<div></div>, document.getElementById("test3"));
+    ReactDOM.render(<div></div>, document.getElementById("test4"));
+  };
   render() {
     // The properties used of the forms for that particular button (such as crn, userID etc.)
 
@@ -84,6 +89,23 @@ class FormTemplate extends Component {
                 }}
               >
                 Submit
+              </button>
+              <button
+                // 'margin-bottom: 5px;display:  inline-block;position: relative;bottom: 5px;'
+                style={{
+                  marginBottom: "5px",
+                  display: "inline-block",
+                  position: "relative",
+                  bottom: "5px",
+                }}
+                className="btn btn-secondary mt-2"
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.clear();
+                  // this.props.onAllFormsSubmit(user, pass, userType);
+                }}
+              >
+                Clear
               </button>
             </div>
           </div>
