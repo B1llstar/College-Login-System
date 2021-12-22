@@ -99,7 +99,6 @@ class Login extends Component {
         <button onClick={() => this.populateFields("Student")}>
           Auto Populate STUDENT
         </button>
-
         <form>
           <div className="row">
             <div className="col-3">

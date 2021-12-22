@@ -16,6 +16,9 @@ const mainRoutes = require("./routes/Main.js");
 app.use(cors());
 app.use(express.json());
 
+const publicPath = path.join(__dirname, "..", "public");
+app.use(express.static(publicPath));
+
 // The four buttons
 app.use("/Main", mainRoutes);
 
