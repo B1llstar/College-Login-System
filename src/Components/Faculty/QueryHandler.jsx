@@ -6,7 +6,8 @@ import NavBar from "../NavBar";
 import AllForms from "../AllForms";
 import ReactDOM from "react-dom";
 
-class QueryHandler extends Component { //faculty
+class QueryHandler extends Component {
+  //faculty
   constructor(props) {
     super(props);
     this.state = {
@@ -31,13 +32,74 @@ class QueryHandler extends Component { //faculty
         city: "",
         state: "",
         zip: "",
-        password: ""
+        password: "",
       },
     };
     this.curQuery = "";
+    let temp = this.makeSomeTables.bind(this);
+    this.makeSomeTables = temp;
+    temp = this.displayTextMessageOnScreen.bind(this);
+    this.displayTextMessageOnScreen = temp;
   }
 
-  tableMaker = () => {};
+  makeSomeTables = (arr, domTarget) => {
+    this.setState({ data: arr });
+    let unique = [];
+    let thList = [];
+    let counter = 0;
+    let result = arr.map((element, index) => {
+      let keys = Object.keys(element);
+      let tdList = [];
+
+      // grab unique elements
+      keys.map((ele) => {
+        if (!unique.includes(ele)) {
+          unique.push(ele);
+        }
+      });
+
+      // make data consisting of each property
+      // map each unique property into an object map containing elements of property unique
+      unique.map((ele, index) => {
+        tdList.push(<td>{element[ele]}</td>);
+
+        if (counter < unique.length) {
+          thList.push(<th id="dbHead">{unique[index]}</th>);
+          counter++;
+        }
+      });
+
+      return <tr id="dbRow">{tdList}</tr>;
+    });
+
+    let ele_ = (
+      <table className="table">
+        <thead class="thead-dark">
+          <tr>{thList}</tr>
+        </thead>
+        <tbody>{result}</tbody>
+      </table>
+    );
+    ReactDOM.render(
+      <div className="main">{ele_}</div>,
+      document.getElementById(domTarget)
+    );
+    console.log(unique);
+  };
+
+  displayTextMessageOnScreen = (msg) => {
+    console.log("Displaying");
+    let ele = <h2>{msg}</h2>;
+    ReactDOM.render(
+      <div className="main">{ele}</div>,
+      document.getElementById("test2")
+    );
+  };
+
+  generateAndDisplayTableFromObject = (res, domDestinationID) => {
+    this.makeSomeTables(res, domDestinationID);
+    console.log("Displaying some data at id ", domDestinationID);
+  };
 
   doHandleCourseSearch = () => {
     this.curQuery = queries.courseSearch;
@@ -45,15 +107,13 @@ class QueryHandler extends Component { //faculty
     Axios.post("http://localhost:3305/Faculty/courseSearch", {
       //course search parameters - just by courseID if can't do multiquery
       //I might have to rewrite search query to accomodate, but no problem
-    }).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
+    }).then((response) => {
+      console.log(response);
+      console.log("QUERY!!!!!");
+      this.props.obj.data = response.data;
+      console.log(this.props.obj.data);
+      this.props.makeTable(this.props.obj.data);
+    });
   };
 
   doHandleGetDegreeAuditPt1 = () => {
@@ -62,16 +122,14 @@ class QueryHandler extends Component { //faculty
     let studentID = this.state.tempData.studentID;
 
     Axios.post("http://localhost:3305/Faculty/degreeAuditPt1", {
-      studentID: studentID
-    }).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
+      studentID: studentID,
+    }).then((response) => {
+      console.log(response);
+      console.log("QUERY!!!!!");
+      this.props.obj.data = response.data;
+      console.log(this.props.obj.data);
+      this.props.makeTable(this.props.obj.data);
+    });
   };
 
   doHandleGetDegreeAuditPt2 = () => {
@@ -80,44 +138,53 @@ class QueryHandler extends Component { //faculty
     let studentID = this.state.tempData.studentID;
 
     Axios.post("http://localhost:3305/Faculty/degreeAuditPt2", {
-      studentID: studentID
-    }).then(
-      (response) => {
-        console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
+      studentID: studentID,
+    }).then((response) => {
+      console.log(response);
+      console.log("QUERY!!!!!");
+      this.props.obj.data = response.data;
+      console.log(this.props.obj.data);
+      this.props.makeTable(this.props.obj.data);
+    });
   };
 
-  doHandleGetFacultyCoursesTeaching = () => {
-    this.curQuery = queries.facultyCoursesTeaching;
-    let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "userID",
-    ]);
+  doHandleGetFacultyAssignedCourseList = () => {
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["userID"]);
     newObj["userID"] = this.props.userCredentials["userID"];
     console.log("Submitted request body: " + newObj);
-    Axios.post("http://localhost:3305/Faculty/facultyCoursesTeaching", { newObj }).then(
-      (response) => {
-        console.log("Response");
-        console.log(response);
-      });
+    Axios.post("http://localhost:3305/Faculty/assignedCourseList", {
+      newObj,
+    })
+      .then((response) => {
+        console.log(response.status);
+        // If response exists - A.K.A. in JS, if it is 'truthy'.
+        if (response.status == 200) {
+          // this.generateAndDisplayTableFromObject(response.data, "test2");
+          this.generateAndDisplayTableFromObject(response.data, "test2");
+        }
+      })
+      .catch(
+        function (error) {
+          this.displayTextMessageOnScreen("Bad request. Something went wrong.");
+          if (error) {
+            if (error.response.status == 400)
+              console.log("Something went wrong.");
+          }
+        }.bind(this)
+      );
   };
 
   doHandleGetFacultyLoginInfo = () => {
     this.curQuery = queries.facultyLoginInfo;
-    let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "userID",
-    ]);
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["userID"]);
     newObj["userID"] = this.props.userCredentials["userID"];
     console.log("Submitted request body: " + newObj);
-    Axios.post("http://localhost:3305/Faculty/facultyLoginInfo", { newObj }).then(
-      (response) => {
-        console.log("Response");
-        console.log(response);
-      });
+    Axios.post("http://localhost:3305/Faculty/facultyLoginInfo", {
+      newObj,
+    }).then((response) => {
+      console.log("Response");
+      console.log(response);
+    });
   };
 
   doHandleRecordAttendance = () => {
@@ -129,11 +196,12 @@ class QueryHandler extends Component { //faculty
       "date",
     ]);
     console.log("Submitted request body: " + newObj);
-    Axios.post("http://localhost:3305/Faculty/recordAttendance", { newObj }).then(
-      (response) => {
-        console.log("Response");
-        console.log(response);
-      });
+    Axios.post("http://localhost:3305/Faculty/recordAttendance", {
+      newObj,
+    }).then((response) => {
+      console.log("Response");
+      console.log(response);
+    });
   };
 
   doHandleGetStudentHistory = () => {
@@ -166,7 +234,8 @@ class QueryHandler extends Component { //faculty
       (response) => {
         console.log("Response");
         console.log(response);
-      });
+      }
+    );
   };
 
   doHandleViewHolds = () => {
@@ -180,29 +249,29 @@ class QueryHandler extends Component { //faculty
 
   doHandleViewRegistration = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
-    Axios.post("http://localhost:3305/Faculty/viewRegistration", { newObj }).then(
-      (response) => {
-        console.log(response);
-      }
-    );
+    Axios.post("http://localhost:3305/Faculty/viewRegistration", {
+      newObj,
+    }).then((response) => {
+      console.log(response);
+    });
   };
 
   doHandleViewStudentAdvisees = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly(["userID"]);
-    Axios.post("http://localhost:3305/Faculty/viewStudentAdvisees", { newObj }).then(
-      (response) => {
-        console.log(response);
-      }
-    );
+    Axios.post("http://localhost:3305/Faculty/viewStudentAdvisees", {
+      newObj,
+    }).then((response) => {
+      console.log(response);
+    });
   };
 
   doHandleViewStudentSchedule = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly(["studentID"]);
-    Axios.post("http://localhost:3305/Faculty/viewStudentSchedule", { newObj }).then(
-      (response) => {
-        console.log(response);
-      }
-    );
+    Axios.post("http://localhost:3305/Faculty/viewStudentSchedule", {
+      newObj,
+    }).then((response) => {
+      console.log(response);
+    });
   };
 
   generateObjectWithNeededPropertiesOnly = (neededPropsArr) => {
@@ -297,10 +366,10 @@ class QueryHandler extends Component { //faculty
     return (
       <div>
         <NavBar
+          assignedCourseList={this.doHandleGetFacultyAssignedCourseList}
           courseSearch={this.doHandleCourseSearch}
           degreeAudit={this.doHandleGetDegreeAuditPt1}
           degreeAudit2={this.doHandleGetDegreeAuditPt2}
-          facultyCoursesTeaching={this.doHandleGetFacultyCoursesTeaching}
           facultyLoginInfo={this.doHandleGetFacultyLoginInfo}
           recordAttendance={this.doHandleRecordAttendance}
           studentHistory={this.doHandleGetStudentHistory}

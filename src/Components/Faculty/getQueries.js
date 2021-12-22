@@ -4,8 +4,8 @@ const permissibleQueries = {
   courseSearch: queries.courseSearch,
   degreeAuditPt1: queries.degreeAuditPt1,
   degreeAuditPt2: queries.degreeAuditPt2,
-  facultyCoursesTeaching: queries.facultyCoursesTeaching,
-  facultyLoginInfo: queries.facultyLoginInfo,  
+  assignedCourseList: queries.facultyAssignedCourseList,
+  facultyLoginInfo: queries.facultyLoginInfo,
   recordAttendance: queries.recordAttendance,
   studentHistory: queries.studentHistory,
   transcript: queries.transcript,
@@ -13,7 +13,7 @@ const permissibleQueries = {
   viewHolds: queries.viewHolds,
   viewRegistration: queries.viewRegistration,
   viewStudentAdvisees: queries.viewStudentAdvisees,
-  viewStudentSchedule: queries.viewStudentSchedule
+  viewStudentSchedule: queries.viewStudentSchedule,
 };
 
 module.exports = permissibleQueries;

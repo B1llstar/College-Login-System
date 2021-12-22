@@ -29,18 +29,38 @@ function replaceQueryQuestionMarkTokens(requestBodyObj, str) {
   return newString;
 }
 
+router.post("/assignedCourseList", (req, res) => {
+  let query = queries.assignedCourseList;
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
+  db.query(newQuery, (err, result) => {
+    if (err) {
+      console.log("err");
+      res.sendSatus(400);
+    } else {
+      console.log("nice");
+      res.send(result);
+    }
+  });
+});
+
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
   let ele = grabVals(req.body.eles);
-  db.query(query, [/*course search variables*/], (err, result) => {
-    res.send(result);
-    console.log(result);
-    console.log("Getting search results...");
-    if (err) {
-      console.log(err);
-      res.err("Something went wrong getting search results.");
+  db.query(
+    query,
+    [
+      /*course search variables*/
+    ],
+    (err, result) => {
+      res.send(result);
+      console.log(result);
+      console.log("Getting search results...");
+      if (err) {
+        console.log(err);
+        res.err("Something went wrong getting search results.");
+      }
     }
-  });
+  );
 });
 
 router.post("/degreeAuditPt1", (req, res) => {
@@ -67,20 +87,6 @@ router.post("/degreeAuditPt2", (req, res) => {
     if (err) {
       console.log(err);
       res.err("Something went wrong getting degree audit details.");
-    }
-  });
-});
-
-router.post("/facultyCoursesTeaching", (req, res) => {
-  let query = queries.facultyCoursesTeaching;
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  console.log(req.body.newObj);
-  db.query(newQuery, (err, result) => {
-    if (err) {
-      console.log("err");
-    } else {
-      console.log("nice");
-      console.log(result);
     }
   });
 });
