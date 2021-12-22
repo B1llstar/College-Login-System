@@ -87,12 +87,6 @@ function checkForNeededProps(first_, toBePassed) {
   return eles;
 }
 
-function grabVals(input) {
-  let ele = [];
-  ele = Object.values(input);
-  return ele;
-}
-
 // SELECT
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;

@@ -4,6 +4,7 @@ import Login from "./Components/Login.jsx";
 import Axios from "axios";
 import "./bootstrap/css/bootstrap.css";
 import "./bootstrap/css/bootstrap.min.css";
+
 import MasterSchedule from "./Components/Display";
 import Display from "./Components/Display";
 import Faculty from "./Components/Faculty/Faculty.js";
@@ -13,7 +14,7 @@ import QueryHandlerFaculty from "./Components/Faculty/QueryHandler.jsx";
 import QueryHandlerResearchStaff from "./Components/ResearchStaff/QueryHandler";
 import QueryHandlerStudent from "./Components/Student_/QueryHandler";
 import DynamicForms from "./Components/DynamicForms.jsx";
-import AllForms from "../src/Components/AllForms";
+import "./_styles_/NavigationScrolling.css";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -130,8 +131,6 @@ class App extends Component {
     }).then((response) => {
       console.log(response.data.validated);
       if (response.data.validated) {
-        console.log(response.data);
-        console.log(response.data.validated + "crigne");
         let userID = response.data.userID;
         let userType = response.data.userType;
 
@@ -204,8 +203,6 @@ class App extends Component {
             );
           }
         }); */
-        this.setState({ userCredentials });
-        console.log(this.state.userCredentials);
 
         displayMsg =
           "Success! Logged in as " + this.state.userCredentials.userID;

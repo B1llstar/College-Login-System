@@ -1,4 +1,3 @@
-import "../styles/Login.css";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 class AllForms extends Component {
@@ -57,7 +56,7 @@ class AllForms extends Component {
       numCredits,
       crn,
       deptID,
-      
+
       userType,
       firstName,
       lastName,
