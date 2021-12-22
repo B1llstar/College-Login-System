@@ -64,13 +64,10 @@ router.post("/adminLoginInfo", (req, res) => {
   let userID = req.body.newObj["userID"];
   // AUTO FILL: userID
   db.query(query, [userID], (err, result) => {
-    res.send(result);
     console.log("Getting admin info...");
     if (err) {
-      console.log(err);
-      // res.err("(ADMIN) Failed to get login info");
+      res.sendStatus(400);
     } else {
-      console.log("Got info: ", result);
       res.send(result);
     }
   });

@@ -166,39 +166,45 @@ class QueryHandler extends Component {
       );
   };
 
-  updateInfoWithResponseDataObj = (obj) => {
-    let {
-      userID,
-      userType,
-      firstName,
-      lastName,
-      phoneNum,
-      DOB,
-      street,
-      studentID,
-      email,
-      city,
-      state,
-      zip,
-    } = obj;
+  componentDidMount = () => {
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["userID"]);
 
+    newObj["userID"] = this.props.userCredentials["userID"];
+    console.log(newObj);
+    Axios.post("http://localhost:3305/Faculty/facultyLoginInfo", {
+      newObj,
+    }).then((response) => {
+      console.log(response);
+      let { userID, firstName, lastName } = response.data[0];
+      let temp = { userID: userID, firstName: firstName, lastName: lastName };
+      console.log(temp);
+      this.displayLoginHeader(temp);
+    });
+  };
+
+  displayLoginHeader = (obj) => {
+    let { userID, userType, firstName, lastName, email, password } = obj;
+    // may use some of those other proeprties later
     this.displayTextMessageOnScreen(
-      <h1 className="text-center">
-        Welcome to New Eastbury, {firstName} {lastName}!
-      </h1>,
-      "root"
+      <div>
+        <h3 className="text-center">Welcome to New Eastbury </h3>
+        <h1 className="text-center" style={{ textDecoration: "underline" }}>
+          {" "}
+          {firstName} {lastName}!<h3>(UserID: {userID})</h3>
+        </h1>
+      </div>,
+      "test1"
     );
   };
 
   doHandleGetFacultyLoginInfo = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly(["userID"]);
-    let userInfo = {};
+
     newObj["userID"] = this.props.userCredentials["userID"];
     Axios.post("http://localhost:3305/Faculty/facultyLoginInfo", {
       newObj,
     }).then((response) => {
-      this.updateInfoWithResponseDataObj(response.data[0]);
-      console.log(response.data);
+      this.generateAndDisplayTableFromObject(response.data, "test2");
     });
   };
 
@@ -434,7 +440,7 @@ class QueryHandler extends Component {
         <NavBar
           className="Navigation"
           assignedCourseList={this.doHandleGetFacultyAssignedCourseList}
-          courseSearch={this.doHandleCodurseSearch}
+          courseSearch={this.doHandleCourseSearch}
           degreeAudit={this.doHandleGetDegreeAudit}
           facultyLoginInfo={this.doHandleGetFacultyLoginInfo}
           recordAttendance={this.doHandleRecordAttendance}

@@ -155,6 +155,7 @@ class Login extends Component {
                 className="btn btn-primary mt-3"
                 onClick={(e) => {
                   e.preventDefault();
+
                   this.props.onLoginSubmit(user, pass, userType);
                 }}
               >

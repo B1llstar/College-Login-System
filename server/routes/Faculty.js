@@ -94,10 +94,9 @@ router.post("/facultyLoginInfo", (req, res) => {
   db.query(query, [userID], (err, result) => {
     console.log("Getting faculty info...");
     if (err) {
-      console.log(err);
-      // res.err("(ADMIN) Failed to get login info");
+      res.sendStatus(400);
     } else {
-      console.log("Got info: ", result);
+      res.send(result);
     }
   });
 });
@@ -108,10 +107,9 @@ router.post("/recordAttendance", (req, res) => {
   console.log(req.body.newObj);
   db.query(newQuery, (err, result) => {
     if (err) {
-      console.log("err");
+      console.log(err);
     } else {
-      console.log("nice");
-      console.log(result);
+      res.send(result);
     }
   });
 });
@@ -120,13 +118,7 @@ router.post("/studentHistory", (req, res) => {
   let query = queries.studentHistory;
   let studentID = req.body.newObj["studentID"];
 
-  db.query(query, studentID, (err, result) => {
-    if (err) {
-      res.sendStatus(400);
-    } else {
-      res.send(result);
-    }
-  });
+  db.query(query, studentID, (err, result) => {});
 });
 
 router.post("/transcript", (req, res) => {

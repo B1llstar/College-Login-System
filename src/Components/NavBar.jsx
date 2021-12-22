@@ -46,11 +46,7 @@ class NavBar extends Component {
         {
           name: "Admin Login Info",
           onClick: () => {
-            this.makeForm(
-              ["userID"],
-
-              this.props.adminLoginInfo
-            );
+            this.props.adminLoginInfo();
             //this.props.facultyLoginInfo
           },
         },
