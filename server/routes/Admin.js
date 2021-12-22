@@ -96,8 +96,8 @@ function grabVals(input) {
 // SELECT
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
-  req.body.newObj["crn"] = parseInt(req.body.newObj["crn"]);
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
+  let courseID = req.body.newObj;
+  let newQuery = replaceQueryQuestionMarkTokens(courseID, query);
 
   db.query(newQuery, (err, result) => {
     if (err) {
@@ -259,7 +259,7 @@ router.post("/deleteCourse", (req, res) => {
 
 router.post("/dropCourse", (req, res) => {
   let query = queries.dropCourse;
-  req.body.newObj["courseID"] = parseInt(req.body.newObj["courseID"]);
+  req.body.newObj["crn"] = parseInt(req.body.newObj["crn"]);
   let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
 
   db.query(newQuery, (err, result) => {
@@ -267,7 +267,7 @@ router.post("/dropCourse", (req, res) => {
       console.log("err");
     } else {
       console.log("Dropped course", result);
-      res.send(req.body.newObj["courseID"]);
+      res.send(req.body.newObj["crn"]);
     }
   });
   // USER INPUT: studentID, crn

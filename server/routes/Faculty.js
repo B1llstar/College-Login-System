@@ -45,22 +45,17 @@ router.post("/assignedCourseList", (req, res) => {
 
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
-  let ele = grabVals(req.body.eles);
-  db.query(
-    query,
-    [
-      /*course search variables*/
-    ],
-    (err, result) => {
+  let courseID = req.body.newObj;
+  let newQuery = replaceQueryQuestionMarkTokens(courseID, query);
+
+  db.query(newQuery, (err, result) => {
+    if (err) {
+      console.log("Err finding course");
+    } else {
+      console.log("Result of course search: ", result);
       res.send(result);
-      console.log(result);
-      console.log("Getting search results...");
-      if (err) {
-        console.log(err);
-        res.err("Something went wrong getting search results.");
-      }
     }
-  );
+  });
 });
 
 router.post("/degreeAuditPt1", (req, res) => {

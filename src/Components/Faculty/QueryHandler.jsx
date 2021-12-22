@@ -102,18 +102,14 @@ class QueryHandler extends Component {
   };
 
   doHandleCourseSearch = () => {
-    this.curQuery = queries.courseSearch;
-
-    Axios.post("http://localhost:3305/Faculty/courseSearch", {
-      //course search parameters - just by courseID if can't do multiquery
-      //I might have to rewrite search query to accomodate, but no problem
-    }).then((response) => {
-      console.log(response);
-      console.log("QUERY!!!!!");
-      this.props.obj.data = response.data;
-      console.log(this.props.obj.data);
-      this.props.makeTable(this.props.obj.data);
-    });
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "courseID"
+    ]);
+    Axios.post("http://localhost:3305/Faculty/courseSearch", { newObj }).then(
+      (response) => {
+        this.generateAndDisplayTableFromObject(response.data, "test2");
+      }
+    );
   };
 
   doHandleGetDegreeAuditPt1 = () => {

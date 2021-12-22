@@ -27,7 +27,7 @@ module.exports = {
     "(SELECT ts.timeSlotID, ts.dayID, ts.periodID, d.weekday, p.periodStart, p.periodEnd FROM timeSlot ts\n" +
     "JOIN tsDay tsd ON ts.timeSlotID=tsd.timeSlotID JOIN tsPeriod tsp ON ts.timeslotID=tsp.timeSlotID\n" +
     "JOIN day d ON tsd.dayID=d.dayID JOIN period p ON tsp.periodID=p.periodID) AS timeTable) as times2\n" +
-    "ON courseList.timeslot2=times2.TSID) AS finalList WHERE ?;",
+    "ON courseList.timeslot2=times2.TSID) AS finalList WHERE finalList.courseID LIKE '%?%';",
 
   // [STUDENT, FACULTY, ADMIN] Degree Audit - Two Part Query, first gets % complete, second gets courses
   // USER INPUT: studentID

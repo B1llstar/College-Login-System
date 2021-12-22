@@ -34,70 +34,74 @@ function replaceQueryQuestionMarkTokens(requestBodyObj, str) {
 
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
-  let ele = grabVals(req.body.eles);
-  db.query(query, [studentID], (err, result) => {
-    res.send(result);
-    console.log("Getting search results...");
-    console.log(result);
+  let courseID = req.body.newObj;
+  let newQuery = replaceQueryQuestionMarkTokens(courseID, query);
+
+  db.query(newQuery, (err, result) => {
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting search results.");
+      console.log("Err finding course");
+    } else {
+      console.log("Result of course search: ", result);
+      res.send(result);
     }
   });
 });
 
 router.post("/degreeAuditPt1", (req, res) => {
   let query = queries.degreeAuditPt1;
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  console.log(req.body.newObj);
-  db.query(newQuery, (err, result) => {
+  let { studentID } = req.body.newObj;
+  studentID = parseInt(studentID);
+  db.query(query, [studentID], (err, result) => {
+    console.log("Getting degree audit p1...");
     if (err) {
-      console.log("err");
+      console.log(err);
     } else {
-      console.log("nice");
-      console.log(result);
+      res.send(result);
     }
   });
 });
 
 router.post("/degreeAuditPt2", (req, res) => {
   let query = queries.degreeAuditPt2;
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  console.log(req.body.newObj);
-  db.query(newQuery, (err, result) => {
+  let { studentID } = req.body.newObj;
+  studentID = parseInt(studentID);
+
+  db.query(query, [studentID], (err, result) => {
+    console.log("Getting degree audit pt2...");
     if (err) {
-      console.log("err");
+      console.log(err);
     } else {
-      console.log("nice");
-      console.log(result);
+      res.send(result);
     }
   });
 });
 
 router.post("/dropCourse", (req, res) => {
   let query = queries.dropCourse;
+  req.body.newObj["crn"] = parseInt(req.body.newObj["crn"]);
   let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  console.log(req.body.newObj);
+
   db.query(newQuery, (err, result) => {
     if (err) {
       console.log("err");
     } else {
-      console.log("nice");
-      console.log(result);
+      console.log("Dropped course", result);
+      //res.send(req.body.newObj["courseID"]);
     }
   });
 });
 
 router.post("/registerForCourse", (req, res) => {
   let query = queries.registerForCourse;
+  req.body.newObj["crn"] = parseInt(req.body.newObj["crn"]);
   let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  console.log(req.body.newObj);
+
   db.query(newQuery, (err, result) => {
     if (err) {
       console.log("err");
     } else {
-      console.log("nice");
-      console.log(result);
+      console.log("Successfully registered course!", result);
+      //res.send(req.body.newObj["courseID"]);
     }
   });
 });
@@ -112,6 +116,7 @@ router.post("/studentHistory", (req, res) => {
     } else {
       console.log("nice");
       console.log(result);
+      res.send(result);
     }
   });
 });
@@ -126,6 +131,7 @@ router.post("/transcript", (req, res) => {
     } else {
       console.log("nice");
       console.log(result);
+      res.send(result);
     }
   });
 });
@@ -133,13 +139,12 @@ router.post("/transcript", (req, res) => {
 router.post("/updatePassword", (req, res) => {
   let query = queries.updatePassword;
   let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  console.log(req.body.newObj);
+
   db.query(newQuery, (err, result) => {
     if (err) {
-      console.log("err");
+      console.log("err updating pass");
     } else {
-      console.log("nice");
-      console.log(result);
+      console.log("Updated pass for user: ", req.body.newObj["studentID"]);
     }
   });
 });
@@ -154,6 +159,7 @@ router.post("/viewAdvisor", (req, res) => {
     } else {
       console.log("nice");
       console.log(result);
+      res.send(result);
     }
   });
 });
@@ -168,6 +174,7 @@ router.post("/viewHolds", (req, res) => {
     } else {
       console.log("nice");
       console.log(result);
+      res.send(result);
     }
   });
 });
@@ -182,6 +189,7 @@ router.post("/viewRegistration", (req, res) => {
     } else {
       console.log("nice");
       console.log(result);
+      res.send(result);
     }
   });
 });
@@ -196,6 +204,7 @@ router.post("/studentLoginInfo", (req, res) => {
     } else {
       console.log("nice");
       console.log(result);
+      res.send(result);
     }
   }); 
 });

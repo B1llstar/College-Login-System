@@ -76,14 +76,8 @@ class NavBar extends Component {
         },
 
         {
-          name: "Search Course",
-          onClick: () => {
-            this.makeForm(
-              // ["crn", "courseID", "courseName", "Instructor"],
-              ["crn", "courseID", "courseName", "Instructor"],
-              this.props.courseSearch
-            );
-          },
+          name: "Course Search",
+          onClick: () => this.makeForm(["courseID"], this.props.courseSearch),
         },
         {
           name: "Create User",
@@ -241,36 +235,24 @@ class NavBar extends Component {
         },
 
         {
-          name: "Faculty Login Info",
-          onClick: () => {
-            //this.props.facultyLoginInfo
-          },
-        },
-
-        {
           name: "Course Search",
           onClick: () => this.makeForm(["courseID"], this.props.courseSearch),
         },
 
         {
-          name: "Drop Course", //This one auto-fills student and password is an input field
-          onClick: () => {
-            //this.props.studentID,
-            this.makeForm(["studentID", "crn"], this.props.dropCourse);
-          },
+          name: "Drop Course",
+          onClick: () => { this.makeForm(["crn"], this.props.dropCourse); },
         },
 
         {
           name: "Degree Audit",
-          onClick: () => {
-            // this.makeForm(["studentID"], this.props.degreeAudit);
-          },
+          onClick: () => this.props.degreeAudit()
         },
 
         {
           name: "Register for Course",
           onClick: () =>
-            this.makeForm(["studentID", "crn"], this.props.registerForCourse),
+            this.makeForm(["crn"], this.props.registerForCourse),
         },
 
         {
@@ -291,7 +273,7 @@ class NavBar extends Component {
         {
           name: "Update Password",
           onClick: () =>
-            this.makeForm(["password", "userID"], this.props.updatePassword),
+            this.makeForm(["password"], this.props.updatePassword),
         },
 
         {
