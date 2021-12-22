@@ -6,7 +6,7 @@ const cors = require("cors");
 
 const db = require("./database.js");
 const app = express();
-
+const port = process.env.PORT || 3010;
 // const researchStaffRoutes = require("./routes/ResearchStaff");
 const studentRoutes = require("./routes/Student.js");
 const adminRoutes = require("./routes/Admin.js");
@@ -18,6 +18,9 @@ app.use(express.json());
 
 const publicPath = path.join(__dirname, "..", "public");
 app.use(express.static(publicPath));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
+});
 
 // The four buttons
 app.use("/Main", mainRoutes);
@@ -36,6 +39,10 @@ db.connect((err) => {
 
 app.listen(3305, () => {
   console.log("Server running: port 3305");
+});
+
+app.listen(port, () => {
+  console.log(`Server is up on port ${port}!`);
 });
 
 /* // This post & this get are what Chris had used
