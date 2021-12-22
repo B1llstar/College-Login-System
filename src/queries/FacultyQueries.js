@@ -16,7 +16,7 @@ module.exports = {
     "CONCAT (u.firstName, ', ', u.lastName) as 'Instructor', S2022.semYear, S2022.timeSlot1, S2022.timeSlot2 FROM user u\n" +
     "RIGHT JOIN (SELECT s.crn, s.courseID, catalog.courseName, catalog.deptName, s.roomID, s.facultyID, s.semYear, s.timeSlot1, s.timeSlot2 from section s\n" +
     "RIGHT JOIN (SELECT d.deptID, d.deptName, c.courseID, c.courseName FROM dept d\n" +
-    "JOINcourse c ON d.deptID=c.deptID) AS catalog ON s.courseID=catalog.courseID\n" +
+    "JOIN course c ON d.deptID=c.deptID) AS catalog ON s.courseID=catalog.courseID\n" +
     "WHERE s.semYear='S2022') AS S2022 ON u.userID=S2022.facultyID) AS courseList\n" +
     "LEFT JOIN (SELECT timeTable.timeSlotID AS 'TSID', timeTable.weekDay AS day, \n" +
     "CONCAT(TIME_FORMAT(timeTable.periodStart, '%h:%i%p'),' - ',TIME_FORMAT(timeTable.periodEnd, '%h:%i%p')) AS 'Time' FROM\n" +

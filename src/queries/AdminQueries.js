@@ -42,12 +42,12 @@ module.exports = {
   createCourse:
     "INSERT INTO course(courseID, courseName, numCredits, deptID) VALUES('?', '?', '?', '?');",
 
-  // [ADMIN] Create a user
-  // USER INPUT: All values required, query must fail if any are missing
-  // Parameters: userID-9 digits INT, userType-dropdown selection, first/last - String
-  // phoneNumber-10 digits no spaces/dashes, DOB- YYYY-MM-DD, street/city - String, zip-5 digit INT
-  createUser:
-    "INSERT INTO user(studentID, userType, firstName, lastName, phoneNumber, DOB, street, city, state, zip)\n" +
+    // [ADMIN] Create a user
+    // USER INPUT: All values required, query must fail if any are missing
+    // Parameters: userID-9 digits INT, userType-dropdown selection, first/last - String
+    // phoneNumber-10 digits no spaces/dashes, DOB- YYYY-MM-DD, street/city - String, zip-5 digit INT
+    createUser:
+    "INSERT INTO user(userID, userType, firstName, lastName, phoneNumber, DOB, street, city, state, zip)\n" +
     "VALUES('?', '?', '?', '?', '?', '?', '?', '?', '?', '?');",
 
   // [STUDENT, FACULTY, ADMIN] Degree Audit - Two Part Query, first gets % complete, second gets courses

@@ -3,6 +3,7 @@ import "../styles/NavigationStyles.css";
 import DynamicForms from "./DynamicForms";
 import ReactDOM from "react-dom";
 import FormTemplate from "./FormTemplate";
+import { query } from "express";
 
 class NavBar extends Component {
   constructor(props) {
@@ -117,8 +118,8 @@ class NavBar extends Component {
         {
           name: "Modify Course",
           onClick: () =>
-            this.makeForm([
-              "courseID",
+            this.makeForm(
+              ["courseID",
               "courseName",
               "numCredits",
               "deptID",
@@ -169,7 +170,7 @@ class NavBar extends Component {
         { name: "View All Users", onClick: () => this.props.viewAllUsers },
         { name: "View Course History", onClick: () => this.props.viewCourseHistory },
 
-        //onClick: this.props.viewCourseHistory },
+        
         {
           name: "View Student Advisees",
           onClick: () => this.props.viewStudentAdvisees(),
