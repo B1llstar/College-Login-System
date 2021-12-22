@@ -64,13 +64,10 @@ router.post("/adminLoginInfo", (req, res) => {
   let userID = req.body.newObj["userID"];
   // AUTO FILL: userID
   db.query(query, [userID], (err, result) => {
-    res.send(result);
     console.log("Getting admin info...");
     if (err) {
-      console.log(err);
-      // res.err("(ADMIN) Failed to get login info");
+      res.sendStatus(400);
     } else {
-      console.log("Got info: ", result);
       res.send(result);
     }
   });
@@ -85,12 +82,6 @@ function checkForNeededProps(first_, toBePassed) {
     if (prop in passed) eles[prop] = toBePassed[prop];
   }
   return eles;
-}
-
-function grabVals(input) {
-  let ele = [];
-  ele = Object.values(input);
-  return ele;
 }
 
 // SELECT
@@ -380,15 +371,13 @@ router.post("/studentLoginInfo", (req, res) => {
 
 router.post("/transcript", (req, res) => {
   let query = queries.transcript;
-  // let { studentID } = req.body.newObj;
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
+  let studentID = req.body.newObj["studentID"];
 
-  //USER INPUT = studentID;
-  db.query(newQuery, (err, result) => {
+  db.query(query, studentID, (err, result) => {
+    console.log("Getting transcript...");
     if (err) {
-      console.log("Error getting transcript");
+      res.sendStatus(400);
     } else {
-      console.log("Success: ", result);
       res.send(result);
     }
   });

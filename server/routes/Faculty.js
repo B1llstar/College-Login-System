@@ -45,8 +45,8 @@ router.post("/assignedCourseList", (req, res) => {
 
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
-  let courseID = req.body.newObj;
-  let newQuery = replaceQueryQuestionMarkTokens(courseID, query);
+  req.body.newObj["crn"] = parseInt(req.body.newObj["crn"]);
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
 
   db.query(newQuery, (err, result) => {
     if (err) {
@@ -60,42 +60,43 @@ router.post("/courseSearch", (req, res) => {
 
 router.post("/degreeAuditPt1", (req, res) => {
   let query = queries.degreeAuditPt1;
-  let ele = grabVals(req.body.eles);
+  let { studentID } = req.body.newObj;
+  studentID = parseInt(studentID);
   db.query(query, [studentID], (err, result) => {
-    res.send(result);
-    console.log(result);
     console.log("Getting degree audit p1...");
     if (err) {
       console.log(err);
-      res.err("Something went wrong getting degree audit overview.");
+    } else {
+      res.send(result);
     }
   });
 });
 
 router.post("/degreeAuditPt2", (req, res) => {
   let query = queries.degreeAuditPt2;
-  let ele = grabVals(req.body.eles);
+  let { studentID } = req.body.newObj;
+  studentID = parseInt(studentID);
+
   db.query(query, [studentID], (err, result) => {
-    res.send(result);
-    console.log(result);
     console.log("Getting degree audit pt2...");
     if (err) {
       console.log(err);
-      res.err("Something went wrong getting degree audit details.");
+    } else {
+      res.send(result);
     }
   });
 });
 
 router.post("/facultyLoginInfo", (req, res) => {
   let query = queries.facultyLoginInfo;
-  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  console.log(req.body.newObj);
-  db.query(newQuery, (err, result) => {
+  let userID = req.body.newObj["userID"];
+  // AUTO FILL: userID
+  db.query(query, [userID], (err, result) => {
+    console.log("Getting faculty info...");
     if (err) {
-      console.log("err");
+      res.sendStatus(400);
     } else {
-      console.log("nice");
-      console.log(result);
+      res.send(result);
     }
   });
 });
@@ -106,10 +107,9 @@ router.post("/recordAttendance", (req, res) => {
   console.log(req.body.newObj);
   db.query(newQuery, (err, result) => {
     if (err) {
-      console.log("err");
+      console.log(err);
     } else {
-      console.log("nice");
-      console.log(result);
+      res.send(result);
     }
   });
 });
@@ -118,34 +118,19 @@ router.post("/studentHistory", (req, res) => {
   let query = queries.studentHistory;
   let studentID = req.body.newObj["studentID"];
 
-  console.log("student ID: ", studentID);
-  console.log(req.body);
-
-  db.query(query, studentID, (err, result) => {
-    res.send(result);
-    console.log("Getting student history...");
-    console.log(result);
-    if (err) {
-      console.log(err);
-      res.err("Something went wrong getting student history.");
-    }
-  });
+  db.query(query, studentID, (err, result) => {});
 });
 
 router.post("/transcript", (req, res) => {
   let query = queries.transcript;
   let studentID = req.body.newObj["studentID"];
 
-  console.log("student ID: ", studentID);
-  console.log(req.body);
-
   db.query(query, studentID, (err, result) => {
-    res.send(result);
     console.log("Getting transcript...");
-    console.log(result);
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting transcript.");
+      res.sendStatus(400);
+    } else {
+      res.send(result);
     }
   });
 });
@@ -153,13 +138,15 @@ router.post("/transcript", (req, res) => {
 router.post("/updatePassword", (req, res) => {
   let query = queries.updatePassword;
   let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
-  console.log(req.body.newObj);
+  //input order: password, userID
+
   db.query(newQuery, (err, result) => {
     if (err) {
-      console.log("err");
+      console.log("err updating pass");
+      res.sendStatus(400);
     } else {
-      console.log("nice");
-      console.log(result);
+      console.log("Updated pass for user: ", req.body.newObj["userID"]);
+      res.send(result);
     }
   });
 });
@@ -168,52 +155,42 @@ router.post("/viewHolds", (req, res) => {
   let query = queries.viewHolds;
   let studentID = req.body.newObj["studentID"];
 
-  console.log("student ID: ", studentID);
-  console.log(req.body);
-
   db.query(query, studentID, (err, result) => {
-    res.send(result);
     console.log("Getting holds...");
-    console.log(result);
+
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting holds.");
+      res.sendStatus(400);
+    } else {
+      console.log("Got holds for user: ", req.body.newObj["studentID"]);
+      res.send(result);
     }
   });
 });
 
 router.post("/viewRegistration", (req, res) => {
   let query = queries.viewRegistration;
-  let studentID = req.body.newObj["studentID"];
+  let { studentID } = req.body.newObj;
 
-  console.log("student ID: ", studentID);
-  console.log(req.body);
-
-  db.query(query, studentID, (err, result) => {
-    res.send(result);
-    console.log("Getting registration...");
-    console.log(result);
+  db.query(query, [studentID], (err, result) => {
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting registration.");
+      res.sendStatus(400);
+    } else {
+      console.log("Registration: ", result);
+      res.send(result);
     }
   });
 });
 
 router.post("/viewStudentAdvisees", (req, res) => {
+  //If we have time, we can create a user input filter for studentID, but not necessary
   let query = queries.viewAdvisees;
-  let studentID = req.body.newObj["userID"];
+  let facID = req.body.newObj["facultyID"];
 
-  console.log("user ID: ", userID);
-  console.log(req.body);
-
-  db.query(query, userID, (err, result) => {
-    res.send(result);
-    console.log(result);
-    console.log("Getting advisees list...");
+  db.query(query, [facID], (err, result) => {
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting advisees.");
+      res.sendStatus(400);
+    } else {
+      res.send(result);
     }
   });
 });
@@ -221,18 +198,13 @@ router.post("/viewStudentAdvisees", (req, res) => {
 router.post("/viewStudentSchedule", (req, res) => {
   let query = queries.viewStudentSchedule;
 
-  let studentID = req.body.newObj["studentID"];
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
 
-  console.log("student ID: ", studentID);
-  console.log(req.body);
-
-  db.query(query, studentID, (err, result) => {
-    res.send(result);
-    console.log("Getting student's schedule...");
-    console.log(result);
+  db.query(query, [req.body.newObj["studentID"]], (err, result) => {
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting schedule.");
+      res.sendStatus(400);
+    } else {
+      res.send(result);
     }
   });
 });
