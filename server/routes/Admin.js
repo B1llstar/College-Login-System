@@ -32,6 +32,10 @@ router.post("/", (req, res) => {
     (err, result) => { 
 */
 
+// NOTE: Errors will not send a response, because
+// Axios promises will check if response exists
+// to determine what code to execute
+
 // TEMPLATE FOR SELECTS
 
 router.post("/testLogin", (req, res) => {
@@ -231,9 +235,23 @@ router.post("/deleteCourse", (req, res) => {
 
   db.query(newQuery, (err, result) => {
     if (err) {
-      console.log("err");
+      console.log("Bad request at route Admin/deleteCourse");
     } else {
-      res.send(req.body.newObj["courseID"]);
+      // This will be maintainable if affectedRows doesn't change
+      // That number is different when something is actually deleted
+      // In other words, it's a good litmus test for a successful query
+      let keys = Object.keys(result);
+      let values = Object.values(result);
+      let index = keys.indexOf("affectedRows");
+
+      if (values[index] != 0) {
+        res.sendStatus(200);
+        console.log("Removed course ID: ", req.body.newObj.courseID);
+      } else {
+        res.sendStatus(400);
+        console.log("Failed to remove course");
+      }
+      // if (result["affectedRows"].length == 0) res.sendStatus(400);
     }
   });
   // USER INPUT: courseID - 5 CHAR (format is 2 letters + 3 numbers, but DB will reject if not correct anyway )
@@ -278,6 +296,7 @@ router.post("/modifyCourse", (req, res) => {
   let query = queries.modifyCourse;
   let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
 
+  // Special case for this query, since courseID appears twice
   newQuery = newQuery.replace(
     "WHERE courseID='?",
     "WHERE courseID='" + req.body.newObj["courseID"]
@@ -298,6 +317,7 @@ router.post("/modifyCourse", (req, res) => {
 
 // SO - if there are optional parameters, set the parameters in the
 // appropriate order when passing them through generateObjectWithNeededPropertiesOnly in QueryHandler
+
 router.post("/modifyUser", (req, res) => {
   let query = queries.modifyUser;
   //  req.body.newObj["userID"] = parseInt(req.body.newObj["userID"]);
@@ -357,8 +377,6 @@ router.post("/studentLoginInfo", (req, res) => {
     }
   });
 });
-
-// WORKS
 
 router.post("/transcript", (req, res) => {
   let query = queries.transcript;
