@@ -390,9 +390,9 @@ router.post("/updatePassword", (req, res) => {
 
   db.query(newQuery, (err, result) => {
     if (err) {
-      console.log("err updating pass");
+      res.sendStatus(400);
     } else {
-      console.log("Updated pass for user: ", req.body.newObj["userID"]);
+      res.send(result);
     }
   });
 });

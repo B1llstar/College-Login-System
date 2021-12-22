@@ -47,6 +47,8 @@ class QueryHandler extends Component {
     this.makeSomeTables = temp;
     temp = this.displayTextMessageOnScreen.bind(this);
     this.displayTextMessageOnScreen = temp;
+    temp = this.displayNewMsgOnScreen.bind(this);
+    this.displayNewMsgOnScreen = temp;
   }
 
   makeSomeTables = (arr, domTarget) => {
@@ -137,9 +139,7 @@ class QueryHandler extends Component {
   }
 */
   doHandleCourseSearch = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "courseID"
-    ]);
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["courseID"]);
     Axios.post("http://localhost:3305/Admin/courseSearch", { newObj }).then(
       (response) => {
         this.generateAndDisplayTableFromObject(response.data, "test2");
@@ -148,9 +148,7 @@ class QueryHandler extends Component {
   };
 
   doHandleCreateCourse = () => {
-    let newObj = this.generateObjectWithNeededPropertiesOnly([
-      "courseID"
-    ]);
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["courseID"]);
     Axios.post("http://localhost:3305/Admin/courseSearch", { newObj }).then(
       (response) => {
         this.generateAndDisplayTableFromObject(response.data, "test2");
@@ -158,14 +156,26 @@ class QueryHandler extends Component {
     );
   };
 
-  displayTextMessageOnScreen = (msg, optDOMDestinationID) => {
+  displayTextMessageOnScreen = (msg) => {
     console.log("Displaying");
     let ele = <h2>{msg}</h2>;
     ReactDOM.render(
-      <div className="main">{ele}</div>,
-      document.getElementById("test2")
+      <div className="d-flex justify-content-center">{ele}</div>,
+      document.getElementById("test1")
     );
   };
+
+  displayNewMsgOnScreen = (msg) => {
+    console.log("Displaying");
+    let ele = <h2>{msg}</h2>;
+    ReactDOM.render(
+      <div className="main" style={{ float: "left" }}>
+        {ele}
+      </div>,
+      document.getElementById("test1")
+    );
+  };
+
   doHandleCreateUser = () => {
     let newObj = this.generateObjectWithNeededPropertiesOnly([
       "userID",
@@ -390,7 +400,13 @@ class QueryHandler extends Component {
     ]);
 
     Axios.post("http://localhost:3305/Admin/updatePassword", { newObj }).then(
-      (response) => {}
+      (response) => {
+        this.displayNewMsgOnScreen(
+          <div style={{ float: "left" }}>
+            <p>HI!!!!!! WE'RE FLOATY</p>
+          </div>
+        );
+      }
     );
   };
 

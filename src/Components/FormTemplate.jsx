@@ -28,7 +28,7 @@ class FormTemplate extends Component {
     for (let i = 0; i < array.length; i++) {
       console.log("Making element");
       eles.push(
-        <div className="col-3">
+        <div className="col-2">
           <input
             id={array[i]}
             type="text"
@@ -55,22 +55,38 @@ class FormTemplate extends Component {
     let temp = this.process(this.props.fields);
     let eles = this.make(temp);
     return (
-      <div className="container-fluid" id="loginFormContainer" max-height="80%">
+      <div
+        className="container-fluid"
+        id="loginFormContainer"
+        max-height="80%"
+        style={{ justifyContent: "center" }}
+      >
         <form id="form2">
-          <div className="row">{eles}</div>
-          <button
-            type="submit"
-            className="btn btn-primary mt-3"
-            onClick={(e) => {
-              e.preventDefault();
+          <div className="row">
+            {eles}{" "}
+            <div className="col-2">
+              <button
+                type="submit"
+                // 'margin-bottom: 5px;display:  inline-block;position: relative;bottom: 5px;'
+                style={{
+                  marginBottom: "5px",
+                  display: "inline-block",
+                  position: "relative",
+                  bottom: "5px",
+                }}
+                className="btn btn-primary mt-2"
+                onClick={(e) => {
+                  e.preventDefault();
 
-              this.props.updateParams();
-              this.props.relevantQuery();
-              // this.props.onAllFormsSubmit(user, pass, userType);
-            }}
-          >
-            Submit
-          </button>
+                  this.props.updateParams();
+                  this.props.relevantQuery();
+                  // this.props.onAllFormsSubmit(user, pass, userType);
+                }}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     );
