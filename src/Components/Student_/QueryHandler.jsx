@@ -8,35 +8,35 @@ import AllForms from "../AllForms";
 import ReactDOM from "react-dom";
 
 class QueryHandler extends Component {
-  state = {
-    tempData: {
-      userID: "",
-      courseID: "",
-      userType: "",
-      firstName: "",
-      lastName: "",
-      phoneNum: "",
-      DOB: "",
-      street: "",
-      studentID: "",
-      email: "",
-      city: "",
-      state: "",
-      zip: "",
-    },
-  };
   constructor(props) {
     super(props);
-    this.state = { display: <NavBar userType={this.props.userType}></NavBar> };
+    this.state = {
+      reqBodyObj: {},
+      tempData: {
+        // for custom inputs
+        userID: "",
+        Instructor: "",
+        crn: "",
+        courseID: "",
+        courseName: "",
+        numCredits: "",
+        deptID: "",
+        userType: "",
+        firstName: "",
+        lastName: "",
+        phoneNum: "",
+        DOB: "",
+        street: "",
+        studentID: "",
+        email: "",
+        city: "",
+        state: "",
+        zip: "",
+        password: ""
+      },
+    };
     this.curQuery = "";
   }
-
-  // Set the response.data object, and store it
-  // Send it over to the tablemaker
-
-  // Using doHandle here, handle in the properties
-  // doHandle actually DOes something, handle is
-  // just an event we're missing
 
   tableMaker = () => {};
 
@@ -94,164 +94,131 @@ class QueryHandler extends Component {
 
   doHandleDropCourse = () => {
     this.curQuery = queries.dropCourse;
-    this.getQueryParams();
-    let studentID = this.props.userCredentials.userID;
-    let crn = this.state.tempData.crn;
-    console.log("Query");
-    
-    Axios.post("http://localhost:3305/Student/dropCourse", {
-      studentID: studentID,
-      crn: crn,
-    }).then(
-        (response) => {
-          console.log("Response");
-          console.log(response);
-        }
-    );
-  };
-
-  doHandleRegisterForCourse = () => {
-    this.curQuery = queries.registerForCourse;
-    this.getQueryParams();
-    let studentID = this.props.userCredentials.userID;
-    let crn = this.state.tempData.crn;
-    console.log("Query");
-
-    Axios.post("http://localhost:3305/Student/registerForCourse", {
-      studentID: studentID,
-      crn: crn,
-    }).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "crn",
+      "userID",
+    ]);
+    newObj["userID"] = this.props.userCredentials["userID"];
+    console.log("Submitted request body: " + newObj);
+    Axios.post("http://localhost:3305/Student/dropCourse", { newObj }).then(
       (response) => {
         console.log("Response");
         console.log(response);
-      }
-    );
+      });
+  };
+
+  doHandleRegisterForCourse = () => {
+    this.curQuery = queries.updatePassword;
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "crn",
+      "userID",
+    ]);
+    newObj["userID"] = this.props.userCredentials["userID"];
+    console.log("Submitted request body: " + newObj);
+    Axios.post("http://localhost:3305/Student/registerForCourse", { newObj }).then(
+      (response) => {
+        console.log("Response");
+        console.log(response);
+      });
   };
 
   doHandleGetStudentHistory = () => {
     this.curQuery = queries.studentHistory;
-    this.getQueryParams();
-    let studentID = this.props.userCredentials.userID;
-
-    Axios.post("http://localhost:3305/Student/studentHistory", {
-      studentID: studentID
-    }).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "userID",
+    ]);
+    newObj["userID"] = this.props.userCredentials["userID"];
+    console.log("Submitted request body: " + newObj);
+    Axios.post("http://localhost:3305/Student/studentHistory", { newObj }).then(
       (response) => {
+        console.log("Response");
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
+      });
   };
 
   doHandleGetTranscript = () => {
     this.curQuery = queries.transcript;
-    this.getQueryParams();
-    let studentID = this.props.userCredentials.userID;
-
-    Axios.post("http://localhost:3305/Student/transcript", {
-      studentID: studentID
-    }).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "userID",
+    ]);
+    newObj["userID"] = this.props.userCredentials["userID"];
+    console.log("Submitted request body: " + newObj);
+    Axios.post("http://localhost:3305/Student/transcript", { newObj }).then(
       (response) => {
+        console.log("Response");
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
+      });
   };
 
   doHandleUpdatePassword = () => {
     this.curQuery = queries.updatePassword;
-    this.getQueryParams();
-    let studentID = this.props.userCredentials.userID;
-    let password = this.state.tempData;
-    console.log("Query");
-
-    Axios.post("http://localhost:3305/Student/updatePassword", {
-      studentID: studentID,
-      password: password,
-    }).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "password",
+      "userID",
+    ]);
+    newObj["userID"] = this.props.userCredentials["userID"];
+    console.log("Submitted request body: " + newObj);
+    Axios.post("http://localhost:3305/Student/updatePassword", { newObj }).then(
       (response) => {
         console.log("Response");
         console.log(response);
-      }
-    );
+      });
   };
 
   doHandleViewAdvisor = () => {
     this.curQuery = queries.viewAdvisor;
-    this.getQueryParams();
-    let studentID = this.props.userCredentials.userID;
-
-    Axios.post("http://localhost:3305/Student/viewAdvisor", {
-      studentID: studentID
-    }).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "userID",
+    ]);
+    newObj["userID"] = this.props.userCredentials["userID"];
+    console.log("Submitted request body: " + newObj);
+    Axios.post("http://localhost:3305/Student/viewAdvisor", { newObj }).then(
       (response) => {
+        console.log("Response");
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
+      });
   };
 
   doHandleViewHolds = () => {
     this.curQuery = queries.viewHolds;
-    this.getQueryParams();
-    let studentID = this.props.userCredentials.userID;
-
-    Axios.post("http://localhost:3305/Student/viewHolds", {
-      studentID: studentID
-    }).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "userID",
+    ]);
+    newObj["userID"] = this.props.userCredentials["userID"];
+    console.log("Submitted request body: " + newObj);
+    Axios.post("http://localhost:3305/Student/viewHolds", { newObj }).then(
       (response) => {
+        console.log("Response");
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
+      });
   };
 
   doHandleViewRegistration = () => {
     this.curQuery = queries.viewRegistration;
-    this.getQueryParams();
-    let studentID = this.props.userCredentials.userID;
-
-    Axios.post("http://localhost:3305/Student/viewRegistration", {
-      studentID: studentID
-    }).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "userID",
+    ]);
+    newObj["userID"] = this.props.userCredentials["userID"];
+    console.log("Submitted request body: " + newObj);
+    Axios.post("http://localhost:3305/Student/viewRegistration", { newObj }).then(
       (response) => {
+        console.log("Response");
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
+      });
   };
 
   doHandleGetViewStudentLoginInfo = () => {
     this.curQuery = queries.viewStudentLoginInfo;
-    this.getQueryParams();
-    let studentID = this.props.userCredentials.userID;
-
-    Axios.post("http://localhost:3305/Student/viewStudentLoginInfo", {
-      studentID: studentID
-    }).then(
+    let newObj = this.generateObjectWithNeededPropertiesOnly([
+      "userID",
+    ]);
+    newObj["userID"] = this.props.userCredentials["userID"];
+    console.log("Submitted request body: " + newObj);
+    Axios.post("http://localhost:3305/Student/studentLoginInfo", { newObj }).then(
       (response) => {
+        console.log("Response");
         console.log(response);
-        console.log("QUERY!!!!!");
-        this.props.obj.data = response.data;
-        console.log(this.props.obj.data);
-        this.props.makeTable(this.props.obj.data);
-      }
-    );
+      });
   };
 
   getQueryParams = (paramObj) => {
@@ -267,6 +234,73 @@ class QueryHandler extends Component {
     this.setState();
     console.log();
     console.log("Generating forms");
+  };
+
+  generateObjectWithNeededPropertiesOnly = (neededPropsArr) => {
+    let newObj = {};
+    let reqBody = this.state.reqBodyObj;
+    let neededProps = neededPropsArr;
+    neededProps.map((ele) => {
+      if (ele in reqBody) {
+        //   if (ele == "numCredits") {
+        //   console.log("Found an integer");
+        // newObj[ele] = parseInt(reqBody[ele]);
+
+        // using in instead of includes, it's better apparently
+        newObj[ele] = reqBody[ele];
+      } else {
+        newObj[ele] = "";
+      }
+    });
+
+    return newObj;
+  };
+
+  doHandleTestLogin = () => {
+    let newObj = this.generateObjectWithNeededPropertiesOnly(["userID"]);
+
+    Axios.post("http://localhost:3305/Admin/testLogin", { newObj }).then(
+      (response) => {
+        console.log(response);
+      }
+    );
+  };
+
+  getQueryParams = (paramObj) => {
+    let newObj = paramObj;
+    console.log("Trying to update query: " + paramObj);
+    this.setState({ tempData: newObj });
+    console.log(this.state.tempData);
+    console.log("Updated properties");
+  };
+
+  updateParams = (key, value) => {
+    console.log(key);
+
+    let tempData = this.state.tempData;
+    tempData[key] = value;
+    this.setState({ tempData });
+    // Had to create another object and then overwrite it
+    // Interesting... lol
+    console.log("QUERY HANDLER: changed state of relevant key: ", key);
+    console.log("Temp Data: ", this.state.tempData);
+
+    let eles = [];
+    let reqBodyObj = this.state.reqBodyObj;
+    reqBodyObj[key] = value;
+    this.setState({ reqBodyObj });
+
+    let needed = [];
+    let values = [];
+
+    console.log("Needed", needed);
+  };
+
+  makeForms = () => {
+    // let ele = <AllForms passQueryParams={this.getQueryParams()}></AllForms>;
+    // ReactDOM.render(ele, document.getElementById("root"));
+
+    return <AllForms passQueryParams={this.getQueryParams}></AllForms>;
   };
 
   render() {
@@ -289,6 +323,7 @@ class QueryHandler extends Component {
           viewRegistration={this.doHandleViewRegistration}
           studentLoginInfo={this.doHandleGetViewStudentLoginInfo}
           userType={"Student"}
+          updateParams={this.updateParams}
         ></NavBar>
       </div>
     );

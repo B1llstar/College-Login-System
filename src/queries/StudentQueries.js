@@ -94,7 +94,7 @@ module.exports = {
     // USER INPUT: password
     // AUTO-FILL INPUT: userID for current user
     updatePassword:
-    "UPDATE loginInfo SET password='?' WHERE userID=?;",
+    "UPDATE loginInfo SET password='?' WHERE userID='?';",
 
     // [STUDENT] View Assigned Faculty Advisor
     // AUTO-FILL INPUT: studentID for current user
@@ -140,6 +140,6 @@ module.exports = {
     // This is the query that should be used to display info on the STUDENT landing page
     viewStudentLoginInfo:
     "SELECT u.userID, u.userType, u.firstName, u.lastName, l.userEmail, l.password FROM\n" +
-    "user u RIGHT JOIN loginInfo l ON u.userID=l.userID WHERE u.userID=?;",
+    "user u RIGHT JOIN loginInfo l ON u.userID=l.userID WHERE u.userID='?';",
     
 }

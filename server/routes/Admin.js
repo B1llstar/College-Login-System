@@ -419,6 +419,7 @@ router.post("/viewStudentSchedule", (req, res) => {
   db.query(query, studentID, (err, result) => {
     res.send(result);
     console.log("Getting student's schedule...");
+    console.log(result);
     if (err) {
       console.log(err);
       res.err("Something went wrong getting schedule.");

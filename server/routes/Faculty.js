@@ -13,11 +13,28 @@ router.post("/", (req, res) => {
   // Use login.js as a template
 });
 
+function replaceQueryQuestionMarkTokens(requestBodyObj, str) {
+  let valReplacements = Object.values(requestBodyObj);
+  let newString = str;
+
+  valReplacements.map((ele) => {
+    if (typeof ele == "number") {
+      console.log("Found a number");
+      newString = newString.replace("'?'", ele);
+    } // may only need to use parseInt on that prop
+    // in the route instead, i hope it's that easy
+    else newString = newString.replace("?", ele);
+  });
+  console.log(newString);
+  return newString;
+}
+
 router.post("/courseSearch", (req, res) => {
   let query = queries.courseSearch;
   let ele = grabVals(req.body.eles);
   db.query(query, [/*course search variables*/], (err, result) => {
     res.send(result);
+    console.log(result);
     console.log("Getting search results...");
     if (err) {
       console.log(err);
@@ -31,6 +48,7 @@ router.post("/degreeAuditPt1", (req, res) => {
   let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
+    console.log(result);
     console.log("Getting degree audit p1...");
     if (err) {
       console.log(err);
@@ -44,6 +62,7 @@ router.post("/degreeAuditPt2", (req, res) => {
   let ele = grabVals(req.body.eles);
   db.query(query, [studentID], (err, result) => {
     res.send(result);
+    console.log(result);
     console.log("Getting degree audit pt2...");
     if (err) {
       console.log(err);
@@ -54,49 +73,57 @@ router.post("/degreeAuditPt2", (req, res) => {
 
 router.post("/facultyCoursesTeaching", (req, res) => {
   let query = queries.facultyCoursesTeaching;
-  let ele = grabVals(req.body.eles);
-  db.query(query, [facultyID], (err, result) => {
-    res.send(result);
-    console.log("Getting courses...");
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
+  console.log(req.body.newObj);
+  db.query(newQuery, (err, result) => {
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting courses.");
+      console.log("err");
+    } else {
+      console.log("nice");
+      console.log(result);
     }
   });
 });
 
 router.post("/facultyLoginInfo", (req, res) => {
-  let query = queries.getFacultyLoginInfo;
-  let ele = grabVals(req.body.eles);
-  db.query(query, [facultyID], (err, result) => {
-    res.send(result);
-    console.log("Getting user info...");
+  let query = queries.facultyLoginInfo;
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
+  console.log(req.body.newObj);
+  db.query(newQuery, (err, result) => {
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting login info.");
+      console.log("err");
+    } else {
+      console.log("nice");
+      console.log(result);
     }
   });
 });
 
 router.post("/recordAttendance", (req, res) => {
   let query = queries.recordAttendance;
-  let ele = grabVals(req.body.eles);
-  db.query(query, [studentID, crn], (err, result) => {
-    res.send(result);
-    console.log("Storing attendance record...");
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
+  console.log(req.body.newObj);
+  db.query(newQuery, (err, result) => {
     if (err) {
-      console.log(err);
-      res.err("Something went wrong getting login info.");
+      console.log("err");
+    } else {
+      console.log("nice");
+      console.log(result);
     }
   });
 });
 
 router.post("/studentHistory", (req, res) => {
-  let query = queries.getStudentHistory;
-  let ele = grabVals(req.body.eles);
-  db.query(query, [studentID], (err, result) => {
+  let query = queries.studentHistory;
+  let studentID = req.body.newObj["studentID"];
+
+  console.log("student ID: ", studentID);
+  console.log(req.body);
+
+  db.query(query, studentID, (err, result) => {
     res.send(result);
     console.log("Getting student history...");
+    console.log(result);
     if (err) {
       console.log(err);
       res.err("Something went wrong getting student history.");
@@ -105,11 +132,16 @@ router.post("/studentHistory", (req, res) => {
 });
 
 router.post("/transcript", (req, res) => {
-  let query = queries.getTranscript;
-  let ele = grabVals(req.body.eles);
-  db.query(query, [studentID], (err, result) => {
+  let query = queries.transcript;
+  let studentID = req.body.newObj["studentID"];
+
+  console.log("student ID: ", studentID);
+  console.log(req.body);
+
+  db.query(query, studentID, (err, result) => {
     res.send(result);
     console.log("Getting transcript...");
+    console.log(result);
     if (err) {
       console.log(err);
       res.err("Something went wrong getting transcript.");
@@ -119,24 +151,29 @@ router.post("/transcript", (req, res) => {
 
 router.post("/updatePassword", (req, res) => {
   let query = queries.updatePassword;
-  let ele = grabVals(req.body.eles);
-  console.log(ele);
-  db.query(query, [facultyID, password], (err, result) => {
-      if (err) {
-        console.log(err, "Problem updating password");
-      } else {
-        console.log("Successfully updated password");
-      }
+  let newQuery = replaceQueryQuestionMarkTokens(req.body.newObj, query);
+  console.log(req.body.newObj);
+  db.query(newQuery, (err, result) => {
+    if (err) {
+      console.log("err");
+    } else {
+      console.log("nice");
+      console.log(result);
     }
-  );
+  });
 });
 
 router.post("/viewHolds", (req, res) => {
   let query = queries.viewHolds;
-  let ele = grabVals(req.body.eles);
-  db.query(query, [studentID], (err, result) => {
+  let studentID = req.body.newObj["studentID"];
+
+  console.log("student ID: ", studentID);
+  console.log(req.body);
+
+  db.query(query, studentID, (err, result) => {
     res.send(result);
     console.log("Getting holds...");
+    console.log(result);
     if (err) {
       console.log(err);
       res.err("Something went wrong getting holds.");
@@ -146,10 +183,15 @@ router.post("/viewHolds", (req, res) => {
 
 router.post("/viewRegistration", (req, res) => {
   let query = queries.viewRegistration;
-  let ele = grabVals(req.body.eles);
-  db.query(query, [studentID], (err, result) => {
+  let studentID = req.body.newObj["studentID"];
+
+  console.log("student ID: ", studentID);
+  console.log(req.body);
+
+  db.query(query, studentID, (err, result) => {
     res.send(result);
     console.log("Getting registration...");
+    console.log(result);
     if (err) {
       console.log(err);
       res.err("Something went wrong getting registration.");
@@ -158,10 +200,15 @@ router.post("/viewRegistration", (req, res) => {
 });
 
 router.post("/viewStudentAdvisees", (req, res) => {
-  let query = queries.viewStudentAdvisees;
-  let ele = grabVals(req.body.eles);
-  db.query(query, [facultyID], (err, result) => {
+  let query = queries.viewAdvisees;
+  let studentID = req.body.newObj["userID"];
+
+  console.log("user ID: ", userID);
+  console.log(req.body);
+
+  db.query(query, userID, (err, result) => {
     res.send(result);
+    console.log(result);
     console.log("Getting advisees list...");
     if (err) {
       console.log(err);
@@ -171,11 +218,17 @@ router.post("/viewStudentAdvisees", (req, res) => {
 });
 
 router.post("/viewStudentSchedule", (req, res) => {
-  let query = queries.getStudentSchedule;
-  let ele = grabVals(req.body.eles);
-  db.query(query, [studentID], (err, result) => {
+  let query = queries.viewStudentSchedule;
+
+  let studentID = req.body.newObj["studentID"];
+
+  console.log("student ID: ", studentID);
+  console.log(req.body);
+
+  db.query(query, studentID, (err, result) => {
     res.send(result);
     console.log("Getting student's schedule...");
+    console.log(result);
     if (err) {
       console.log(err);
       res.err("Something went wrong getting schedule.");

@@ -12,6 +12,7 @@ class NavBar extends Component {
       chosenUserTypeNavEleArray: [],
       curEle: "",
       // This is where we'll store the user inputs sent from FormTemplate!
+      reqBodyObj: {},
       tempData: {
         // for custom inputs
         userID: "",
@@ -212,22 +213,15 @@ class NavBar extends Component {
         },
 
         {
-          name: "Faculty Login Info",
-          onClick: () => {
-            //this.props.facultyLoginInfo
-          },
-        },
-
-        {
           name: "Course Search",
-          onClick: () => this.makeForm(["courseID"]),
+          onClick: () => this.makeForm(["courseID"], this.props.courseSearch),
         },
 
         {
           name: "Drop Course", //This one auto-fills student and password is an input field
           onClick: () => {
             //this.props.studentID,
-            this.makeForm(["crn"]);
+            this.makeForm(["crn"], this.props.dropCourse);
           },
         },
 
@@ -247,55 +241,41 @@ class NavBar extends Component {
 
         {
           name: "Register for Course",
-          onClick: () => {
-            //this.props.registerForCourse
-          },
+          onClick: () => this.makeForm(["studentID", "crn"], this.props.registerForCourse)
         },
 
         {
           name: "Student History",
-          onClick: () => {
-            //this.props.studentHistory
-          },
+          onClick: () => this.props.studentHistory(),
         },
 
         {
           name: "Student Login Info",
-          onClick: () => {
-            //this.props.studentLoginInfo
-          },
+          onClick: () => this.props.studentLoginInfo(),
         },
 
         {
           name: "Unofficial Transcript",
-          onClick: () => {
-            //this.props.transcript
-          },
+          onClick: () => this.props.transcript(),
         },
 
         {
           name: "Update Password",
-          onClick: () => this.makeForm(["password", "userID"]),
+          onClick: () => this.makeForm(["password"], this.props.updatePassword),
         },
 
         {
           name: "View Advisor",
-          onClick: () => {
-            //this.props.viewAdvisor
-          },
+          onClick: () => this.props.viewAdvisor(),
         },
 
         {
           name: "View Holds",
-          onClick: () => {
-            //this.props.viewHolds
-          },
+          onClick: () => this.props.viewHolds(),
         },
         {
           name: "View Registration",
-          onClick: () => {
-            //this.props.viewRegistration
-          },
+          onClick: () => this.props.viewRegistration(),
         },
 
         {
@@ -313,13 +293,13 @@ class NavBar extends Component {
         {
           name: "Assigned Course List",
           onClick: () => {
-            //this.props.facultyLoginInfo
+            this.props.facultyCoursesTeaching()
           },
         },
 
         {
           name: "Course Search",
-          onClick: () => this.makeForm(["courseID"]),
+          onClick: () => this.makeForm(["courseID"], this.props.courseSearch),
         },
 
         {
@@ -334,52 +314,48 @@ class NavBar extends Component {
 
         {
           name: "Faculty Login Info",
-          onClick: () => {
-            //this.props.facultyLoginInfo
-          },
+          onClick: () => this.props.facultyLoginInfo()
         },
 
         {
           name: "Record Attendance",
           onClick: () =>
-            this.makeForm(["studentID", "crn", "isPresent", "date"]),
+            this.makeForm(["studentID", "crn", "isPresent", "date"], this.props.recordAttendance),
         },
 
         {
           name: "Student History",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.makeForm(["studentID"], this.props.studentHistory),
         },
 
         {
           name: "Unofficial Transcript",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.makeForm(["studentID"], this.props.transcript),
         },
 
         {
-          name: "Update Password", //AUTO FILL facultyID, user input password
-          onClick: () =>
-            //this.props.facultyID
-            this.makeForm(["password"]),
+          name: "Update Password", 
+          onClick: () => this.makeForm(["password"], this.props.updatePassword),
         },
 
         {
           name: "View Advisees",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.makeForm(["userID"], this.props.viewStudentAdvisees),
         },
 
         {
           name: "View Holds",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.makeForm(["studentID"], this.props.viewHolds),
         },
 
         {
           name: "View Registration",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.makeForm(["studentID"], this.props.viewRegistration),
         },
 
         {
           name: "View Student Schedule",
-          onClick: () => this.makeForm(["studentID"]),
+          onClick: () => this.makeForm(["studentID"], this.props.viewStudentSchedule ),
         },
 
         {
