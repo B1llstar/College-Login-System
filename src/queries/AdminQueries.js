@@ -95,6 +95,13 @@ module.exports = {
     "ON s.timeslot2=tSlots2.TSID) AS list ON list.courseID=c.courseID WHERE (list.semYear='F2021' OR list.semYear='S2022') \n" +
     "ORDER BY list.semYear ASC;",
 
+    masterScheduleAdd:
+    "INSERT INTO section(crn, courseID, timeSlot1, timeSlot2, facultyID, roomID, semYear) VALUES ('?', '?','?','?','?','?','?');",
+
+    masterScheduleRemove:
+    "DELETE FROM section WHERE crn='?';",
+
+
   // [ADMIN] Modify a course
   // USER INPUT: each variable for SET is optional, if a field is blank it should be removed from the query
   // Parameters: courseID- 5 CHAR, courseName- String, credits- single digit INT, deptID- 3 CHAR ('D##')
@@ -137,6 +144,14 @@ module.exports = {
   studentLoginInfo:
     "SELECT u.userID, u.userType, u.firstName, u.lastName, l.userEmail FROM\n" +
     "user u RIGHT JOIN loginInfo l ON u.userID=l.userID WHERE u.userID='?';",
+
+  timeSlotDisplay:
+  "SELECT timeTable.timeSlotID, timeTable.weekDay AS day, \n"+
+  "CONCAT(TIME_FORMAT(timeTable.periodStart, '%h:%i%p'),' - ',TIME_FORMAT(timeTable.periodEnd, '%h:%i%p')) AS 'Time' FROM\n"+
+  "(SELECT ts.timeSlotID, ts.dayID, ts.periodID, d.weekday, p.periodStart, p.periodEnd FROM timeSlot ts\n"+
+  "JOIN tsDay tsd ON ts.timeSlotID=tsd.timeSlotID JOIN tsPeriod tsp ON ts.timeslotID=tsp.timeSlotID\n"+
+  "JOIN day d ON tsd.dayID=d.dayID JOIN period p ON tsp.periodID=p.periodID) AS timeTable;",
+
 
   // [STUDENT, FACULTY, ADMIN] View student transcript
   // USER INPUT: studentID
